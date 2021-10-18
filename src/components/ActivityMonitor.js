@@ -33,7 +33,7 @@ const ActivityMonitor = () => (
           [1,2,3].map((x, i) => (
             <div className="alert-items" key={i}>
               <div>
-                <p>DO_DEEL_CDS is up</p>
+                <p style={{fontSize: 14}}>DO_DEEL_CDS is up</p>
                 <small>Sept 24, 2021 | 09:25:05 AM</small>
               </div>
 

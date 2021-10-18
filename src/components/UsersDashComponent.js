@@ -81,7 +81,7 @@ const UsersDashComponent = () => (
       </div>
 
       <div className="card-footer d-flex align-items-center">
-        <h5>SEE ALL USERS </h5>
+        <h6>SEE ALL USERS </h6>
         <span className="material-icons">
                     chevron_right
         </span>

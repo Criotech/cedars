@@ -40,7 +40,7 @@ const Reviews = () => (
       </div>
 
       <div className="card-footer d-flex align-items-center">
-        <h5>SEE ALL REVIEWS </h5>
+        <h6>SEE ALL REVIEWS </h6>
         <span className="material-icons">
                     chevron_right
         </span>

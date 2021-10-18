@@ -56,7 +56,7 @@ const Tickets = () => (
       </div>
 
       <div className="card-footer d-flex align-items-center">
-        <h5>SEE ALL TICKETS </h5>
+        <h6>SEE ALL TICKETS </h6>
         <span className="material-icons">
                     chevron_right
         </span>

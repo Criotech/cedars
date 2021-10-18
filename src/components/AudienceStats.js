@@ -47,7 +47,7 @@ const AudienceStats = () => (
       </div>
 
       <div className="card-footer d-flex align-items-center">
-        <h5>SEE DETAILS </h5>
+        <h6>SEE DETAILS </h6>
         <span className="material-icons">
           chevron_right
         </span>
