@@ -1,5 +1,5 @@
 {
-  "name": "dml",
+  "name": "mindthegap",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +10,7 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "recharts": "^2.1.5",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
@@ -52,6 +53,8 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.26.1",
     "gh-pages": "^2.0.1",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
