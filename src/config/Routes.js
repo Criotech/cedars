@@ -11,6 +11,9 @@ const Home = lazy(() => import('../pages/home/Home'));
 const Login = lazy(() => import('../pages/auth/Login'));
 const Dashboard = lazy(() => import('../pages/dashboard/Dashboard'));
 const Users = lazy(() => import('../pages/users/Users'));
+const AddUser = lazy(() => import('../pages/users/AddUser'));
+const UserDetails = lazy(() => import('../pages/users/UserDetails'));
+
 
 const Routes = () => (
   // eslint-disable-next-line no-undef
@@ -27,6 +30,9 @@ const Routes = () => (
         <PublicRoute exact path='/' component={Home} />
         <PublicRoute exact path='/dashboard' component={Dashboard} />
         <PublicRoute exact path='/users' component={Users} />
+        <PublicRoute exact path='/users/add' component={AddUser} />
+        <PublicRoute exact path='/users/user' component={UserDetails} />
+
 
 
         {/* catch all invalid urls */}
