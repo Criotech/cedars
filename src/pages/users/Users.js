@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 
 const Users = () => {
