@@ -1,18 +1,4 @@
-# react-redux-base (softcom.ng)
-
-Forked from [react-redux-base](https://github.com/kenshinman/react-redux-base)
-
-Preview at <http://chidimo.github.io/react-redux-base>
-
-## Live preview
-
-A live preview of this template is available at <http://chidimo.github.io/react-redux-base>
-
-## Using scripts
-
-1. To run tests, use command `yarn test`. Coverage report is automatically generated and placed in the `coverage/` folder. To view the report, open `/coverage/lcov-report/index.html`. You can have `jest` watch your files by running `yarn test:watch`.
-1. To lint `JavaScript` files, run `yarn lint`. Optionally you can run `yarn lint --fix` to apply automatic fixes.
-1. To prettify files, run `yarn pretty`. By default, the command prettifies `.ts`, `.js`, `.css`, `.html`, `.json`, and `.md` files. You may extend this list by adding more file extensions to the `pretty` section of `scripts` in `package.json`.
+# Mind The Gap Admin
 
 ## Guides
 
