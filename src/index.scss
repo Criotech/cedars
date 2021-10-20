@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
 
 :root {
-    --background: #f5f6fa;
+    --background: rgba(249, 250, 251, 0.8);
     --ink: #393b3f;
     --purple: #513ccc;
     --warning: #ffc400;
@@ -393,7 +393,8 @@ a {
 }
 
 .user-section {
-    p, tr {
+    p,
+    tr {
         font-size: 14px;
     }
     .training-list-item {
@@ -405,12 +406,13 @@ a {
         .fa-tag {
             margin-right: 30px;
             margin-top: 5px;
-            color: #C4CAD3;
+            color: #c4cad3;
             font-size: 17px;
         }
     }
     table {
-        td, th {
+        td,
+        th {
             border: none;
             padding-top: 10px;
             padding-bottom: 10px;
@@ -422,4 +424,32 @@ a {
             }
         }
     }
+}
+
+.trainings-section {
+    width: 100%;
+    font-size: 14px;
+    th {
+        border: none;
+    }
+    td {
+        border-bottom: 1px solid #dbe3f1;
+        padding-top: 35px;
+        padding-bottom: 50px;
+        padding-right: 40px;
+    }
+}
+
+.search-bar-container {
+    position: relative;
+    flex: 1;
+    .fa-search {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+    }
+    input {
+        text-indent: 30px;
+    }
+
 }

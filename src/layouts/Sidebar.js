@@ -27,7 +27,7 @@ const Sidebar = ({ title = 'Dashboard' }) => {
             </div>
           </Link>
 
-          <Link to="/training">
+          <Link to="/trainings">
             <div className={title === 'Dashboa' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">co_present</span>
               <p>Trainigs</p>
