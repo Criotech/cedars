@@ -31,7 +31,7 @@ const Trainings = () => {
           </div>
 
 
-          <div className='w-100 mt-3'>
+          <div className='w-100 mt-4'>
             <div className="d-flex align-items-center w-100">
               <div className='search-bar-container'>
                 <i className="fa fa-search" aria-hidden="true"></i>
@@ -70,6 +70,15 @@ const Trainings = () => {
 
               </tbody>
             </table>
+
+            <div className='footer d-flex justify-content-end py-3'>
+              <div className="d-flex align-items-center">
+                <p className="mr-3">Rows per page 10 <i className="fa fa-caret-down" aria-hidden="true"></i></p>
+                <p className="mr-3">1-5 of 13 </p>
+                <h5 className="mr-3 fw-bold"><i className="fa fa-angle-left mr-2" aria-hidden="true"></i> <i className="fa fa-angle-right" aria-hidden="true"></i></h5>
+              </div>
+
+            </div>
           </div>
 
         </section>
