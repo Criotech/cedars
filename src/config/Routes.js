@@ -14,6 +14,8 @@ const Users = lazy(() => import('../pages/users/Users'));
 const AddUser = lazy(() => import('../pages/users/AddUser'));
 const UserDetails = lazy(() => import('../pages/users/UserDetails'));
 const Trainings = lazy(() => import('../pages/trainings/Trainings'));
+const Projects = lazy(()=> import('../pages/projects/Projects'));
+const CreateTraining = lazy(()=> import('../pages/trainings/CreateTraining'));
 
 
 const Routes = () => (
@@ -34,6 +36,9 @@ const Routes = () => (
         <PublicRoute exact path='/users/add' component={AddUser} />
         <PublicRoute exact path='/users/user' component={UserDetails} />
         <PublicRoute exact path='/trainings' component={Trainings} />
+        <PublicRoute exact path='/trainings/create' component={CreateTraining} />
+        <PublicRoute exact path='/projects' component={Projects} />
+
 
 
 

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 
-const Trainings = () => {
-  const history = useHistory();
+const Projects = () => {
   const [users] = useState([
     { id: 1, active: false },
     { id: 2, active: false },
@@ -19,19 +17,18 @@ const Trainings = () => {
 
   return (
     <div>
-      <DashboardLayout title='Trainings'>
+      <DashboardLayout title='Projects'>
         <section className="trainings-section">
           <div className="flex-between">
-            <h5 className="fw-bold mb-3">Trainings</h5>
+            <h5 className="fw-bold mb-3">Projects</h5>
 
-            <div onClick={()=>history.push('/trainings/create')} className="d-flex flex-between pointer">
+            <div className="d-flex flex-between">
               <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
               <h5 className="fw-bold text-green">
                 Create New
               </h5>
             </div>
           </div>
-
 
           <div className='w-100 mt-4'>
             <div className="d-flex align-items-center w-100">
@@ -89,4 +86,4 @@ const Trainings = () => {
   );
 };
 
-export default Trainings;
+export default Projects;

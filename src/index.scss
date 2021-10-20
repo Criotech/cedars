@@ -2,7 +2,7 @@
 
 :root {
     --background: rgba(249, 250, 251, 0.8);
-    --ink: #393b3f;
+    --ink: #545454;
     --purple: #513ccc;
     --warning: #ffc400;
     --negative: #ea5230;
@@ -367,21 +367,22 @@ a {
     .form-container {
         width: 100%;
         padding: 40px 100px;
-        .input-family {
-            position: relative;
-            .label {
-                position: absolute;
-                top: -10px;
-                left: 30px;
-                background-color: var(--white);
-                font-weight: 600;
-                color: #506176;
-            }
-            input {
-                height: 60px;
-                border-radius: 10;
-            }
-        }
+    }
+}
+
+.input-family {
+    position: relative;
+    .label {
+        position: absolute;
+        top: -10px;
+        left: 30px;
+        background-color: var(--white);
+        font-weight: 600;
+        color: #506176;
+    }
+    input {
+        height: 60px;
+        border-radius: 10;
     }
 }
 
@@ -438,6 +439,21 @@ a {
         padding-bottom: 50px;
         padding-right: 40px;
     }
+    .az {
+        width: 800px;
+        margin: auto;
+    }
+    .upload-file-container {
+        height: 300px;
+        border-radius: 10px;
+        border: 1px dashed #A6ACBE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .fa {
+            font-size: 30px;
+        }
+    }
 }
 
 .search-bar-container {
@@ -451,5 +467,4 @@ a {
     input {
         text-indent: 30px;
     }
-    
 }

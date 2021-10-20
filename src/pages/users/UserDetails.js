@@ -10,7 +10,7 @@ const UserDetails = () => {
 
   return (
     <div>
-      <DashboardLayout>
+      <DashboardLayout title='Users'>
         <section className="user-section">
           <div className='d-flex justify-content-between align-items-center'>
             <h4><i onClick={() => history.push('/users')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>

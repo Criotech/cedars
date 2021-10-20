@@ -31,7 +31,7 @@ const Users = () => {
 
   return (
     <div>
-      <DashboardLayout>
+      <DashboardLayout title='Users'>
         <section className="users-section">
           <div className="flex-between">
             <h5 className="fw-bold mb-3">Audience reach</h5>

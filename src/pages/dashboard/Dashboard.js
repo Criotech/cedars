@@ -13,7 +13,7 @@ import MultipleBarChart from '../../components/chats.js/MultipleBarChart';
 const About = () => {
   return (
     <div>
-      <DashboardLayout>
+      <DashboardLayout title='Dashboard'>
         <h3 className="mb-3">Overview</h3>
         <div className="row row-eq-height">
           <div className="col-lg-8 panel">

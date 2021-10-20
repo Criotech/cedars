@@ -2,12 +2,12 @@ import React from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
-const Dashboard_layout = ({children}) => {
+const Dashboard_layout = ({children, title='Dashboard'}) => {
 
   return (
     <section className="d-flex align-items-stretch h-100">
       <div className="w-10 h-100 d-none d-lg-block">
-        <Sidebar />
+        <Sidebar title={title} />
       </div>
       <div className="w-90 full_height bg-grey">
         <Header />

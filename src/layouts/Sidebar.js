@@ -4,7 +4,7 @@ import Logo from '../components/Logo';
 
 // import { Link } from 'react-router-dom';
 
-const Sidebar = ({ title = 'Dashboard' }) => {
+const Sidebar = ({ title }) => {
 
   return (
     <div className="sidebar flex-column align-items-center">
@@ -21,28 +21,28 @@ const Sidebar = ({ title = 'Dashboard' }) => {
           </Link>
 
           <Link to="/users">
-            <div className={title === 'Dashboar' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'Users' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">groups</span>
               <p>Users</p>
             </div>
           </Link>
 
           <Link to="/trainings">
-            <div className={title === 'Dashboa' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'Trainings' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">co_present</span>
-              <p>Trainigs</p>
+              <p>Trainings</p>
             </div>
           </Link>
 
-          <Link to="/assignment">
-            <div className={title === 'Dashbo' ? 'nav-link active' : 'nav-link'} >
+          <Link to="/projects">
+            <div className={title === 'Projects' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">assignment</span>
               <p>Projects</p>
             </div>
           </Link>
 
           <Link to="/news">
-            <div className={title === 'Dashb' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'News' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">menu_book</span>
               <p>News</p>
             </div>
