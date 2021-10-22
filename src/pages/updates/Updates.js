@@ -1,31 +1,27 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
+import DashboardLayout from '../../layouts/Dasboard_Layout';
+import Tabs from '../../components/Tabbar';
 
-const Projects = () => {
+const Updates = () => {
   const history = useHistory();
-
   const [users] = useState([
     { id: 1, active: false },
     { id: 2, active: false },
     { id: 3, active: false },
     { id: 4, active: false },
-    { id: 5, active: false },
-    { id: 6, active: false },
-    { id: 7, active: false },
-    { id: 8, active: false },
-    { id: 9, active: false },
-    { id: 10, active: false },
+    { id: 4, active: false },
   ]);
+  const [currentTab, setCurrentTab] = useState(0);
 
   return (
     <div>
-      <DashboardLayout title='Projects'>
+      <DashboardLayout title='Updates'>
         <section className="trainings-section">
           <div className="flex-between">
-            <h5 className="fw-bold mb-3">Projects</h5>
+            <h5 className="fw-bold mb-3">Updates</h5>
 
-            <div onClick={()=>history.push('/projects/create')} className="d-flex flex-between pointer">
+            <div onClick={()=>history.push('/updates/create')} className="d-flex flex-between pointer">
               <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
               <h5 className="fw-bold text-green">
                 Create New
@@ -33,15 +29,8 @@ const Projects = () => {
             </div>
           </div>
 
-          <div className='w-100 mt-4'>
-            <div className="d-flex align-items-center w-100">
-              <div className='search-bar-container'>
-                <i className="fa fa-search" aria-hidden="true"></i>
-                <input type="text" className="form-control flex-grow-1" placeholder='Search' />
-              </div>
-
-              <h6 className="px-5 text-green fw-bold">Filters <i className="fa fa-cog ml-1" aria-hidden="true"></i></h6>
-            </div>
+          <div className='mt-5 px-5'>
+            <Tabs tabs={[{name: 'News'}, {name: 'Jobs'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
           </div>
 
           <div className="mt-4">
@@ -50,7 +39,7 @@ const Projects = () => {
                 <tr>
                   <th scope="col">Date</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Overview</th>
+                  <th scope="col">Content</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -59,7 +48,7 @@ const Projects = () => {
                   users.map(x => (
                     <tr key={x.id}>
                       <td>16/10/2021</td>
-                      <td>Using marketing tools and social media to grow your business</td>
+                      <td>Induction Party</td>
                       <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
@@ -89,4 +78,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Updates;

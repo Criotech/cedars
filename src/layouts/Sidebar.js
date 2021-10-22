@@ -41,10 +41,10 @@ const Sidebar = ({ title }) => {
             </div>
           </Link>
 
-          <Link to="/news">
-            <div className={title === 'News' ? 'nav-link active' : 'nav-link'} >
+          <Link to="/updates">
+            <div className={title === 'Updates' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">menu_book</span>
-              <p>News</p>
+              <p>Updates</p>
             </div>
           </Link>
           

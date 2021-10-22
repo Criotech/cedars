@@ -63,14 +63,14 @@ const Users = () => {
                 <tbody>
                   {
                     users.map(x => (
-                      <tr onClick={()=>history.push('/users/user')} key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
+                      <tr key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
                         <td><input onChange={() => handleCheck(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td>
-                        <th className="d-flex"><div className="circle"><img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>Chen Simmons</th>
-                        <td>chensimmons@gmail.com</td>
-                        <td>LA/20B/1089</td>
-                        <td>08023445560</td>
-                        <td>6</td>
-                        <td>5 Minutes ago</td>
+                        <th onClick={()=>history.push('/users/user')} className="d-flex"><div className="circle"><img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>Chen Simmons</th>
+                        <td onClick={()=>history.push('/users/user')}>chensimmons@gmail.com</td>
+                        <td onClick={()=>history.push('/users/user')}>LA/20B/1089</td>
+                        <td onClick={()=>history.push('/users/user')}>08023445560</td>
+                        <td onClick={()=>history.push('/users/user')}>6</td>
+                        <td onClick={()=>history.push('/users/user')}>5 Minutes ago</td>
                       </tr>
                     ))
                   }

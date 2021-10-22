@@ -16,6 +16,9 @@ const UserDetails = lazy(() => import('../pages/users/UserDetails'));
 const Trainings = lazy(() => import('../pages/trainings/Trainings'));
 const Projects = lazy(()=> import('../pages/projects/Projects'));
 const CreateTraining = lazy(()=> import('../pages/trainings/CreateTraining'));
+const CreateProject = lazy(()=> import('../pages/projects/CreateProject'));
+const Updates = lazy(()=> import('../pages/updates/Updates'));
+const CreateUpdate = lazy(()=> import('../pages/updates/CreateNewUpdate'));
 
 
 const Routes = () => (
@@ -38,9 +41,9 @@ const Routes = () => (
         <PublicRoute exact path='/trainings' component={Trainings} />
         <PublicRoute exact path='/trainings/create' component={CreateTraining} />
         <PublicRoute exact path='/projects' component={Projects} />
-
-
-
+        <PublicRoute exact path='/projects/create' component={CreateProject} />
+        <PublicRoute exact path='/updates' component={Updates} />
+        <PublicRoute exact path='/updates/create' component={CreateUpdate} />
 
 
         {/* catch all invalid urls */}

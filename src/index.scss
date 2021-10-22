@@ -446,7 +446,7 @@ a {
     .upload-file-container {
         height: 300px;
         border-radius: 10px;
-        border: 1px dashed #A6ACBE;
+        border: 1px dashed #a6acbe;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -466,5 +466,17 @@ a {
     }
     input {
         text-indent: 30px;
+    }
+}
+
+.tab-nav-bar {
+    margin-bottom: 50px;
+    border-bottom: 1px solid #121212;
+    font-weight: bold;
+    .active {
+        border-bottom: 4px solid #29a439;
+        color: #29a439;
+        padding-bottom: 20px;
+        border-bottom-width: 2px;
     }
 }

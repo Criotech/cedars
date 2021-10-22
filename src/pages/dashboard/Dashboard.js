@@ -6,7 +6,7 @@ import AudienceStats from '../../components/AudienceStats';
 import DeviceStats from '../../components/DeviceStats';
 import Reviews from '../../components/Reviews';
 import Tickets from '../../components/Tickets';
-import UsersDashComponent from '../../components/UsersDashComponent';
+// import UsersDashComponent from '../../components/UsersDashComponent';
 import LineChartComponent from '../../components/chats.js/LineChart';
 import MultipleBarChart from '../../components/chats.js/MultipleBarChart';
 
@@ -75,9 +75,9 @@ const About = () => {
         </div>
 
         <div className="row">
-          <div className="col-lg-4">
+          {/* <div className="col-lg-4">
             <UsersDashComponent />
-          </div>
+          </div> */}
           <div className="col-lg-4">
             <Reviews />
           </div>
