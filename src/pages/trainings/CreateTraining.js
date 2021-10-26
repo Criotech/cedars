@@ -20,7 +20,7 @@ const CreateTraining = () => {
 
 
             <div className='mt-5 px-5 az'>
-              <Tabs tabs={[{name: 'Training Details'}, {name: 'Upload resources'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+              <Tabs tabs={[{name: 'Overview'}, {name: 'Resources'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
               
               {
                 currentTab===0 ? <Form setCurrentTab={setCurrentTab} /> : <Upload />

@@ -1,27 +1,17 @@
 import {
-  SET_USER,
-  LOGOUT_USER,
+  FETCH_TRAININGS,
 } from '../types';
 import ApiService from '../../utils/apiService';
 import { getError, clear } from './alertActions';
 import { startLoading, stopLoading } from './loadingAction';
-
-export const setCurrentUser = user => dispatch => {
-  localStorage.setItem('user', JSON.stringify(user));
-  dispatch({ type: SET_USER, payload: user });
-};
-
-export const loginUser = (email, password) => async dispatch => {
+  
+export const fetchTrainings = () => async dispatch => {
   dispatch(startLoading());
-
   try {
-    const resp = await ApiService.loginAccount({email, password});
-
+    const resp = await ApiService.fetchTrainings();
     if (resp) {
       dispatch(stopLoading());
-
-      localStorage.setItem('token', resp.data.data.api_token);
-      return dispatch(setCurrentUser(resp.data.data));
+      return dispatch({ type: FETCH_TRAININGS, payload: resp.data.data });
     }
   } catch (error) {
     dispatch(stopLoading());
@@ -32,8 +22,4 @@ export const loginUser = (email, password) => async dispatch => {
       dispatch(getError(error.response.data.error.message));
     }
   }
-};
-
-export const logoutUser = () => dispatch => {
-  dispatch({ type: LOGOUT_USER });
 };

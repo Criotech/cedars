@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ErrorBoundary from '../components/ErrorBoundary';
-import Header from './Header';
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
+const PrivateRoute = ({ component: Component, auth, alert, ...rest }) => {
+  useEffect(()=>{
+    if (alert.message) {
+      localStorage.setItem('token', '');
+      return (<Redirect to="/login" />);
+    }
+  }, [alert.message]);
+
   return (
     <Route
       {...rest}
@@ -13,9 +19,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
         if (auth.isAuthenticated) {
           return (
             <ErrorBoundary>
-              <Header />
-              {/* <SideNav /> */}
-              <main className="container" id="private-route-layout">
+              <main id="private-route-layout">
                 <Component {...props} />
               </main>
             </ErrorBoundary>
@@ -36,8 +40,9 @@ PrivateRoute.propTypes = {
   component: propTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ auth }) => ({
+const mapStateToProps = ({ auth, alert }) => ({
   auth,
+  alert
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

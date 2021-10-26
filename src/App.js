@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastProvider } from 'react-toast-notifications';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import Routes from './config/Routes';
@@ -6,7 +7,9 @@ import Routes from './config/Routes';
 const App = () => {
   return (
     <Provider store={store}>
-      <Routes />
+      <ToastProvider>
+        <Routes />
+      </ToastProvider>
     </Provider>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { Card } from '../../components/Card';
 import ActivityMonitor from '../../components/ActivityMonitor';
@@ -9,15 +9,19 @@ import Tickets from '../../components/Tickets';
 // import UsersDashComponent from '../../components/UsersDashComponent';
 import LineChartComponent from '../../components/chats.js/LineChart';
 import MultipleBarChart from '../../components/chats.js/MultipleBarChart';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const About = () => {
+  const [startDate, setStartDate] = useState(new Date());
   return (
     <div>
       <DashboardLayout title='Dashboard'>
         <h3 className="mb-3">Overview</h3>
         <div className="row row-eq-height">
           <div className="col-lg-8 panel">
-
             <div className="mb-3">
               <Card>
                 <div className="d-flex justify-content-between align-items-center">
@@ -45,16 +49,20 @@ const About = () => {
 
           <div className="col-lg-4 panel">
             <div className="mb-2">
+
               <Card>
-                <div className="d-flex justify-content-between align-items-center pointer">
+                <DatePicker selected={startDate} active onChange={(date) => setStartDate(date)} customInput={<div className="d-flex justify-content-between align-items-center pointer">
                   <div className="d-flex">
                     <i className="fa fa-calendar mr-2" aria-hidden="true"></i>
-                    <h6 className="flex-1">19.12.2020-25.12.2020</h6>
+                    <h6 className="flex-1">{moment(startDate).format('YYYY-MM-DD HH:MM:SS')}</h6>
+
                   </div>
                   <span className="material-icons">
                     keyboard_arrow_down
                   </span>
-                </div>
+                </div>} />
+
+
               </Card>
             </div>
 
@@ -70,7 +78,7 @@ const About = () => {
           </div>
 
           <div className="col-lg-4 panel">
-            <DeviceStats/>
+            <DeviceStats />
           </div>
         </div>
 

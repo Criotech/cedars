@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
+import { fetchProjects } from '../../redux/actions/projectsAction';
 
 const Projects = () => {
   const history = useHistory();
 
-  const [users] = useState([
-    { id: 1, active: false },
-    { id: 2, active: false },
-    { id: 3, active: false },
-    { id: 4, active: false },
-    { id: 5, active: false },
-    { id: 6, active: false },
-    { id: 7, active: false },
-    { id: 8, active: false },
-    { id: 9, active: false },
-    { id: 10, active: false },
-  ]);
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+
+  const alert = useSelector(({ alert }) => alert);
+  const projectsReducer = useSelector(({ projectsReducer }) => projectsReducer);
+
+  useEffect(()=>{
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (alert.message) {
+      addToast(alert.message, { appearance: 'error' });
+    }
+  }, [alert.message, addToast]);
+
+  const WithoutTime = (dateTime) => {
+    var date = new Date(dateTime);
+
+    return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+  };
+
 
   return (
     <div>
@@ -56,10 +69,10 @@ const Projects = () => {
               </thead>
               <tbody>
                 {
-                  users.map(x => (
+                  projectsReducer.projects.map(x => (
                     <tr key={x.id}>
-                      <td>16/10/2021</td>
-                      <td>Using marketing tools and social media to grow your business</td>
+                      <td>{WithoutTime(x.created_at)}</td>
+                      <td>{x.title}</td>
                       <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>

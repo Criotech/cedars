@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
+import { fetchTrainings } from '../../redux/actions/triainingActions';
+
 
 const Trainings = () => {
   const history = useHistory();
-  const [users] = useState([
-    { id: 1, active: false },
-    { id: 2, active: false },
-    { id: 3, active: false },
-    { id: 4, active: false },
-    { id: 5, active: false },
-    { id: 6, active: false },
-    { id: 7, active: false },
-    { id: 8, active: false },
-    { id: 9, active: false },
-    { id: 10, active: false },
-  ]);
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+
+  const alert = useSelector(({ alert }) => alert);
+  const trainingsReducer = useSelector(({ trainingsReducer }) => trainingsReducer);
+
+  useEffect(()=>{
+    dispatch(fetchTrainings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (alert.message) {
+      addToast(alert.message, { appearance: 'error' });
+    }
+  }, [alert.message, addToast]);
 
   return (
     <div>
@@ -24,7 +31,7 @@ const Trainings = () => {
           <div className="flex-between">
             <h5 className="fw-bold mb-3">Trainings</h5>
 
-            <div onClick={()=>history.push('/trainings/create')} className="d-flex flex-between pointer">
+            <div onClick={() => history.push('/trainings/create')} className="d-flex flex-between pointer">
               <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
               <h5 className="fw-bold text-green">
                 Create New
@@ -56,14 +63,14 @@ const Trainings = () => {
               </thead>
               <tbody>
                 {
-                  users.map(x => (
+                  trainingsReducer.trainings.map(x => (
                     <tr key={x.id}>
-                      <td>16/10/2021</td>
-                      <td>Using marketing tools and social media to grow your business</td>
-                      <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
+                      <td>{x.start_time}</td>
+                      <td>{x.title}</td>
+                      <td> {x.overview} </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))

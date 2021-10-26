@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import Tabs from '../../components/Tabbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
+import { fetchNews } from '../../redux/actions/newsActions';
+import { fetchJobs } from '../../redux/actions/jobActions';
 
 const Updates = () => {
   const history = useHistory();
-  const [users] = useState([
-    { id: 1, active: false },
-    { id: 2, active: false },
-    { id: 3, active: false },
-    { id: 4, active: false },
-    { id: 4, active: false },
-  ]);
+
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+
+  const alert = useSelector(({ alert }) => alert);
+  const newsReducer = useSelector(({ newsReducer }) => newsReducer);
+  const jobsReducer = useSelector(({ jobsReducer }) => jobsReducer);
+
+  useEffect(()=>{
+    dispatch(fetchNews());
+    dispatch(fetchJobs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (alert.message) {
+      addToast(alert.message, { appearance: 'error' });
+    }
+  }, [alert.message, addToast]);
+
+  const WithoutTime = (dateTime) => {
+    var date = new Date(dateTime);
+
+    return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+  };
+
+  
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
@@ -45,11 +68,25 @@ const Updates = () => {
               </thead>
               <tbody>
                 {
-                  users.map(x => (
+                  currentTab===0 && newsReducer.news.map(x => (
                     <tr key={x.id}>
-                      <td>16/10/2021</td>
-                      <td>Induction Party</td>
-                      <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
+                      <td>{WithoutTime(x.created_at)}</td>
+                      <td>{x.title}</td>
+                      <td>{x.content}</td>
+                      <td><div className="btn-group" role="group" aria-label="Basic outlined example">
+                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
+                        <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                      </div></td>
+                    </tr>
+                  ))
+                }
+
+                {
+                  currentTab===1 && jobsReducer.jobs.map(x => (
+                    <tr key={x.id}>
+                      <td>{WithoutTime(x.created_at)}</td>
+                      <td>{x.title}</td>
+                      <td>{x.description}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
                         <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>

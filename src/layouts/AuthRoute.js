@@ -11,7 +11,7 @@ const AuthRoute = ({ component: Component, auth, ...rest }) => {
       render={props => {
         // if user is authenticated, redirect to homepage
         if (auth.isAuthenticated) {
-          return <Redirect to="/" />;
+          return <Redirect to="/dashboard" />;
         } else {
           return (
             <main className="container" id="auth-route-layout">
