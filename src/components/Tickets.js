@@ -32,7 +32,7 @@ const Tickets = () => (
         </div>
         {
           [1, 2, 3].map((x, i) => (
-            <div key={i} className="py-3 border-bottom d-flex align-items-center">
+            <div key={i} style={{fontSize: 14}} className="py-3 border-bottom d-flex align-items-center">
               <div style={{ width: '33.3%' }}>
                 <p className="">2020/12/22 <br />
                                     09:59</p>

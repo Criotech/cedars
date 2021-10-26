@@ -51,16 +51,18 @@ const About = () => {
             <div className="mb-2">
 
               <Card>
-                <DatePicker selected={startDate} active onChange={(date) => setStartDate(date)} customInput={<div className="d-flex justify-content-between align-items-center pointer">
-                  <div className="d-flex">
-                    <i className="fa fa-calendar mr-2" aria-hidden="true"></i>
-                    <h6 className="flex-1">{moment(startDate).format('YYYY-MM-DD HH:MM:SS')}</h6>
+                <DatePicker
+                
+                  selected={startDate} active onChange={(date) => setStartDate(date)} customInput={<div className="d-flex justify-content-between align-items-center pointer">
+                    <div className="d-flex">
+                      <i className="fa fa-calendar mr-2" aria-hidden="true"></i>
+                      <h6 className="flex-1">{moment(startDate).format('YYYY-MM-DD HH:MM:SS')}</h6>
 
-                  </div>
-                  <span className="material-icons">
+                    </div>
+                    <span className="material-icons">
                     keyboard_arrow_down
-                  </span>
-                </div>} />
+                    </span>
+                  </div>} />
 
 
               </Card>
