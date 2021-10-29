@@ -3,7 +3,7 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { fetchProjects } from '../../redux/actions/projectsAction';
+import { fetchProjects, deleteProject } from '../../redux/actions/projectsAction';
 
 const Projects = () => {
   const history = useHistory();
@@ -22,7 +22,10 @@ const Projects = () => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
     }
-  }, [alert.message, addToast]);
+    if (alert.success) {
+      addToast(alert.success, { appearance: 'success' });
+    }
+  }, [alert.message, alert.success, addToast]);
 
   const WithoutTime = (dateTime) => {
     var date = new Date(dateTime);
@@ -30,6 +33,9 @@ const Projects = () => {
     return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
   };
 
+  const deleteAProject = (id) => {
+    dispatch(deleteProject(id));
+  };
 
   return (
     <div>
@@ -76,7 +82,7 @@ const Projects = () => {
                       <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button onClick={()=>deleteAProject(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))

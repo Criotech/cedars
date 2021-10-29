@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
-import { fetchTrainings } from '../../redux/actions/triainingActions';
+import { fetchTrainings, deleteTraining } from '../../redux/actions/triainingActions';
 
 
 const Trainings = () => {
@@ -22,7 +23,14 @@ const Trainings = () => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
     }
-  }, [alert.message, addToast]);
+    if (alert.success) {
+      addToast(alert.success, { appearance: 'success' });
+    }
+  }, [alert.message, alert.success, addToast]);
+
+  const deletATraining = (id) => {
+    dispatch(deleteTraining(id));
+  };
 
   return (
     <div>
@@ -65,12 +73,12 @@ const Trainings = () => {
                 {
                   trainingsReducer.trainings.map(x => (
                     <tr key={x.id}>
-                      <td>{x.start_time}</td>
+                      <td>{moment(x.updated_at).format('YYYY-MM-DD')}</td>
                       <td>{x.title}</td>
                       <td> {x.overview} </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
-                        <button style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
+                        <button onClick={()=>history.push('/trainings/create', {training: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button onClick={()=>deletATraining(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))

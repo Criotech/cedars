@@ -5,7 +5,7 @@ const alert = (state = {}, action) => {
   case SUCCESS:
     return {
       type: 'alert-success',
-      message: action.message
+      success: action.message
     };
   case ERROR:
     return {

@@ -4,8 +4,8 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import Tabs from '../../components/Tabbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { fetchNews } from '../../redux/actions/newsActions';
-import { fetchJobs } from '../../redux/actions/jobActions';
+import { fetchNews, deleteNews } from '../../redux/actions/newsActions';
+import { fetchJobs, deleteJob } from '../../redux/actions/jobActions';
 
 const Updates = () => {
   const history = useHistory();
@@ -26,12 +26,23 @@ const Updates = () => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
     }
-  }, [alert.message, addToast]);
+    if (alert.success) {
+      addToast(alert.success, { appearance: 'success' });
+    }
+  }, [alert.message, alert.success, addToast]);
 
   const WithoutTime = (dateTime) => {
     var date = new Date(dateTime);
 
     return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+  };
+
+  const deleteANews = (id) => {
+    dispatch(deleteNews(id));
+  };
+
+  const deleteAJob = (id) => {
+    dispatch(deleteJob(id));
   };
 
   
@@ -75,7 +86,7 @@ const Updates = () => {
                       <td>{x.content}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button onClick={()=>deleteANews(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))
@@ -89,7 +100,7 @@ const Updates = () => {
                       <td>{x.description}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button onClick={()=>deleteAJob(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))

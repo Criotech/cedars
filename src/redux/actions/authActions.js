@@ -30,6 +30,7 @@ export const loginUser = (email, password) => async dispatch => {
       dispatch(clear());
     } else {
       dispatch(getError(error.response.data.error.message));
+      dispatch(clear());
     }
   }
 };

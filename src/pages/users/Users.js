@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
+import { fetchProspects, fetchCM, approvePCMs } from '../../redux/actions/usersAction';
+import CMS from '../../components/users/users';
+import PCMS from '../../components/users/pcms';
 
 const Users = () => {
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+
+
+  const alert = useSelector(({ alert }) => alert);
+  const usersReducer = useSelector(({ usersReducer }) => usersReducer);
+  const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
+  const [userType, switchUserType] = useState('cm');
+  
   const [users, selectUser] = useState([
     { id: 1, active: false },
     { id: 2, active: false },
@@ -16,7 +31,62 @@ const Users = () => {
     { id: 9, active: false },
     { id: 10, active: false },
   ]);
+  const [pcmIds, setPCMIds] = useState([]);
   const [selectedNo, countSelected] = useState(0);
+  const [page, setPage] = useState(1);
+  const [per_page, handleSetPerPage] = useState(15);
+
+  useEffect(()=>{
+    dispatch(fetchProspects());
+    dispatch(fetchCM(page, per_page));
+  }, [dispatch, page, per_page]);
+
+  const next = () => {
+    let x = page+1;
+    setPage(x);
+    dispatch(fetchCM(page, per_page));
+  };
+
+  const prev = () => {
+    let x = page-1;
+    setPage(x);
+    dispatch(fetchCM(page, per_page));
+  };
+
+  const setPerPage = (x) => {
+    handleSetPerPage(x);
+
+    dispatch(fetchCM(page, per_page));
+  };
+
+  useEffect(() => {
+    if (alert.message) {
+      addToast(alert.message, { appearance: 'error' });
+    }
+    if (alert.success) {
+      addToast(alert.success, { appearance: 'success' });
+    }
+  }, [alert.message, alert.success, addToast]);
+
+  const approvePCMUsers = async () => {
+    if (pcmIds.length===0) {
+      return;
+    }
+    await dispatch(approvePCMs(pcmIds, 1));
+  };
+
+
+  const handleSelectPCMIds = (id) => {
+    let check = pcmIds.includes(id);
+    if (check) {
+      let a = pcmIds.filter(x=>{
+        return x !== id;
+      });
+      setPCMIds(a);
+    } else {
+      setPCMIds([...pcmIds, id]);
+    }
+  };
 
   const handleCheck = (x) => {
     let newArr = users;
@@ -34,62 +104,34 @@ const Users = () => {
       <DashboardLayout title='Users'>
         <section className="users-section">
           <div className="flex-between">
-            <h5 className="fw-bold mb-3">Audience reach</h5>
-            <button onClick={()=>history.push('/users/add')} className="btn bg-green text-white">
+            <div className="d-flex align-items-center">
+              <h5 onClick={()=>switchUserType('cm')} className={userType==='cm'?'text-green fw-bold mb-3 mr-3 pointer':'fw-bold mb-3 mr-3 pointer'}>Active Users</h5>
+              <h5 onClick={()=>switchUserType('pcm')} className={userType==='pcm'?'text-green fw-bold mb-3 mr-3 pointer':'fw-bold mb-3 mr-3 pointer'}>Interested Users</h5>
+            </div>
+
+            {
+              userType==='cm'
+                ?
+                <button onClick={()=>history.push('/users/add')} className="btn bg-green text-white">
               Add
-            </button>
+                </button>
+                :
+                <button onClick={approvePCMUsers} className="btn bg-green text-white">
+                  {loadingReducer.loading?'Loading...':'Approve all'}
+                </button>
+            }
+  
           </div>
 
-          <div className="users-list-container">
-            <div className="top d-flex align-items-center">
-              <i className="fa fa-trash" style={{ color: '#C7C7C7' }} aria-hidden="true"></i>
-              <p className="mx-3 fw-bold"> {selectedNo} selected </p>
-              <span className="badge bg-green text-white">{selectedNo}</span>
-            </div>
-
-            <div className="table-section">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"><input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">State code</th>
-                    <th scope="col">Phone number</th>
-                    <th scope="col">No. of trainings attended</th>
-                    <th scope="col">Recent activity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    users.map(x => (
-                      <tr key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
-                        <td><input onChange={() => handleCheck(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td>
-                        <th onClick={()=>history.push('/users/user')} className="d-flex"><div className="circle"><img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>Chen Simmons</th>
-                        <td onClick={()=>history.push('/users/user')}>chensimmons@gmail.com</td>
-                        <td onClick={()=>history.push('/users/user')}>LA/20B/1089</td>
-                        <td onClick={()=>history.push('/users/user')}>08023445560</td>
-                        <td onClick={()=>history.push('/users/user')}>6</td>
-                        <td onClick={()=>history.push('/users/user')}>5 Minutes ago</td>
-                      </tr>
-                    ))
-                  }
-
-
-                </tbody>
-              </table>
-
-            </div>
-
-            <div className='footer'>
-              <div className="d-flex align-items-center">
-                <p className="mr-3">Rows per page 10 <i className="fa fa-caret-down" aria-hidden="true"></i></p>
-                <p className="mr-3">1-5 of 13 </p>
-                <h5 className="mr-3 fw-bold"><i className="fa fa-angle-left mr-2" aria-hidden="true"></i> <i className="fa fa-angle-right" aria-hidden="true"></i></h5>
-              </div>
-
-            </div>
-          </div>
+          {
+            userType==='cm'
+              ?
+              <CMS users={usersReducer.cms} history={history} prev={prev} next={next} setPerPage={setPerPage}
+                handleCheck={handleCheck} selectedNo={selectedNo} page={page} per_page={per_page} />
+              :
+              <PCMS users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo} />
+          }
+          
         </section>
       </DashboardLayout>
     </div>

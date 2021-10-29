@@ -1,12 +1,90 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import moment from 'moment';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import { Card } from '../../components/Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
+import { getSingleUser, toggleActiveUser } from '../../redux/actions/usersAction';
+import loadingReducer from '../../redux/reducers/loadingReducer';
 
-
-const UserDetails = () => {
+const UserDetails = ({location}) => {
   const history = useHistory();
 
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+  // const [attendance, setAttendance] = useState([]);
+  // const [businesses, setbusinesses] = useState([]);
+
+
+  const alert = useSelector(({ alert }) => alert);
+  const usersReducer = useSelector(({ usersReducer }) => usersReducer);
+ 
+
+  useEffect(()=>{
+    dispatch(getSingleUser(location.state.id));
+  }, [dispatch, location]);
+
+  useEffect(() => {
+    if (alert.message) {
+      addToast(alert.message, { appearance: 'error' });
+    }
+    if (alert.success) {
+      addToast(alert.success, { appearance: 'success' });
+    }
+  }, [alert.message, alert.success, addToast]);
+
+  let businesses = usersReducer.cm.businesses;
+  let attendance = usersReducer.cm.attendance;
+
+  var arBusinesses = [];
+  for(const item in businesses){
+    arBusinesses.push(businesses[item]);
+  }
+
+  var arAttendance = [];
+  for(const item in attendance){
+    arAttendance.push(attendance[item]);
+  }
+
+  const renderBusiness = () => {
+    return arBusinesses.map(item=>{
+      return (
+        <tr key={item.id}>
+          <td>1</td>
+          <td>{moment(item.created_at).format('YYYY-MM-DD, h:mm:ss')}</td>
+          <td>{item.business_name}</td>
+          <td>{item.business_email}</td>
+          <td>{item.business_owner}</td>
+          <td>08167526178</td>
+          <td><p className="badge bg-green text-white">{item.status===1?'verified':'pending'}</p></td>
+          <td>{item.reject_reason}</td>
+        </tr>
+      );
+    });
+  };
+
+
+
+  const renderAttendance = () => {
+    return arAttendance.map(item=>{
+      return (
+        <div key={item.id} className="training-list-item">
+          <div className="d-flex">
+            <i className="fa fa-tag" aria-hidden="true"></i>
+            <p>{item.training.title}</p>
+          </div>
+          <div>
+            <input className="form-check-input" type="checkbox" checked={true} id="flexCheckChecked" />
+          </div>
+        </div>
+      );
+    });
+  };
+
+  const toggleUserState = () => {
+    dispatch(toggleActiveUser(({id: usersReducer.cm.id, status: 'active'})));
+  };
 
   return (
     <div>
@@ -14,25 +92,33 @@ const UserDetails = () => {
         <section className="user-section">
           <div className='d-flex justify-content-between align-items-center'>
             <h4><i onClick={() => history.push('/users')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
-            <button style={{ marginTop: -10 }} className="btn bg-green text-white px-3 py-2 fw-bold mt-2">
-                            Deactivate user
-            </button>
-          </div>
+            {
+              loadingReducer.loading?
+                <button onClick={toggleUserState} style={{ marginTop: -10 }} className="btn bg-green text-white px-3 py-2 fw-bold mt-2">
+              Loading...
+                </button>
+                :
+                <button onClick={toggleUserState} style={{ marginTop: -10 }} className="btn bg-green text-white px-3 py-2 fw-bold mt-2">
+                  {usersReducer.cm.status==='active'?'Deactivate user':'Activate user'}  
+                </button>
+            }
 
+          </div>
+          
           <div className="flex-between mt-3">
             <div className="d-flex align-items-center">
               <div style={{ height: 100, width: 100 }} className="circle-big mt-3 mr-2">
-                <img src="https://cdn.truelancer.com/upload-full/701651-vector-cartoon-portrait-avatar-illustration-fanart.jpg" width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
+                <img src={usersReducer.cm.profile&&usersReducer.cm.profile.photo} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
               </div>
               <div className="d-flex flex-column align-items-baseline">
-                <h5 className="fw-bold mt-2">Chen Simmons</h5>
-                <p style={{ color: '#17161699', marginTop: 10 }}>State code: LA/21B/1098</p>
-                <p style={{ color: '#17161699' }}>Part of DO_DEEL CDS since  October, 2021</p>
+                <h5 className="fw-bold mt-2">{usersReducer.cm.name}</h5>
+                <p style={{ color: '#17161699', marginTop: 10 }}>State code: {usersReducer.cm.nysc_state_code}</p>
+                <p style={{ color: '#17161699' }}>Part of DO_DEEL CDS since  {moment(usersReducer.cm.created_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
             <div>
-              <p className="text-primary fw-bold">chen.simmons@gmail.com</p>
-              <p>08163426709</p>
+              <p className="text-primary fw-bold">{usersReducer.cm.email}</p>
+              <p>{usersReducer.cm.profile&&usersReducer.cm.profile.phone_number}</p>
             </div>
           </div>
 
@@ -41,17 +127,7 @@ const UserDetails = () => {
               <p className="fw-bold text-green">Trainings completed</p>
               <div className="mt-2">
                 {
-                  [1,2,3,4,5,6].map((x,i)=>(
-                    <div key={i} className="training-list-item">
-                      <div className="d-flex">
-                        <i className="fa fa-tag" aria-hidden="true"></i>
-                        <p>Using marketing tools and social media to grow your business</p>
-                      </div>
-                      <div>
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                      </div>
-                    </div>
-                  ))
+                  renderAttendance()
                 }
               </div>
             </Card>
@@ -77,19 +153,9 @@ const UserDetails = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    
                     {
-                      [1,2,3,4,5,6].map((x,i) => (
-                        <tr key={i}>
-                          <td>{x}</td>
-                          <td>14/12/2021 11:01:13</td>
-                          <td>Samuel hub</td>
-                          <td>samuelhub@gmail.com</td>
-                          <td>Samuel Akintunde</td>
-                          <td>08167526178</td>
-                          <td><p className="badge bg-green text-white">verified</p></td>
-                          <td>MTG added as manager</td>
-                        </tr>
-                      ))
+                      renderBusiness()
                     }
 
 

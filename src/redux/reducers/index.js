@@ -6,6 +6,7 @@ import trainingsReducer from './trainingReducer';
 import projectsReducer from './projectReducer';
 import jobsReducer from './jobReducer';
 import newsReducer from './newsReducer';
+import usersReducer from './usersReducers';
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   trainingsReducer,
   projectsReducer,
   jobsReducer,
-  newsReducer
+  newsReducer,
+  usersReducer
 });

@@ -21,3 +21,7 @@ export const FETCH_TRAININGS = 'FETCH_TRAININGS';
 export const FETCH_PROJECTS = 'FETCH_PROJECTS';
 export const FETCH_NEWS = 'FETCH_NEWS';
 export const FETCH_JOBS = 'FETCH_JOBS';
+export const FETCH_PROSPECTS = 'FETCH_PROSPECTS';
+export const FETCH_CM = 'FETCH_CM';
+export const APPROVE_PCMS = 'APPROVE_PCMS';
+export const FETCH_SINGLE_CM = 'FETCH_SINGLE_CM';
