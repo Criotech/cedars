@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +22,29 @@ const AddUser = () => {
     nysc_call_up_number: ''
   });
 
+  const [photo, setPhoto] = useState('');
+  const [preview, setPreview] = useState('');
+  const inputFile = useRef(null);
+
+  const handleFileUpload = e => {
+    const { files } = e.target;
+    if (files && files.length) {
+      // const filename = files[0].name;
+
+      // var parts = filename.split('.');
+      // const fileType = parts[parts.length - 1];
+      // console.log('fileType', fileType); //ex: zip, rar, jpg, svg etc.
+
+      setPhoto(files[0]);
+      setPreview(URL.createObjectURL(files[0]));
+    }
+  };
+
+
+  const onButtonClick = () => {
+    inputFile.current.click();
+  };
+
   useEffect(() => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
@@ -44,8 +67,9 @@ const AddUser = () => {
     const {name, email, deployed_state, nysc_state_code, phone_number, nysc_call_up_number} = user;
     if (!name && !email && !deployed_state && !nysc_state_code && !phone_number && !nysc_call_up_number ) return;
     
-    await dispatch(addUser({name, email, deployed_state, nysc_state_code, phone_number, nysc_call_up_number}));
+    await dispatch(addUser({name, email, deployed_state, nysc_state_code, phone_number, nysc_call_up_number, photo}));
   };
+
 
   return (
     <div>
@@ -56,10 +80,18 @@ const AddUser = () => {
             <div className="form-outer-container">
               <div className='header d-flex'>
                 <div className="circle-big mr-2">
-                  <img src="https://cdn.truelancer.com/upload-full/701651-vector-cartoon-portrait-avatar-illustration-fanart.jpg" width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
+                  <img src={preview?preview:'https://cdn.truelancer.com/upload-full/701651-vector-cartoon-portrait-avatar-illustration-fanart.jpg'} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
+
                 </div>
                 <div>
-                  <button className="btn btn-outline border-green text-green mt-2 fw-bold">
+                  <input
+                    style={{ display: 'none' }}
+                    // accept=".zip,.rar"
+                    ref={inputFile}
+                    onChange={handleFileUpload}
+                    type="file"
+                  />
+                  <button onClick={onButtonClick} className="btn btn-outline border-green text-green mt-2 fw-bold">
                                         Upload Avatar
                   </button>
                   <p className="mt-2">Recommended dimensions: 200x200, maximum file size: 2MB</p>

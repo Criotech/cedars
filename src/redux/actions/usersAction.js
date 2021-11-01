@@ -96,6 +96,15 @@ export const addUser = (data) => async dispatch =>  {
   
   try {
     const resp = await ApiService.addUser(data);
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('deployed_state', data.deployed_state);
+    formData.append('nysc_state_code', data.nysc_state_code);
+    formData.append('phone_number', data.phone_number);
+    formData.append('nysc_call_up_number', data.nysc_call_up_number);
+    formData.append('photo', data.photo);
+    
   
     if (resp) {
       dispatch(stopLoading());

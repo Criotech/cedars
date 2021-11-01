@@ -22,7 +22,7 @@ const Form = ({setCurrentTab, handleChange, training}) => {
         </div>
         <div className="mb-4 input-family">
           <label htmlFor="exampleInputtext1" className="label">Start Time</label>
-          <input type="date" name='start_time' className="form-control" onChange={handleChange} value={training.start_time} />
+          <input type="datetime-local" name='start_time' className="form-control" onChange={handleChange} value={training.start_time} />
         </div>
 
       </form>

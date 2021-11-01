@@ -1,5 +1,5 @@
 
-// import moment from 'moment';
+import moment from 'moment';
 import {
   FETCH_TRAININGS,
 } from '../types';
@@ -37,8 +37,7 @@ export const addTraining = (data) => async dispatch =>  {
     formData.append('title', data.title);
     formData.append('overview', data.overview);
     formData.append('live_video', data.live_video);
-    // formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD, h:mm:ss'));
-    formData.append('start_time', '2021-12-31 16:30:00');
+    formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('tutor', data.tutor);
     // formData.append('status', status);
     for (let i = 0; i < data.myFiles.length; i++) {
@@ -68,19 +67,20 @@ export const updateTraining = (data, id) => async dispatch =>  {
   dispatch(startLoading());
   // let status = data.status===true?1:0;
   try {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('overview', data.overview);
-    formData.append('live_video', data.live_video);
-    // formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD, h:mm:ss'));
-    formData.append('start_time', '2021-12-31 16:30:00');
-    formData.append('tutor', data.tutor);
+    // const formData = new FormData();
+    // formData.append('title', data.title);
+    // formData.append('overview', data.overview);
+    // formData.append('live_video', data.live_video);
+    // formData.append('start_time', moment(data.start_time).format());
+    // formData.append('start_time', '2021-12-31 16:30:00');
+    // formData.append('tutor', data.tutor);
     // formData.append('status', status);
-    for (let i = 0; i < data.myFiles.length; i++) {
-      formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
-    }
+    // for (let i = 0; i < data.myFiles.length; i++) {
+    //   formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
+    // }
+    data.start_time = moment(data.start_time).format('YYYY-MM-DD HH:mm:ss');
 
-    const resp = await ApiService.updateTraining(formData, id);
+    const resp = await ApiService.updateTraining(data, id);
   
     if (resp) {
       dispatch(stopLoading());

@@ -15,7 +15,7 @@ const CreateProject = () => {
       <DashboardLayout title='Projects'>
         <section className="trainings-section">
           <div>
-            <h4><i onClick={() => history.push('/trainings')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
+            <h4><i onClick={() => history.push('/projects')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
             <h5 className="fw-bold mt-3">Create New Project</h5>
 
 
