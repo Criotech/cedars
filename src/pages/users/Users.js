@@ -18,7 +18,7 @@ const Users = () => {
   const usersReducer = useSelector(({ usersReducer }) => usersReducer);
   const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
   const [userType, switchUserType] = useState('cm');
-  
+
   const [users, selectUser] = useState([
     { id: 1, active: false },
     { id: 2, active: false },
@@ -36,27 +36,39 @@ const Users = () => {
   const [page, setPage] = useState(1);
   const [per_page, handleSetPerPage] = useState(15);
 
-  useEffect(()=>{
-    dispatch(fetchProspects());
+  useEffect(() => {
+    dispatch(fetchProspects(page, per_page));
     dispatch(fetchCM(page, per_page));
   }, [dispatch, page, per_page]);
 
   const next = () => {
-    let x = page+1;
+    let x = page + 1;
     setPage(x);
-    dispatch(fetchCM(page, per_page));
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, per_page));
+    } else {
+      dispatch(fetchProspects(page, per_page));
+    }
   };
 
   const prev = () => {
-    let x = page-1;
+    let x = page - 1;
     setPage(x);
-    dispatch(fetchCM(page, per_page));
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, per_page));
+    } else {
+      dispatch(fetchProspects(page, per_page));
+    }
   };
 
   const setPerPage = (x) => {
     handleSetPerPage(x);
 
-    dispatch(fetchCM(page, per_page));
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, per_page));
+    } else {
+      dispatch(fetchProspects(page, per_page));
+    }
   };
 
   useEffect(() => {
@@ -69,7 +81,7 @@ const Users = () => {
   }, [alert.message, alert.success, addToast]);
 
   const approvePCMUsers = async () => {
-    if (pcmIds.length===0) {
+    if (pcmIds.length === 0) {
       return;
     }
     await dispatch(approvePCMs(pcmIds, 1));
@@ -79,7 +91,7 @@ const Users = () => {
   const handleSelectPCMIds = (id) => {
     let check = pcmIds.includes(id);
     if (check) {
-      let a = pcmIds.filter(x=>{
+      let a = pcmIds.filter(x => {
         return x !== id;
       });
       setPCMIds(a);
@@ -91,12 +103,17 @@ const Users = () => {
   const handleCheck = (x) => {
     let newArr = users;
     newArr[x - 1].active = !newArr[x - 1].active;
-    if (newArr[x - 1].active===true) {
-      countSelected(selectedNo+1);
+    if (newArr[x - 1].active === true) {
+      countSelected(selectedNo + 1);
     } else {
-      countSelected(selectedNo-1);
+      countSelected(selectedNo - 1);
     }
     selectUser([...newArr]);
+  };
+
+  const handleSwitchTab = (x) => {
+    switchUserType(x);
+    setPage(1);
   };
 
   return (
@@ -105,33 +122,34 @@ const Users = () => {
         <section className="users-section">
           <div className="flex-between">
             <div className="d-flex align-items-center">
-              <h5 onClick={()=>switchUserType('cm')} className={userType==='cm'?'text-green fw-bold mb-3 mr-3 pointer':'fw-bold mb-3 mr-3 pointer'}>Active Users</h5>
-              <h5 onClick={()=>switchUserType('pcm')} className={userType==='pcm'?'text-green fw-bold mb-3 mr-3 pointer':'fw-bold mb-3 mr-3 pointer'}>Interested Users</h5>
+              <h5 onClick={() => handleSwitchTab('cm')} className={userType === 'cm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Active Users</h5>
+              <h5 onClick={() => handleSwitchTab('pcm')} className={userType === 'pcm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Interested Users</h5>
             </div>
 
             {
-              userType==='cm'
+              userType === 'cm'
                 ?
-                <button onClick={()=>history.push('/users/add')} className="btn bg-green text-white">
-              Add
+                <button onClick={() => history.push('/users/add')} className="btn bg-green text-white">
+                      Add
                 </button>
                 :
                 <button onClick={approvePCMUsers} className="btn bg-green text-white">
-                  {loadingReducer.loading?'Loading...':'Approve all'}
+                  {loadingReducer.loading ? 'Loading...' : 'Approve all'}
                 </button>
             }
-  
+
           </div>
 
           {
-            userType==='cm'
+            userType === 'cm'
               ?
-              <CMS users={usersReducer.cms} history={history} prev={prev} next={next} setPerPage={setPerPage}
+              <CMS users={usersReducer.cms} history={history} prev={prev} next={next} totalUsers={usersReducer.totalCMs} setPerPage={setPerPage}
                 handleCheck={handleCheck} selectedNo={selectedNo} page={page} per_page={per_page} />
               :
-              <PCMS users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo} />
+              <PCMS users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo}
+                prev={prev} next={next} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
           }
-          
+
         </section>
       </DashboardLayout>
     </div>

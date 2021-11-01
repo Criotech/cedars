@@ -83,7 +83,7 @@ const UserDetails = ({location}) => {
   };
 
   const toggleUserState = () => {
-    dispatch(toggleActiveUser(({id: usersReducer.cm.id, status: 'active'})));
+    dispatch(toggleActiveUser(({id: usersReducer.cm.id, status: usersReducer.cm.status==='active'?0:1})));
   };
 
   return (

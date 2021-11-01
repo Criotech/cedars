@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const CMS = ({users, history, selectedNo, setPerPage, prev, next, per_page, page}) => {
+const CMS = ({users, history, selectedNo, setPerPage, prev, next, per_page, page, totalUsers}) => {
   return (
     <div className="users-list-container">
       <div className="top d-flex align-items-center">
@@ -69,8 +69,17 @@ const CMS = ({users, history, selectedNo, setPerPage, prev, next, per_page, page
             </ul>
           </div>
             
-          <p className="mr-3">{page} of 100 </p>
-          <h5 className="mr-3 fw-bold"><i onClick={prev} className="fa fa-angle-left mr-2 pointer" aria-hidden="true"></i> <i className="fa fa-angle-right pointer" onClick={next} aria-hidden="true"></i></h5>
+          <p className="mr-3">{page} of {Math.ceil(+totalUsers/per_page)} </p>
+          <h5 className="mr-3 fw-bold">
+            {
+              page>1 &&
+              <i onClick={prev} className="fa fa-angle-left mr-2 pointer" aria-hidden="true"></i> 
+            }
+            {
+              page<Math.ceil(+totalUsers/per_page) &&
+              <i className="fa fa-angle-right pointer" onClick={next} aria-hidden="true"></i>
+            }
+          </h5>
         </div>
 
       </div>

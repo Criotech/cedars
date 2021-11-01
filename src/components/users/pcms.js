@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const PCMS = ({users, handleSelectPCMIds, selectedCount}) => {
+const PCMS = ({users, handleSelectPCMIds, selectedCount, setPerPage, prev, next, per_page, page, totalUsers}) => {
   return (
     <div className="users-list-container">
       <div className="top d-flex align-items-center">
@@ -46,9 +46,39 @@ const PCMS = ({users, handleSelectPCMIds, selectedCount}) => {
 
       <div className='footer'>
         <div className="d-flex align-items-center">
-          <p className="mr-3">Rows per page 10 <i className="fa fa-caret-down" aria-hidden="true"></i></p>
-          <p className="mr-3">1-5 of 13 </p>
-          <h5 className="mr-3 fw-bold"><i className="fa fa-angle-left mr-2" aria-hidden="true"></i> <i className="fa fa-angle-right" aria-hidden="true"></i></h5>
+          <div className='dropdown'>
+            <p className="mr-3 pointer" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" aria-hidden="true">Rows per page {per_page} <i  className="fa fa-caret-down  pointer"></i></p>
+            <ul className="dropdown-menu p-2" style={{marginLeft: -90}} aria-labelledby="dropdownMenuButton1">
+              <li onClick={()=>setPerPage(1)} className='py-2 fw-bold pointer'><small> 1 </small></li>
+              <li onClick={()=>setPerPage(2)} className='py-2 fw-bold pointer'><small> 2 </small></li>
+              <li onClick={()=>setPerPage(3)} className='py-2 fw-bold pointer'><small> 3 </small></li>
+              <li onClick={()=>setPerPage(4)} className='py-2 fw-bold pointer'><small> 4 </small></li>
+              <li onClick={()=>setPerPage(5)} className='py-2 fw-bold pointer'><small> 5 </small></li>
+              <li onClick={()=>setPerPage(6)} className='py-2 fw-bold pointer'><small> 6 </small></li>
+              <li onClick={()=>setPerPage(7)} className='py-2 fw-bold pointer'><small> 7 </small></li>
+              <li onClick={()=>setPerPage(8)} className='py-2 fw-bold pointer'><small> 8 </small></li>
+              <li onClick={()=>setPerPage(9)} className='py-2 fw-bold pointer'><small> 9 </small></li>
+              <li onClick={()=>setPerPage(10)} className='py-2 fw-bold pointer'><small> 10 </small></li>
+              <li onClick={()=>setPerPage(11)} className='py-2 fw-bold pointer'><small> 11 </small></li>
+              <li onClick={()=>setPerPage(12)} className='py-2 fw-bold pointer'><small> 12 </small></li>
+              <li onClick={()=>setPerPage(13)} className='py-2 fw-bold pointer'><small> 13 </small></li>
+              <li onClick={()=>setPerPage(14)} className='py-2 fw-bold pointer'><small> 14 </small></li>
+              <li onClick={()=>setPerPage(15)} className='py-2 fw-bold pointer'><small> 15 </small></li>
+            </ul>
+          </div>
+
+          <p className="mr-3">{page} of {Math.ceil(+totalUsers/per_page)} </p>
+        
+          <h5 className="mr-3 fw-bold">
+            {
+              page>1 &&
+              <i onClick={prev} className="fa fa-angle-left mr-2 pointer" aria-hidden="true"></i> 
+            }
+            {
+              page<Math.ceil(+totalUsers/per_page) &&
+              <i className="fa fa-angle-right pointer" onClick={next} aria-hidden="true"></i>
+            }
+          </h5>
         </div>
 
       </div>

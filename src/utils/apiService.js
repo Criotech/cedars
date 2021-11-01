@@ -25,8 +25,8 @@ class APIServices {
     return await apiInstance.get('/news');
   }
 
-  async fetchProspects() {
-    return await apiInstance.get('/prospects');
+  async fetchProspects(page, per_page) {
+    return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}`);
   }
 
   async fetchCM(page, per_page) {

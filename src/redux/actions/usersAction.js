@@ -7,10 +7,10 @@ import ApiService from '../../utils/apiService';
 import { getError, clear, success } from './alertActions';
 import { startLoading, stopLoading } from './loadingAction';
     
-export const fetchProspects = () => async dispatch => {
+export const fetchProspects = (page, per_page) => async dispatch => {
   dispatch(startLoading());
   try {
-    const resp = await ApiService.fetchProspects();
+    const resp = await ApiService.fetchProspects(page, per_page);
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_PROSPECTS, payload: resp.data.data });
