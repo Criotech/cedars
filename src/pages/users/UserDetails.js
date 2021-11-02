@@ -50,16 +50,15 @@ const UserDetails = ({location}) => {
   };
 
   const renderBusiness = () => {
-    return arBusinesses.map(item=>{
+    return arBusinesses.map((item, i)=>{
       return (
         <tr key={item.id}>
-          <td>1</td>
+          <td>{i+1}</td>
           <td>{moment(item.created_at).format('YYYY-MM-DD, h:mm:ss')}</td>
           <td>{item.business_name}</td>
           <td>{item.business_email}</td>
           <td>{item.business_owner}</td>
-          <td></td>
-          <td onClick={()=>verifyBusiness(item.id)}><p className="badge bg-green text-white">{item.status===1?'verified':'pending'}</p></td>
+          <td><p className="badge bg-green text-white pointer">{item.status===1?'verified':'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
       );

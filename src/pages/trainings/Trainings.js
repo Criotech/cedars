@@ -66,16 +66,19 @@ const Trainings = () => {
                   <th scope="col">Date</th>
                   <th scope="col">Title</th>
                   <th scope="col">Overview</th>
+                  <th scope="col">Status</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
+
                 {
                   trainingsReducer.trainings.map(x => (
                     <tr key={x.id}>
                       <td>{moment(x.updated_at).format('YYYY-MM-DD')}</td>
                       <td>{x.title}</td>
                       <td> {x.overview} </td>
+                      <td> {x.status} </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button onClick={()=>history.push('/trainings/create', {training: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={()=>deletATraining(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
@@ -83,7 +86,6 @@ const Trainings = () => {
                     </tr>
                   ))
                 }
-
 
               </tbody>
             </table>

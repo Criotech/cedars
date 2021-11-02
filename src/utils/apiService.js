@@ -10,27 +10,27 @@ class APIServices {
   }
 
   async fetchTrainings() {
-    return await apiInstance.get('/trainings');
+    return await apiInstance.get('/trainings?order=desc');
   }
 
   async fetchProjects () {
-    return await apiInstance.get('/projects');
+    return await apiInstance.get('/projects?order=desc');
   }
 
   async fetchJobs() {
-    return await apiInstance.get('/jobs');
+    return await apiInstance.get('/jobs?order=desc');
   }
 
   async fetchNews () {
-    return await apiInstance.get('/news');
+    return await apiInstance.get('/news?order=desc');
   }
 
   async fetchProspects(page, per_page) {
-    return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}`);
+    return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}&order=desc`);
   }
 
   async fetchCM(page, per_page) {
-    return await apiInstance.get(`/users?page=${page}&per_page=${per_page}`);
+    return await apiInstance.get(`/users?page=${page}&per_page=${per_page}&order=desc`);
   }
 
   async approvePCMs(data) {
@@ -74,7 +74,7 @@ class APIServices {
   }
 
   async updateTraining(data, id) {
-    return await apiInstance.patch(`/trainings/${id}`, data);
+    return await apiInstance.post(`/trainings/${id}?_method=PATCH`, data);
   }
 
   async fetchStateExcos(stateCode) {
@@ -82,7 +82,7 @@ class APIServices {
   }
 
   async verifyABusiness(data, businessId) {
-    return await apiInstance.get(`/businesses/${businessId}`, data);
+    return await apiInstance.patch(`/businesses/${businessId}`, data);
   }
 }
 

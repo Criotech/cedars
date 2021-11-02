@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Form = ({setCurrentTab, handleChange, training}) => {
+const Form = ({ setCurrentTab, handleChange, training, data }) => {
   return (
     <div>
       <form>
@@ -28,12 +28,25 @@ const Form = ({setCurrentTab, handleChange, training}) => {
           <label htmlFor="exampleInputtext1" className="label">Attendance Time</label>
           <input type="datetime-local" name='attandance_time' className="form-control" onChange={handleChange} value={training.attandance_time} />
         </div>
-        
+        {
+          data &&
+          <div className="mb-4 input-family">
+            <label htmlFor="exampleInputtext1" className="label">Training Status</label>
+            <select name='status' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+              <option value={0}>Pending</option>
+              <option value={1}>Approved</option>
+              <option value={2}>Started</option>
+              <option value={3}>Attendance Opened</option>
+              <option value={4}>Closed</option>
+            </select>
+          </div>
+        }
+
 
       </form>
       <div className='d-flex justify-content-end'>
-        <button onClick={()=>setCurrentTab(1)} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
-                            Next
+        <button onClick={() => setCurrentTab(1)} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
+          Next
         </button>
       </div>
 

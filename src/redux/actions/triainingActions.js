@@ -30,17 +30,14 @@ export const fetchTrainings = () => async dispatch => {
 
 export const addTraining = (data) => async dispatch =>  {
   dispatch(startLoading());
-  // let status = data.status===true?1:0;
-  
   try {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('overview', data.overview);
     formData.append('live_video', data.live_video);
     formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD HH:mm:ss'));
-    formData.append('attandance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('attendance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('tutor', data.tutor);
-    // formData.append('status', status);
     for (let i = 0; i < data.myFiles.length; i++) {
       formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
     }
@@ -66,22 +63,20 @@ export const addTraining = (data) => async dispatch =>  {
 
 export const updateTraining = (data, id) => async dispatch =>  {
   dispatch(startLoading());
-  // let status = data.status===true?1:0;
   try {
-    // const formData = new FormData();
-    // formData.append('title', data.title);
-    // formData.append('overview', data.overview);
-    // formData.append('live_video', data.live_video);
-    // formData.append('start_time', moment(data.start_time).format());
-    // formData.append('start_time', '2021-12-31 16:30:00');
-    // formData.append('tutor', data.tutor);
-    // formData.append('status', status);
-    // for (let i = 0; i < data.myFiles.length; i++) {
-    //   formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
-    // }
-    data.start_time = moment(data.start_time).format('YYYY-MM-DD HH:mm:ss');
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('overview', data.overview);
+    formData.append('live_video', data.live_video);
+    formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('attendance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('tutor', data.tutor);
+    formData.append('status', parseInt(data.status));
+    for (let i = 0; i < data.myFiles.length; i++) {
+      formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
+    }
 
-    const resp = await ApiService.updateTraining(data, id);
+    const resp = await ApiService.updateTraining(formData, id);
   
     if (resp) {
       dispatch(stopLoading());
@@ -123,3 +118,4 @@ export const deleteTraining = (id) => async dispatch => {
     }
   }
 };
+
