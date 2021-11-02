@@ -93,9 +93,8 @@ export const getSingleUser = (id) => async dispatch => {
 
 export const addUser = (data) => async dispatch =>  {
   dispatch(startLoading());
-  
+  console.log('ihbhddcbdjfbujefbfbfu');
   try {
-    const resp = await ApiService.addUser(data);
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('email', data.email);
@@ -104,6 +103,8 @@ export const addUser = (data) => async dispatch =>  {
     formData.append('phone_number', data.phone_number);
     formData.append('nysc_call_up_number', data.nysc_call_up_number);
     formData.append('photo', data.photo);
+
+    const resp = await ApiService.addUser(formData);
     
   
     if (resp) {
@@ -133,6 +134,30 @@ export const toggleActiveUser = (data) => async dispatch => {
       dispatch(stopLoading());
       dispatch(success(resp.data.message));
       dispatch(getSingleUser(data.id));
+      dispatch(clear());
+    }
+  } catch (error) {
+    dispatch(stopLoading());
+    if (error.message === 'Network Error') {
+      dispatch(getError('Network Error'));
+      dispatch(clear());
+    } else {
+      dispatch(getError(error.response.data.error.message));
+      dispatch(clear());
+    }
+  }
+};
+
+export const updateBusinessStatus = (data, businessId) => async dispatch=> {
+  dispatch(startLoading());
+  
+  try {
+    const resp = await ApiService.verifyABusiness({status: data.status}, businessId);
+  
+    if (resp) {
+      dispatch(stopLoading());
+      dispatch(success(resp.data.message));
+      dispatch(getSingleUser(data.userId));
       dispatch(clear());
     }
   } catch (error) {

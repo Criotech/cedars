@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Card } from '../../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { getSingleUser, toggleActiveUser } from '../../redux/actions/usersAction';
+import { getSingleUser, toggleActiveUser, updateBusinessStatus } from '../../redux/actions/usersAction';
 import loadingReducer from '../../redux/reducers/loadingReducer';
 
 const UserDetails = ({location}) => {
@@ -13,8 +13,6 @@ const UserDetails = ({location}) => {
 
   const dispatch = useDispatch();
   const { addToast } = useToasts();
-  // const [attendance, setAttendance] = useState([]);
-  // const [businesses, setbusinesses] = useState([]);
 
 
   const alert = useSelector(({ alert }) => alert);
@@ -47,6 +45,10 @@ const UserDetails = ({location}) => {
     arAttendance.push(attendance[item]);
   }
 
+  const verifyBusiness = (businessId) => {
+    dispatch(updateBusinessStatus({status: 1, userId: usersReducer.cm.id}, businessId));
+  };
+
   const renderBusiness = () => {
     return arBusinesses.map(item=>{
       return (
@@ -56,8 +58,8 @@ const UserDetails = ({location}) => {
           <td>{item.business_name}</td>
           <td>{item.business_email}</td>
           <td>{item.business_owner}</td>
-          <td>08167526178</td>
-          <td><p className="badge bg-green text-white">{item.status===1?'verified':'pending'}</p></td>
+          <td></td>
+          <td onClick={()=>verifyBusiness(item.id)}><p className="badge bg-green text-white">{item.status===1?'verified':'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
       );
@@ -85,6 +87,7 @@ const UserDetails = ({location}) => {
   const toggleUserState = () => {
     dispatch(toggleActiveUser(({id: usersReducer.cm.id, status: usersReducer.cm.status==='active'?0:1})));
   };
+
 
   return (
     <div>

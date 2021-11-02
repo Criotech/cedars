@@ -80,6 +80,10 @@ class APIServices {
   async fetchStateExcos(stateCode) {
     return await apiInstance.get(`/states/${stateCode}/members`);
   }
+
+  async verifyABusiness(data, businessId) {
+    return await apiInstance.get(`/businesses/${businessId}`, data);
+  }
 }
 
 const instance = new APIServices();
