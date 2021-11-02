@@ -4,6 +4,7 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { addUser } from '../../redux/actions/usersAction';
+import { states } from '../../utils/states';
 
 const AddUser = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const AddUser = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
-    deployed_state: '',
+    deployed_state: 'AB',
     nysc_state_code: '',
     phone_number: '',
     nysc_call_up_number: ''
@@ -108,9 +109,19 @@ const AddUser = () => {
                     <label htmlFor="exampleInputtext1" className="label">Email address</label>
                     <input name='email' onChange={handleChange} type="text" className="form-control" />
                   </div>
-                  <div className="mb-4 input-family">
+                  {/* <div className="mb-4 input-family">
                     <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
                     <input name='deployed_state' onChange={handleChange} type="text" className="form-control" />
+                  </div> */}
+                  <div className="mb-4 input-family">
+                    <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+                    <select name='deployed_state' onChange={handleChange} className="form-select" style={{height: 60}} aria-label="Default select example">
+                      {
+                        states.map(x=>(
+                          <option key={x.state_code} value={x.state_code}>{x.state_name}</option>
+                        ))
+                      }
+                    </select>
                   </div>
                   <div className="mb-4 input-family">
                     <label htmlFor="exampleInputtext1" className="label">Call up number</label>
