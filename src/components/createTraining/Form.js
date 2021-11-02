@@ -24,6 +24,11 @@ const Form = ({setCurrentTab, handleChange, training}) => {
           <label htmlFor="exampleInputtext1" className="label">Start Time</label>
           <input type="datetime-local" name='start_time' className="form-control" onChange={handleChange} value={training.start_time} />
         </div>
+        <div className="mb-4 input-family">
+          <label htmlFor="exampleInputtext1" className="label">Attendance Time</label>
+          <input type="datetime-local" name='attandance_time' className="form-control" onChange={handleChange} value={training.attandance_time} />
+        </div>
+        
 
       </form>
       <div className='d-flex justify-content-end'>

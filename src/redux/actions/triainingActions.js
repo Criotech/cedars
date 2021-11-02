@@ -38,6 +38,7 @@ export const addTraining = (data) => async dispatch =>  {
     formData.append('overview', data.overview);
     formData.append('live_video', data.live_video);
     formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD HH:mm:ss'));
+    formData.append('attandance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('tutor', data.tutor);
     // formData.append('status', status);
     for (let i = 0; i < data.myFiles.length; i++) {

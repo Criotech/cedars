@@ -24,6 +24,7 @@ const CreateTraining = ({location}) => {
     live_video: (data)?data.live_video:'',
     start_time: (data)?data.start_time:'',
     tutor: (data)?data.tutor:'',
+    attandance_time: (data)?data.attandance_time:''
   });
   const [status, handleCheck] = useState((data&&data.status!=='started')?true:false);
   const [myFiles, setMyFiles] = useState([]);

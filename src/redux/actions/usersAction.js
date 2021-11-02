@@ -93,7 +93,6 @@ export const getSingleUser = (id) => async dispatch => {
 
 export const addUser = (data) => async dispatch =>  {
   dispatch(startLoading());
-  console.log('ihbhddcbdjfbujefbfbfu');
   try {
     const formData = new FormData();
     formData.append('name', data.name);
