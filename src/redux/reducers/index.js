@@ -7,6 +7,7 @@ import projectsReducer from './projectReducer';
 import jobsReducer from './jobReducer';
 import newsReducer from './newsReducer';
 import usersReducer from './usersReducers';
+import excosReducer from './excosReducer';
 
 export default combineReducers({
   auth,
@@ -16,5 +17,6 @@ export default combineReducers({
   projectsReducer,
   jobsReducer,
   newsReducer,
-  usersReducer
+  usersReducer,
+  excosReducer
 });

@@ -47,6 +47,13 @@ const Sidebar = ({ title }) => {
               <p>Updates</p>
             </div>
           </Link>
+
+          <Link to="/statesinfo">
+            <div className={title === 'StatesInfo' ? 'nav-link active' : 'nav-link'} >
+              <span><i className="fa fa-info-circle" aria-hidden="true"></i></span>
+              <p>States info</p>
+            </div>
+          </Link>
           
         </nav>
 

@@ -25,3 +25,4 @@ export const FETCH_PROSPECTS = 'FETCH_PROSPECTS';
 export const FETCH_CM = 'FETCH_CM';
 export const APPROVE_PCMS = 'APPROVE_PCMS';
 export const FETCH_SINGLE_CM = 'FETCH_SINGLE_CM';
+export const FETCH_EXCOS = 'FETCH_EXCOS';

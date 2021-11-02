@@ -4,11 +4,13 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import Tabs from '../../components/Tabbar';
 import Form from '../../components/createProject/Form';
 import Upload from '../../components/createProject/upload';
+import StateInfo from '../../components/createProject/stateInfo';
 
 
 const CreateProject = () => {
   const history = useHistory();
   const [currentTab, setCurrentTab] = useState(0);
+  
 
   return (
     <div>
@@ -20,10 +22,17 @@ const CreateProject = () => {
 
 
             <div className='mt-5 px-5 az'>
-              <Tabs tabs={[{name: 'Project Details'}, {name: 'Upload resources'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+              <Tabs tabs={[{name: 'Project Details'}, {name: 'Upload resources'}, {name: 'Excos'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
               
               {
-                currentTab===0 ? <Form setCurrentTab={setCurrentTab} /> : <Upload />
+                currentTab===0 && <Form setCurrentTab={setCurrentTab} /> 
+              }
+
+              {
+                currentTab===1 &&  <Upload />
+              }
+              {
+                currentTab===2 && <StateInfo />
               }
          
             </div>

@@ -76,6 +76,10 @@ class APIServices {
   async updateTraining(data, id) {
     return await apiInstance.patch(`/trainings/${id}`, data);
   }
+
+  async fetchStateExcos(stateCode) {
+    return await apiInstance.get(`/states/${stateCode}/members`);
+  }
 }
 
 const instance = new APIServices();

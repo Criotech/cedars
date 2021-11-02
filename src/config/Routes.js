@@ -19,6 +19,7 @@ const CreateTraining = lazy(()=> import('../pages/trainings/CreateTraining'));
 const CreateProject = lazy(()=> import('../pages/projects/CreateProject'));
 const Updates = lazy(()=> import('../pages/updates/Updates'));
 const CreateUpdate = lazy(()=> import('../pages/updates/CreateNewUpdate'));
+const StatesInfo = lazy(()=> import('../pages/stateInformation'));
 
 
 const Routes = () => (
@@ -45,6 +46,7 @@ const Routes = () => (
         <PrivateRoute exact path='/projects/create' component={CreateProject} />
         <PrivateRoute exact path='/updates' component={Updates} />
         <PrivateRoute exact path='/updates/create' component={CreateUpdate} />
+        <PrivateRoute exact path='/statesinfo' component={StatesInfo} />
 
 
         {/* catch all invalid urls */}

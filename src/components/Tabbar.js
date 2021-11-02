@@ -6,7 +6,7 @@ const Tabs = ({ tabs, currentTab = 0, setCurrentTab }) => {
       {
         tabs.map((x, i) => {
           return (
-            <div key={i} onClick={()=>setCurrentTab(i)} className={currentTab === i ? 'col-sm-6 text-center pointer active' : 'col-sm-6 pointer text-center'}>
+            <div key={i} onClick={()=>setCurrentTab(i)} className={currentTab === i ? 'col-sm-4 text-center pointer active' : 'col-sm-4 pointer text-center'}>
               {x.name}
             </div>);
         })

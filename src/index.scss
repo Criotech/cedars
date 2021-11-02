@@ -379,10 +379,12 @@ a {
         background-color: var(--white);
         font-weight: 600;
         color: #506176;
+        font-size: 13px;
     }
     input {
         height: 60px;
         border-radius: 10;
+        font-size: 14px;
     }
 }
 
@@ -439,10 +441,6 @@ a {
         padding-bottom: 50px;
         padding-right: 40px;
     }
-    .az {
-        width: 800px;
-        margin: auto;
-    }
     .upload-file-container {
         height: 300px;
         border-radius: 10px;
@@ -454,6 +452,11 @@ a {
             font-size: 30px;
         }
     }
+}
+
+.az {
+    width: 800px;
+    margin: auto;
 }
 
 .search-bar-container {
@@ -479,4 +482,13 @@ a {
         padding-bottom: 20px;
         border-bottom-width: 2px;
     }
+}
+
+.text-grey {
+    color: #677189;
+}
+
+.border-outline-btn {
+    padding: 2px;
+    border: 1px solid #677189;
 }
