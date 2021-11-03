@@ -58,7 +58,7 @@ const UserDetails = ({location}) => {
           <td>{item.business_name}</td>
           <td>{item.business_email}</td>
           <td>{item.business_owner}</td>
-          <td onClick={verifyBusiness} ><p className="badge bg-green text-white pointer">{item.status===1?'verified':'pending'}</p></td>
+          <td onClick={()=>verifyBusiness(item.id)} ><p className="badge bg-green text-white pointer">{item.status==='approved'?'verified':'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
       );
