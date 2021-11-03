@@ -3,7 +3,7 @@ import { states, range } from '../../utils/states';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { fetchExcos } from '../../redux/actions/excosAction';
+import { fetchExcos, postExcos } from '../../redux/actions/excosAction';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,13 @@ const Index = () => {
 
   const alert = useSelector(({ alert }) => alert);
   const excosReducer = useSelector(({ excosReducer }) => excosReducer);
+  const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
 
   const [excos, setExcos] = useState({
     stateCode: 'ab'
   });
+
+  const [excoFormData, setExcoFormData] = useState({});
 
   useEffect(() => {
     dispatch(fetchExcos(excos.stateCode));
@@ -29,9 +32,19 @@ const Index = () => {
     }
   }, [alert.message, alert.success, addToast]);
 
-  const handleChange = (e) => {
+  const handleFilterChange = (e) => {
     setExcos({ ...excos, [e.target.name]: e.target.value });
     dispatch(fetchExcos(excos.stateCode));
+  };
+
+  const handleChange = (e) => {
+    setExcoFormData({ ...excoFormData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await dispatch(postExcos({ ...excoFormData, type: 1 }));
   };
 
   const copyToClipBoard = async copyMe => {
@@ -50,7 +63,7 @@ const Index = () => {
         <div className='row container mt-5 pt-4'>
           <div className="mb-4  input-family col-md-4">
             <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-            <select name='stateCode' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+            <select name='stateCode' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               {
                 states.map(x => (
                   <option key={x.state_code} value={x.state_code}>{x.state_name}</option>
@@ -61,7 +74,7 @@ const Index = () => {
 
           <div className="mb-4 input-family col-md-4">
             <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-            <select name='deployed_state' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+            <select name='deployed_state' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               {
                 range(2020, 2040).map(x => (
                   <option key={x} value={x}>{x}</option>
@@ -72,7 +85,7 @@ const Index = () => {
 
           <div className="mb-4 input-family col-md-4">
             <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-            <select name='deployed_state' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+            <select name='deployed_state' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               <option value='Batch A, Stream 1'>Batch A, Stream 1</option>
               <option value='Batch A, Stream 2'>Batch A, Stream 2</option>
               <option value='Batch B, Stream 1'>Batch B, Stream 1</option>
@@ -105,66 +118,105 @@ const Index = () => {
                     <form>
                       <div className="mb-4 input-family">
                         <label htmlFor="exampleInputPassword1" className="label">Full Name</label>
-                        <input type="text" className="form-control" id="exampleInputtext1" />
+                        <input name='name' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                       </div>
                       <div className='row'>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Email Address</label>
-                            <input type="email" className="form-control" id="exampleInputtext1" />
+                            <input name='email' onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Phone number</label>
-                            <input type="text" className="form-control" id="exampleInputtext1" />
+                            <input name='phone_number' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
-                            <label htmlFor="exampleInputPassword1" className="label">Email Address</label>
-                            <input type="email" className="form-control" id="exampleInputtext1" />
+                            <label htmlFor="exampleInputPassword1" className="label">Instagram Handle</label>
+                            <input name='instagram' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
-                            <label htmlFor="exampleInputPassword1" className="label">Phone number</label>
-                            <input type="text" className="form-control" id="exampleInputtext1" />
+                            <label htmlFor="exampleInputPassword1" className="label">Facebook Name</label>
+                            <input name='facebook' onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
                           </div>
+                        </div>
+                      </div>
+
+                      <div className='row'>
+                        <div className="mb-4  input-family col-md-4">
+                          <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+                          <select name='state_code' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                            {
+                              states.map(x => (
+                                <option key={x.state_code} value={x.state_code}>{x.state_name}</option>
+                              ))
+                            }
+                          </select>
+                        </div>
+
+                        <div className="mb-4 input-family col-md-4">
+                          <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+                          <select name='year' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                            {
+                              range(2020, 2040).map(x => (
+                                <option key={x} value={x}>{x}</option>
+                              ))
+                            }
+                          </select>
+                        </div>
+
+                        <div className="mb-4 input-family col-md-4">
+                          <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+                          <select name='batch' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                            <option>Selecet a batch</option>
+                            <option value='BatchAStream1'>Batch A, Stream 1</option>
+                            <option value='BatchAStream2'>Batch A, Stream 2</option>
+                            <option value='BatchBStream1'>Batch B, Stream 1</option>
+                            <option value='BatchBStream2'>Batch B, Stream 2</option>
+                            <option value='BatchCStream1'>Batch C, Stream 1</option>
+                            <option value='BatchCStream2'>Batch C, Stream 2</option>
+
+                          </select>
                         </div>
                       </div>
 
                       <small>Select Position</small>
 
                       <div className='row mt-3'>
+
+
                         <div className='col-md-3'>
                           <div className='flex-between form-control'>
                             <small>President</small>
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"></input>
+                            <input className="form-check-input" type="radio" name='position' onChange={handleChange} value="President" id="defaultCheck1"></input>
                           </div>
                         </div>
 
                         <div className='col-md-3'>
                           <div className='flex-between form-control'>
                             <small>V. President</small>
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"></input>
+                            <input className="form-check-input" type="radio" name='position' onChange={handleChange} value="V. President" id="defaultCheck1"></input>
                           </div>
                         </div>
                         <div className='col-md-3'>
                           <div className='flex-between form-control'>
                             <small>G. Secretary</small>
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"></input>
+                            <input className="form-check-input" type="radio" name='position' onChange={handleChange} value="G. Secretary" id="defaultCheck1"></input>
                           </div>
                         </div>
                         <div className='col-md-3'>
                           <div className='flex-between form-control'>
                             <small>PRO</small>
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"></input>
+                            <input className="form-check-input" type="radio" name='position' onChange={handleChange} value="PRO" id="defaultCheck1"></input>
                           </div>
                         </div>
 
                       </div>
-
 
                     </form>
                   </div>
@@ -172,7 +224,7 @@ const Index = () => {
                 </div>
                 <div className="modal-footer">
 
-                  <button type="button" className="btn bg-green text-white">Save changes</button>
+                  <button onClick={handleSubmit} data-bs-dismiss="modal" type="button" className="btn bg-green text-white">{loadingReducer.loading?'Loading...':'save'}</button>
                 </div>
               </div>
             </div>
@@ -189,7 +241,7 @@ const Index = () => {
                     <small className='text-green'>{x.position}</small>
                     <div className='flex-between mt-1'>
                       <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={()=>copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
                         <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
                       </button>
                     </div>
@@ -216,7 +268,7 @@ const Index = () => {
                     <small className='text-green'>{x.position}</small>
                     <div className='flex-between mt-1'>
                       <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={()=>copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
                         <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
                       </button>
                     </div>
@@ -243,7 +295,7 @@ const Index = () => {
                     <small className='text-green'>{x.position}</small>
                     <div className='flex-between mt-1'>
                       <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={()=>copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
                         <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
                       </button>
                     </div>

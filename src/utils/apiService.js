@@ -81,6 +81,10 @@ class APIServices {
     return await apiInstance.get(`/states/${stateCode}/members`);
   }
 
+  async postStateExcos(data) {
+    return await apiInstance.post(`/states/${data.state_code}/members`, data);
+  }
+
   async verifyABusiness(data, businessId) {
     return await apiInstance.patch(`/businesses/${businessId}`, data);
   }

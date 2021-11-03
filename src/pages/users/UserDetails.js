@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Card } from '../../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { getSingleUser, toggleActiveUser, updateBusinessStatus } from '../../redux/actions/usersAction';
+import { getSingleUser, toggleActiveUser } from '../../redux/actions/usersAction';
 import loadingReducer from '../../redux/reducers/loadingReducer';
 
 const UserDetails = ({location}) => {
@@ -45,9 +45,9 @@ const UserDetails = ({location}) => {
     arAttendance.push(attendance[item]);
   }
 
-  const verifyBusiness = (businessId) => {
-    dispatch(updateBusinessStatus({status: 1, userId: usersReducer.cm.id}, businessId));
-  };
+  // const verifyBusiness = (businessId) => {
+  //   dispatch(updateBusinessStatus({status: 1, userId: usersReducer.cm.id}, businessId));
+  // };
 
   const renderBusiness = () => {
     return arBusinesses.map((item, i)=>{
@@ -58,7 +58,7 @@ const UserDetails = ({location}) => {
           <td>{item.business_name}</td>
           <td>{item.business_email}</td>
           <td>{item.business_owner}</td>
-          <td><p className="badge bg-green text-white pointer">{item.status===1?'verified':'pending'}</p></td>
+          <td ><p className="badge bg-green text-white pointer">{item.status===1?'verified':'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
       );
