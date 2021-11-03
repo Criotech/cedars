@@ -9,7 +9,6 @@ export const fetchExcos = (stateCode) => async dispatch => {
   dispatch(startLoading());
   try {
     const resp = await ApiService.fetchStateExcos(stateCode);
-    console.log(resp.data.data);
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_EXCOS, payload: resp.data.data });
@@ -35,7 +34,7 @@ export const postExcos = (data) => async dispatch => {
     if (resp) {
       dispatch(stopLoading());
       dispatch(success(resp.data.message));
-      dispatch(fetchExcos(data.stateCode));
+      dispatch(fetchExcos(data.state_code));
       dispatch(clear());
     }
   } catch (error) {
