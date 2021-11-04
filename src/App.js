@@ -7,7 +7,7 @@ import Routes from './config/Routes';
 const App = () => {
   return (
     <Provider store={store}>
-      <ToastProvider>
+      <ToastProvider autoDismiss={true} autoDismissTimeout='3000' placement='bottom-right'>
         <Routes />
       </ToastProvider>
     </Provider>

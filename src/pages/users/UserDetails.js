@@ -58,7 +58,7 @@ const UserDetails = ({location}) => {
           <td>{item.business_name}</td>
           <td>{item.business_email}</td>
           <td>{item.business_owner}</td>
-          <td onClick={()=>verifyBusiness(item.id)} ><p className="badge bg-green text-white pointer">{item.status==='approved'?'verified':'pending'}</p></td>
+          <td onClick={()=>verifyBusiness(item.id)} ><p className={item.status==='approved'?'badge bg-green text-white pointer':'badge bg-pending text-white pointer'}>{item.status==='approved'?'verified':'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
       );
@@ -114,7 +114,7 @@ const UserDetails = ({location}) => {
               </div>
               <div className="d-flex flex-column align-items-baseline">
                 <h5 className="fw-bold mt-2">{usersReducer.cm.name}</h5>
-                <p style={{ color: '#17161699', marginTop: 10 }}>State code: {usersReducer.cm.nysc_state_code}</p>
+                <p style={{ color: '#17161699', marginTop: 10 }}>State code: {usersReducer.cm.profile&&usersReducer.cm.profile.nysc_state_code}</p>
                 <p style={{ color: '#17161699' }}>Part of DO_DEEL CDS since  {moment(usersReducer.cm.created_at).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
@@ -148,7 +148,7 @@ const UserDetails = ({location}) => {
                       <th scope="col">Business name</th>
                       <th scope="col">Email address</th>
                       <th scope="col">Owner’s name</th>
-                      <th scope="col">Phone number</th>
+                      {/* <th scope="col">Phone number</th> */}
                       <th scope="col">Status</th>
                       <th scope="col">Comment</th>
 

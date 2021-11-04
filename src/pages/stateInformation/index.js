@@ -73,7 +73,7 @@ const Index = () => {
           </div>
 
           <div className="mb-4 input-family col-md-4">
-            <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+            <label htmlFor="exampleInputtext1" className="label">Year</label>
             <select name='deployed_state' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               {
                 range(2020, 2040).map(x => (
@@ -84,7 +84,7 @@ const Index = () => {
           </div>
 
           <div className="mb-4 input-family col-md-4">
-            <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+            <label htmlFor="exampleInputtext1" className="label">Batch</label>
             <select name='deployed_state' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               <option value='Batch A, Stream 1'>Batch A, Stream 1</option>
               <option value='Batch A, Stream 2'>Batch A, Stream 2</option>

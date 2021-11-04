@@ -19,7 +19,7 @@ const Login = () => {
 
   useEffect(()=>{
     if (alert.message) {
-      addToast(alert.message, { appearance: 'error' });
+      addToast(alert.message, { appearance: 'error', autoDismiss: true, });
     }
   }, [alert.message, addToast]);
 

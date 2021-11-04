@@ -31,7 +31,7 @@ const CMS = ({users, history, selectedNo, setPerPage, prev, next, per_page, page
                   {/* <td><input onChange={() => handleCheck(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td> */}
                   <th onClick={()=>history.push('/users/user', { id: x.id })} className="d-flex"><div className="circle"><img src={x.profile.photo} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>{x.name}</th>
                   <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.email}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.nysc_call_up_number}</td>
+                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.nysc_state_code}</td>
                   <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.phone_number}</td>
                   <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.attendance_count}</td>
                   <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.status}</td>

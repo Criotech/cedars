@@ -141,7 +141,7 @@ a {
 }
 
 .navigation {
-    padding-top: 40px;
+    padding-top: 20px;
     .nav-link {
         text-align: center;
         font-size: 2rem;
@@ -175,7 +175,7 @@ a {
 }
 
 .dash-header {
-    height: 100px;
+    height: 90px;
     background: var(--white) !important;
     & .has-search .form-control {
         padding-left: 2.375rem;
@@ -186,6 +186,10 @@ a {
             display: none;
         }
     }
+}
+
+.bg-pending {
+    background-color: #EA5230;
 }
 
 .w-10 {
@@ -200,6 +204,14 @@ a {
     @include tablet {
         width: 100% !important;
     }
+}
+
+.mt-55 {
+    margin-top: 55px;
+}
+
+.ml-150 {
+    margin-left: 150px;
 }
 
 .card-container {

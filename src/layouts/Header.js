@@ -1,12 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import Logo from '../components/Logo';
 import { logoutUser } from '../redux/actions/authActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light px-lg-5 dash-header d-flex justify-content-between align-items-center">
+    <nav  className="navbar navbar-expand-lg navbar-light fixed-top px-lg-5 dash-header d-flex justify-content-between align-items-center">
+      <div className="navbar-brand" href="#">
+        <Logo />
+      </div>
       <div className="container-fluid">
         <form className="d-flex">
           <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

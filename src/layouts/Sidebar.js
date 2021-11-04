@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../components/Logo';
+// import Logo from '../components/Logo';
 
-// import { Link } from 'react-router-dom';
 
 const Sidebar = ({ title }) => {
 
   return (
-    <div className="sidebar flex-column align-items-center">
-      <div className="text-center" style={{paddingTop: 40}}>
+    <div className="sidebar mt-4 flex-column align-items-center">
+      {/* <div className="text-center" style={{paddingTop: 40}}>
         <Logo />
-      </div>
+      </div> */}
       <div className="mt-200">
         <nav className="flex-column navigation">
           <Link to="/dashboard">

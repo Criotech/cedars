@@ -24,7 +24,7 @@ const StatesInfo = lazy(()=> import('../pages/stateInformation'));
 
 const Routes = () => (
   // eslint-disable-next-line no-undef
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <Suspense fallback={<PageLoader />}>
       <Switch>
         {/* can't access them when you are logged in */}
