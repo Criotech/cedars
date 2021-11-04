@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import swal from 'sweetalert';
 import { states, range } from '../../utils/states';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,9 +27,21 @@ const Index = () => {
   useEffect(() => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
+      swal({
+        title: 'Error!',
+        text: alert.message,
+        icon: 'error',
+        button: 'close!',
+      });
     }
     if (alert.success) {
       addToast(alert.success, { appearance: 'success' });
+      swal({
+        title: 'Success!',
+        text: alert.success,
+        icon: 'success',
+        button: 'close!',
+      });
     }
   }, [alert.message, alert.success, addToast]);
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import Tabs from '../../components/Tabbar';
@@ -25,9 +26,21 @@ const Updates = () => {
   useEffect(() => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
+      swal({
+        title: 'Error!',
+        text: alert.message,
+        icon: 'error',
+        button: 'close!',
+      });
     }
     if (alert.success) {
       addToast(alert.success, { appearance: 'success' });
+      swal({
+        title: 'Success!',
+        text: alert.success,
+        icon: 'success',
+        button: 'close!',
+      });
     }
   }, [alert.message, alert.success, addToast]);
 
@@ -38,11 +51,37 @@ const Updates = () => {
   };
 
   const deleteANews = (id) => {
-    dispatch(deleteNews(id));
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteNews(id));
+        } else {
+          swal('Operation canceled!');
+        }
+      });
   };
 
   const deleteAJob = (id) => {
-    dispatch(deleteJob(id));
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteJob(id));
+        } else {
+          swal('Operation canceled!');
+        }
+      });
   };
 
   

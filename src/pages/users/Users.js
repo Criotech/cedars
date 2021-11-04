@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import swal from 'sweetalert';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,9 +75,21 @@ const Users = () => {
   useEffect(() => {
     if (alert.message) {
       addToast(alert.message, { appearance: 'error' });
+      swal({
+        title: 'Error!',
+        text: alert.message,
+        icon: 'error',
+        button: 'close!',
+      });
     }
     if (alert.success) {
       addToast(alert.success, { appearance: 'success' });
+      swal({
+        title: 'Success!',
+        text: alert.success,
+        icon: 'success',
+        button: 'close!',
+      });
     }
   }, [alert.message, alert.success, addToast]);
 
