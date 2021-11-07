@@ -8,7 +8,7 @@ const PrivateRoute = ({ component: Component, auth, alert, ...rest }) => {
   useEffect(()=>{
     if (alert.message==='Unauthenticated.') {
       localStorage.setItem('token', '');
-      window.location.reload(false);
+      window.location.reload();
     }
   }, [alert.message]);
 
