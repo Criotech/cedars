@@ -6,9 +6,9 @@ import ErrorBoundary from '../components/ErrorBoundary';
 
 const PrivateRoute = ({ component: Component, auth, alert, ...rest }) => {
   useEffect(()=>{
-    if (alert.message==='unauthorized') {
+    if (alert.message==='Unauthenticated.') {
       localStorage.setItem('token', '');
-      return (<Redirect to="/login" />);
+      window.location.reload(false);
     }
   }, [alert.message]);
 

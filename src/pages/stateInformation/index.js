@@ -57,7 +57,7 @@ const Index = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(postExcos({ ...excoFormData, type: 1 }));
+    await dispatch(postExcos({ ...excoFormData }));
   };
 
   const copyToClipBoard = async copyMe => {
@@ -99,12 +99,12 @@ const Index = () => {
           <div className="mb-4 input-family col-md-4">
             <label htmlFor="exampleInputtext1" className="label">Batch</label>
             <select name='deployed_state' onChange={handleFilterChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
-              <option value='Batch A, Stream 1'>Batch A, Stream 1</option>
-              <option value='Batch A, Stream 2'>Batch A, Stream 2</option>
-              <option value='Batch B, Stream 1'>Batch B, Stream 1</option>
-              <option value='Batch B, Stream 2'>Batch B, Stream 2</option>
-              <option value='Batch C, Stream 1'>Batch C, Stream 1</option>
-              <option value='Batch C, Stream 2'>Batch C, Stream 2</option>
+              <option value='BatchAStream1'>Batch A, Stream 1</option>
+              <option value='BatchAStream2'>Batch A, Stream 2</option>
+              <option value='BatchBStream1'>Batch B, Stream 1</option>
+              <option value='BatchBStream2'>Batch B, Stream 2</option>
+              <option value='BatchCStream1'>Batch C, Stream 1</option>
+              <option value='BatchCStream2'>Batch C, Stream 2</option>
 
             </select>
           </div>
@@ -164,6 +164,7 @@ const Index = () => {
                         <div className="mb-4  input-family col-md-4">
                           <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
                           <select name='state_code' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                            <option>Selecet a state</option>
                             {
                               states.map(x => (
                                 <option key={x.state_code} value={x.state_code}>{x.state_name}</option>
@@ -175,6 +176,7 @@ const Index = () => {
                         <div className="mb-4 input-family col-md-4">
                           <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
                           <select name='year' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                            <option>Selecet a year</option>
                             {
                               range(2020, 2040).map(x => (
                                 <option key={x} value={x}>{x}</option>
@@ -196,6 +198,16 @@ const Index = () => {
 
                           </select>
                         </div>
+                      </div>
+
+                      <div className="mb-4 input-family">
+                        <label htmlFor="exampleInputtext1" className="label">Exco Type</label>
+                        <select name='type' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                          <option>Select type</option>
+                          <option value={0}>Schedule Officer</option>
+                          <option value={1}>Community Manager</option>
+                          <option value={2}>Executive</option>
+                        </select>
                       </div>
 
                       <small>Select Position</small>
