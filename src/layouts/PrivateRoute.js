@@ -11,12 +11,13 @@ const PrivateRoute = ({ component: Component, auth, alert, ...rest }) => {
       window.location.reload();
     }
   }, [alert.message]);
+  let token = localStorage.getItem('token');
 
   return (
     <Route
       {...rest}
       render={props => {
-        if (auth.isAuthenticated) {
+        if (auth.isAuthenticated  && token) {
           return (
             <ErrorBoundary>
               <main id="private-route-layout">
