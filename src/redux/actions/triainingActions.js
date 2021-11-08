@@ -16,8 +16,6 @@ export const fetchTrainings = () => async dispatch => {
       return dispatch({ type: FETCH_TRAININGS, payload: resp.data.data });
     }
   } catch (error) {
-    console.log(error.response.data);
-
     dispatch(stopLoading());
     if (error.message === 'Network Error'||error.response.status===500) {
       dispatch(getError('Network Error'));
