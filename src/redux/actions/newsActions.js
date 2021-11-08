@@ -16,7 +16,7 @@ export const fetchNews = () => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -46,7 +46,7 @@ export const addNews = (data) => async dispatch =>  {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -70,7 +70,7 @@ export const deleteNews = (id) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {

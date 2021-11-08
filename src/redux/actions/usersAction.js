@@ -17,7 +17,7 @@ export const fetchProspects = (page, per_page) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500||error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -37,7 +37,7 @@ export const fetchCM = (page, per_page) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -61,7 +61,7 @@ export const approvePCMs = (pcmIds, approved) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -81,7 +81,7 @@ export const getSingleUser = (id) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -113,7 +113,7 @@ export const addUser = (data) => async dispatch =>  {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -137,7 +137,7 @@ export const toggleActiveUser = (data) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -161,7 +161,7 @@ export const updateBusinessStatus = (data, businessId) => async dispatch=> {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {

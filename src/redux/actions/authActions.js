@@ -25,7 +25,7 @@ export const loginUser = (email, password) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {

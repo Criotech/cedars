@@ -16,7 +16,7 @@ export const fetchJobs = () => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
@@ -40,7 +40,7 @@ export const deleteJob = (id) => async dispatch => {
     }
   } catch (error) {
     dispatch(stopLoading());
-    if (error.message === 'Network Error') {
+    if (error.message === 'Network Error' || error.response.status===500) {
       dispatch(getError('Network Error'));
       dispatch(clear());
     } else {
