@@ -137,7 +137,7 @@ const Updates = () => {
                       <td>{x.title}</td>
                       <td>{x.content}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button onClick={()=>history.push('/updates/create/news', {news: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={() => deleteANews(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
@@ -151,7 +151,7 @@ const Updates = () => {
                       <td>{x.title}</td>
                       <td>{x.description}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button onClick={()=>history.push('/updates/create/job', {job: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={() => deleteAJob(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>

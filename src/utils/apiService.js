@@ -53,6 +53,10 @@ class APIServices {
     return await apiInstance.post('/news', data);
   }
 
+  async updateNews(data, id) {
+    return await apiInstance.post(`/news/${id}?_method=PATCH`, data);
+  }
+
   async addJob(data) {
     return await apiInstance.post('/jobs', data);
   }
@@ -75,6 +79,10 @@ class APIServices {
 
   async deleteJob(id) {
     return await apiInstance.delete(`/jobs/${id}`);
+  }
+
+  async updateJob(data, id) {
+    return await apiInstance.post(`/jobs/${id}?_method=PATCH`, data);
   }
 
   async updateTraining(data, id) {

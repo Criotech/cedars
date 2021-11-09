@@ -28,6 +28,7 @@ const CreateTraining = ({ location }) => {
     attandance_time: (data) ? data.attandance_time : '',
     status: ''
   });
+  
   const [myFiles, setMyFiles] = useState([]);
 
   const onDrop = useCallback(acceptedFiles => {

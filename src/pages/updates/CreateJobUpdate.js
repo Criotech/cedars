@@ -6,20 +6,25 @@ import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { addJob } from '../../redux/actions/jobActions';
+import { addJob, updateJob } from '../../redux/actions/jobActions';
 
-const CreateJob = () => {
+const CreateJob = ({ location }) => {
+  let data = (location.state) ? location.state.job : null;
+
   const history = useHistory();
 
   const dispatch = useDispatch();
   const { addToast } = useToasts();
 
   const [update, setUpdate] = useState({
-    title: '',
-    content: '',
+    title: (data) ? data.title : '',
+    description: (data) ? data.description : '', role: (data) ? data.role : '', closing_date: (data) ? data.closing_date : '', location: (data) ? data.location : '',
+    type: (data) ? data.type : '', apply_link: (data) ? data.apply_link : '', rate: (data) ? data.rate : '', employer_name: (data) ? data.employer.name : '',
+    employer_location: (data) ? data.employer.location : '', employer_email: (data) ? data.employer.name : ''
+
   });
   const [image, setImage] = useState('');
-  const [perks, setPerks] = useState([]);
+  const [perks, setPerks] = useState((data)?data.perks:[]);
   const inputFile = useRef(null);
 
   const handleFileUpload = e => {
@@ -76,6 +81,13 @@ const CreateJob = () => {
     await dispatch(addJob({ ...update, perks, image: image }));
   };
 
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    await dispatch(updateJob({ ...update, perks, image: image }, data.id));
+  };
+
   const removeFile = () => {
     setImage('');
   };
@@ -86,7 +98,7 @@ const CreateJob = () => {
         <section className="trainings-section">
           <div>
             <h4><i onClick={() => history.push('/updates')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
-            <h5 className="fw-bold mt-3">Create New Job</h5>
+            <h5 className="fw-bold mt-3">{data?'Update New Job':'Create New Job'}</h5>
 
 
             <div className='mt-5 px-5 az'>
@@ -121,7 +133,7 @@ const CreateJob = () => {
                   <label htmlFor="exampleInputPassword1" className="label">Location</label>
                   <input type="text" className="form-control" name='location' value={update.location} onChange={handleChange} />
                 </div>
-                  
+
                 <div className='row'>
                   <div className="mb-4 input-family col-md-6">
                     <label htmlFor="exampleInputPassword1" className="label">Job role</label>
@@ -135,7 +147,7 @@ const CreateJob = () => {
                 </div>
 
                 <div className='row'>
-                  
+
                   <div className="mb-4 input-family col-md-6">
                     <label htmlFor="exampleInputPassword1" className="label">Rate</label>
                     <input type="text" className="form-control" name='rate' value={update.rate} onChange={handleChange} />
@@ -149,8 +161,8 @@ const CreateJob = () => {
 
                 <div className="mb-4 input-family">
                   <label htmlFor="exampleInputPassword1" className="label">Tags</label>
-                  <ReactTagInput 
-                    tags={perks} 
+                  <ReactTagInput
+                    tags={perks}
                     onChange={(newTags) => setPerks(newTags)}
                   />
                 </div>
@@ -194,7 +206,12 @@ const CreateJob = () => {
               }
 
               <div className="d-flex justify-content-center mt-5">
-                <button style={{ fontSize: 13 }} onClick={handleSubmit} className='btn bg-green text-white  px-5 py-2'>{loadingReducer.loading ? 'Loading...' : 'Publish'}</button>
+                {
+                  data ?
+                    <button style={{ fontSize: 13 }} onClick={handleUpdate} className='btn bg-green text-white  px-5 py-2'>{loadingReducer.loading ? 'Loading...' : 'Publish'}</button>
+                    :
+                    <button style={{ fontSize: 13 }} onClick={handleSubmit} className='btn bg-green text-white  px-5 py-2'>{loadingReducer.loading ? 'Loading...' : 'Publish'}</button>
+                }
               </div>
 
             </div>
