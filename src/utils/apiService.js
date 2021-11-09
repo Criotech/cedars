@@ -53,6 +53,10 @@ class APIServices {
     return await apiInstance.post('/news', data);
   }
 
+  async addJob(data) {
+    return await apiInstance.post('/jobs', data);
+  }
+
   async toggleActiveUser(data) {
     return await apiInstance.patch(`/users/${data.id}`, {status: data.status});
   }

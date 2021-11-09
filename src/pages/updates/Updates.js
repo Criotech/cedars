@@ -18,7 +18,7 @@ const Updates = () => {
   const newsReducer = useSelector(({ newsReducer }) => newsReducer);
   const jobsReducer = useSelector(({ jobsReducer }) => jobsReducer);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchNews());
     dispatch(fetchJobs());
   }, [dispatch]);
@@ -47,7 +47,7 @@ const Updates = () => {
   const WithoutTime = (dateTime) => {
     var date = new Date(dateTime);
 
-    return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
   const deleteANews = (id) => {
@@ -84,7 +84,7 @@ const Updates = () => {
       });
   };
 
-  
+
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
@@ -94,19 +94,32 @@ const Updates = () => {
           <div className="flex-between">
             <h5 className="fw-bold mb-3">Updates</h5>
 
-            <div onClick={()=>history.push('/updates/create')} className="d-flex flex-between pointer">
-              <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
-              <h5 className="fw-bold text-green">
-                Create New
-              </h5>
-            </div>
+
+            {
+              currentTab === 0 ?
+                <div onClick={() => history.push('/updates/create/news')} className="d-flex flex-between pointer">
+                  <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
+                  <h5 className="fw-bold text-green">
+                    Create News Update
+                  </h5>
+                </div>
+                :
+                <div onClick={() => history.push('/updates/create/job')} className="d-flex flex-between pointer">
+                  <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
+                  <h5 className="fw-bold text-green">
+                    Create Job Update
+                  </h5>
+                </div>
+            }
+
           </div>
+
 
           <div className='mt-5 px-5'>
-            <Tabs tabs={[{name: 'News'}, {name: 'Jobs'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+            <Tabs tabs={[{ name: 'News' }, { name: 'Jobs' }]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 px-5">
             <table className="table">
               <thead>
                 <tr>
@@ -118,28 +131,28 @@ const Updates = () => {
               </thead>
               <tbody>
                 {
-                  currentTab===0 && newsReducer.news.map(x => (
+                  currentTab === 0 && newsReducer.news.map(x => (
                     <tr key={x.id}>
                       <td>{WithoutTime(x.created_at)}</td>
                       <td>{x.title}</td>
                       <td>{x.content}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button onClick={()=>deleteANews(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button onClick={() => deleteANews(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))
                 }
 
                 {
-                  currentTab===1 && jobsReducer.jobs.map(x => (
+                  currentTab === 1 && jobsReducer.jobs.map(x => (
                     <tr key={x.id}>
                       <td>{WithoutTime(x.created_at)}</td>
                       <td>{x.title}</td>
                       <td>{x.description}</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
-                        <button onClick={()=>deleteAJob(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
+                        <button style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
+                        <button onClick={() => deleteAJob(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>
                   ))

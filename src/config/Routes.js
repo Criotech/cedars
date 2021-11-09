@@ -18,7 +18,8 @@ const Projects = lazy(()=> import('../pages/projects/Projects'));
 const CreateTraining = lazy(()=> import('../pages/trainings/CreateTraining'));
 const CreateProject = lazy(()=> import('../pages/projects/CreateProject'));
 const Updates = lazy(()=> import('../pages/updates/Updates'));
-const CreateUpdate = lazy(()=> import('../pages/updates/CreateNewUpdate'));
+const CreateNews = lazy(()=> import('../pages/updates/CreateNewUpdate'));
+const CreateJob = lazy(()=> import('../pages/updates/CreateJobUpdate'));
 const StatesInfo = lazy(()=> import('../pages/stateInformation'));
 
 
@@ -45,7 +46,8 @@ const Routes = () => (
         <PrivateRoute exact path='/projects' component={Projects} />
         <PrivateRoute exact path='/projects/create' component={CreateProject} />
         <PrivateRoute exact path='/updates' component={Updates} />
-        <PrivateRoute exact path='/updates/create' component={CreateUpdate} />
+        <PrivateRoute exact path='/updates/create/news' component={CreateNews} />
+        <PrivateRoute exact path='/updates/create/job' component={CreateJob} />
         <PrivateRoute exact path='/statesinfo' component={StatesInfo} />
 
 

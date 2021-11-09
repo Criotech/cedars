@@ -59,8 +59,9 @@ const CreateUpdate = () => {
         icon: 'success',
         button: 'close!',
       });
+      history.push('/updates');
     }
-  }, [alert.message, alert.success, addToast]);
+  }, [alert.message, alert.success, addToast, history]);
 
   const handleChange = (e) => {
     setUpdate({ ...update, [e.target.name]: e.target.value }); 
@@ -78,11 +79,11 @@ const CreateUpdate = () => {
 
   return (
     <div>
-      <DashboardLayout title='Trainings'>
+      <DashboardLayout title='Updates'>
         <section className="trainings-section">
           <div>
             <h4><i onClick={() => history.push('/updates')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
-            <h5 className="fw-bold mt-3">Create New Update</h5>
+            <h5 className="fw-bold mt-3">Create New News</h5>
 
 
             <div className='mt-5 px-5 az'>
