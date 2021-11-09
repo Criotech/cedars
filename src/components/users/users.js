@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 
-const CMS = ({users, history, selectedNo, setPerPage, prev, next, per_page, page, totalUsers}) => {
+const CMS = ({users, history, setPerPage, prev, next, per_page, page, totalUsers}) => {
   return (
     <div className="users-list-container">
       <div className="top d-flex align-items-center">
-        <i className="fa fa-trash" style={{ color: '#C7C7C7' }} aria-hidden="true"></i>
+        {/* <i className="fa fa-trash" style={{ color: '#C7C7C7' }} aria-hidden="true"></i>
         <p className="mx-3 fw-bold"> {selectedNo} selected </p>
-        <span className="badge bg-green text-white">{selectedNo}</span>
+        <span className="badge bg-green text-white">{selectedNo}</span> */}
       </div>
 
       <div className="table-section">
