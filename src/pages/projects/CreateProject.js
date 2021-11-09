@@ -68,6 +68,16 @@ const CreateProject = ({ location }) => {
     await dispatch(updateProject({ ...project, status: 1 }, data.id));
   };
 
+
+  const copyToClipBoard = async copyMe => {
+    try {
+      await navigator.clipboard.writeText(copyMe);
+      addToast('Copied', { appearance: 'success' });
+    } catch (err) {
+      addToast('Failed to copy', { appearance: 'error' });
+    }
+  };
+
   return (
     <div>
       <DashboardLayout title='Projects'>
@@ -88,7 +98,7 @@ const CreateProject = ({ location }) => {
                 currentTab===1 &&  <Upload />
               }
               {
-                currentTab===2 && <StateInfo />
+                currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} />
               }
          
             </div>

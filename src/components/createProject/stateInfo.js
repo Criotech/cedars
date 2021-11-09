@@ -1,7 +1,7 @@
 import React from 'react';
 import { states, range } from '../../utils/states';
 
-const StateInfo = ({ handleChange }) => {
+const StateInfo = ({ handleChange, data, copyToClipBoard }) => {
 
   return (
     <div>
@@ -40,6 +40,32 @@ const StateInfo = ({ handleChange }) => {
 
           </select>
         </div>
+      </div>
+
+
+      <div>
+        <div className='row'>
+          {
+            data.excos.map(x => (
+              <div key={x.id} className='col-md-6 mb-4 px-5'>
+                <small className='text-green'>{x.position}</small>
+                <div className='flex-between mt-1'>
+                  <p className='fw-bold text-grey'>{x.name}</p>
+                  <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                    <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
+                  </button>
+                </div>
+                <div className='mt-2 fw-bold'>
+                  <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
+                </div>
+                <div className='mt-2 fw-bold text-grey'>
+                  <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+         
       </div>
 
     </div>
