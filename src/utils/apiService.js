@@ -89,6 +89,14 @@ class APIServices {
     return await apiInstance.post(`/trainings/${id}?_method=PATCH`, data);
   }
 
+  async fetchProject(id) {
+    return await apiInstance.get(`/projects/${id}`);
+  }
+
+  async updateProject(data, id) {
+    return await apiInstance.post(`/projects/${id}?_method=PATCH`, data);
+  }
+
   async fetchStateExcos(stateCode) {
     return await apiInstance.get(`/states/${stateCode}/members`);
   }

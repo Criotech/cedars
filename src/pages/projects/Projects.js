@@ -107,7 +107,7 @@ const Projects = () => {
                       <td>{x.title}</td>
                       <td>Fusce tincidunt arcu sed sem blandit Fusce tincidunt arcu sed sem blanditFusce tincidunt arcu sed sem blandit......  </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}}  type="button" className="btn">Edit</button>
+                        <button style={{borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1}} onClick={()=>history.push('/projects/create', {project: x})}  type="button" className="btn">Edit</button>
                         <button onClick={()=>deleteAProject(x.id)} style={{borderColor: '#DFDFDF', borderWidth: 1}} type="button" className="btn btn-outline-white">Delete</button>
                       </div></td>
                     </tr>

@@ -19,7 +19,6 @@ const UserDetails = ({location}) => {
   const alert = useSelector(({ alert }) => alert);
   const usersReducer = useSelector(({ usersReducer }) => usersReducer);
  
-
   useEffect(()=>{
     dispatch(getSingleUser(location.state.id));
   }, [dispatch, location]);
