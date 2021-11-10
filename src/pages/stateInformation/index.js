@@ -154,7 +154,7 @@ const Index = () => {
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
-                            <label htmlFor="exampleInputPassword1" className="label">Facebook Name</label>
+                            <label htmlFor="exampleInputPassword1" className="label">Facebook Link</label>
                             <input name='facebook' onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
@@ -174,7 +174,7 @@ const Index = () => {
                         </div>
 
                         <div className="mb-4 input-family col-md-4">
-                          <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
+                          <label htmlFor="exampleInputtext1" className="label">Year</label>
                           <select name='year' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                             <option>Selecet a year</option>
                             {
@@ -280,6 +280,7 @@ const Index = () => {
                 ))
               }
             </div>
+         
           </div>
 
           <h5 className="fw-bold mb-3  mt-5">Schedule Officers</h5>
