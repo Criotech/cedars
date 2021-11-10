@@ -21,7 +21,6 @@ const CreateProject = ({ location }) => {
   const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
   const projectsReducer = useSelector(({ projectsReducer }) => projectsReducer);
 
-  const [data] = useState(projectsReducer.project);
   const [project, setProject] = useState({
     title: '',
     overview: '',
@@ -65,7 +64,7 @@ const CreateProject = ({ location }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    await dispatch(updateProject({ ...project, status: 1 }, data.id));
+    await dispatch(updateProject({ ...project, status: 1 }, projectsReducer.project.id));
   };
 
 
