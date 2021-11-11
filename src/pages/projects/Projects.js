@@ -4,7 +4,7 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { fetchProjects, deleteProject } from '../../redux/actions/projectsAction';
+import { fetchProjects } from '../../redux/actions/projectsAction';
 
 const Projects = () => {
   const history = useHistory();
@@ -56,7 +56,8 @@ const Projects = () => {
     })
       .then((willDelete) => {
         if (willDelete) {
-          dispatch(deleteProject(id));
+          // dispatch(deleteProject(id));
+          swal('Operation canceled!');
         } else {
           swal('Operation canceled!');
         }
