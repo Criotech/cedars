@@ -35,6 +35,7 @@ export const addNews = (data) => async dispatch =>  {
     formData.append('content', data.content);
     formData.append('image', data.image);
     formData.append('category_id', 1);
+    formData.append('is_featured', true);
     
 
     const resp = await ApiService.addNews(formData);
@@ -64,6 +65,7 @@ export const updateNews = (data, id) => async dispatch =>  {
     formData.append('content', data.content);
     formData.append('image', data.image);
     formData.append('category_id', 1);
+    formData.append('is_featured', data.is_featured);
 
     const resp = await ApiService.updateNews(formData, id);
   

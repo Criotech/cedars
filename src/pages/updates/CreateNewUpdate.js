@@ -18,6 +18,7 @@ const CreateUpdate = ({ location }) => {
     title: (data) ? data.title : '',
     content: (data) ? data.content:'',
   });
+  const [is_featured, toggleFeatured] = useState((data) ? data.is_featured:false);
   const [image, setImage] = useState('');
   const inputFile = useRef(null);
 
@@ -37,7 +38,6 @@ const CreateUpdate = ({ location }) => {
   const onButtonClick = () => {
     inputFile.current.click();
   };
-
 
   const alert = useSelector(({ alert }) => alert);
   const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
@@ -72,13 +72,13 @@ const CreateUpdate = ({ location }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(addNews({ ...update, image: image }));
+    await dispatch(addNews({ ...update, is_featured, image: image }));
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    await dispatch(updateNews({ ...update, image: image }, data.id));
+    await dispatch(updateNews({ ...update, is_featured, image: image }, data.id));
   };
 
   const removeFile = () => {
@@ -104,6 +104,13 @@ const CreateUpdate = ({ location }) => {
                 <div className="mb-4 input-family">
                   <label htmlFor="exampleInputtext1" className="label">Details</label>
                   <textarea type="text" style={{ height: 200 }} className="form-control" name='content' value={update.content} onChange={handleChange} />
+                </div>
+
+                <div className='col-md-3 mb-4'>
+                  <div className='flex-between form-control'>
+                    <small>Featured</small>
+                    <input className="form-check-input" type="checkbox" name='is_featured' onChange={()=>toggleFeatured(!is_featured)} value={is_featured} id="defaultCheck1"></input>
+                  </div>
                 </div>
 
               </form>

@@ -67,8 +67,9 @@ const CreateTraining = ({ location }) => {
         icon: 'success',
         button: 'close!',
       });
+      history.push('/trainings');
     }
-  }, [alert.message, alert.success, addToast]);
+  }, [alert.message, alert.success, addToast, history]);
 
   const handleChange = (e) => {
     setTraining({ ...training, [e.target.name]: e.target.value });
