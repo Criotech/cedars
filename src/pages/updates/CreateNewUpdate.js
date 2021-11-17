@@ -72,13 +72,13 @@ const CreateUpdate = ({ location }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(addNews({ ...update, is_featured, image: image }));
+    await dispatch(addNews({ ...update, is_featured: is_featured?1:0, image: image }));
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    await dispatch(updateNews({ ...update, is_featured, image: image }, data.id));
+    await dispatch(updateNews({ ...update, is_featured: is_featured?1:0, image: image }, data.id));
   };
 
   const removeFile = () => {
