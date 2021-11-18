@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import moment from 'moment';
 import swal from 'sweetalert';
 import ReactTagInput from '@pathofdev/react-tag-input';
 import '@pathofdev/react-tag-input/build/index.css';
@@ -18,9 +19,16 @@ const CreateJob = ({ location }) => {
 
   const [update, setUpdate] = useState({
     title: (data) ? data.title : '',
-    description: (data) ? data.description : '', role: (data) ? data.role : '', closing_date: (data) ? data.closing_date : '', location: (data) ? data.location : '',
-    type: (data) ? data.type : '', apply_link: (data) ? data.apply_link : '', rate: (data) ? data.rate : '', employer_name: (data) ? data.employer.name : '',
-    employer_location: (data) ? data.employer.location : '', employer_email: (data) ? data.employer.name : ''
+    description: (data) ? data.description : '', 
+    role: (data) ? data.role : '', 
+    closing_date: (data) ? moment(data.closing_date).format('YYYY-MM-DDTHH:mm') : '', 
+    location: (data) ? data.location : '',
+    type: (data) ? data.type : '', 
+    apply_link: (data) ? data.apply_link : '', 
+    rate: (data) ? data.rate : '', 
+    employer_name: (data) ? data.employer.name : '',
+    employer_location: (data) ? data.employer.location : '', 
+    employer_email: (data) ? data.employer.name : ''
 
   });
   const [image, setImage] = useState('');

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import moment from 'moment';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
@@ -23,11 +24,11 @@ const CreateTraining = ({ location }) => {
     title: (data) ? data.title : '',
     overview: (data) ? data.overview : '',
     live_video: (data) ? data.live_video : '',
-    start_time: (data) ? data.start_time : '',
+    start_time: (data) ? moment(data.start_time).format('YYYY-MM-DDTHH:mm') : '',
     tutor: (data) ? data.tutor : '',
-    attandance_time: (data) ? data.attandance_time : '',
-    status: ''
-  });
+    attandance_time: (data) ? moment(data.attandance_time).format('YYYY-MM-DDTHH:mm') : '',
+    status: (data) ? data.status : ''
+  }); 
   
   const [myFiles, setMyFiles] = useState([]);
 
@@ -83,6 +84,18 @@ const CreateTraining = ({ location }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    if (training.status === 'closed') {
+      training.status = 4;
+    } else if (training.status === 'pending') {
+      training.status = 0;
+    } else if (training.status === 'approved') {
+      training.status = 1;
+    } else if (training.status === 'started') {
+      training.status = 2;
+    } else if (training.status === 'attendanceOpened') {
+      training.status = 3;
+    } 
 
     await dispatch(updateTraining({ ...training, myFiles: myFiles }, data.id));
   };

@@ -71,7 +71,7 @@ export const updateTraining = (data, id) => async dispatch =>  {
     formData.append('start_time', moment(data.start_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('attendance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('tutor', data.tutor);
-    formData.append('status', parseInt(data.status));
+    formData.append('status', data.status);
     for (let i = 0; i < data.myFiles.length; i++) {
       formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
     }
