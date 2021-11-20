@@ -109,6 +109,14 @@ class APIServices {
   async verifyABusiness(data, businessId) {
     return await apiInstance.patch(`/businesses/${businessId}`, data);
   }
+
+  async createAnnoucement(data) {
+    return await apiInstance.post('/announcements', data);
+  }
+
+  async fetchAnnoucements() {
+    return await apiInstance.get('/announcements');
+  }
 }
 
 const instance = new APIServices();

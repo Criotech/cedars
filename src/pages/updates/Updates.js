@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { fetchNews, deleteNews } from '../../redux/actions/newsActions';
 import { fetchJobs, deleteJob } from '../../redux/actions/jobActions';
+import { fetchAnnoucements } from '../../redux/actions/annoucement';
+import { states } from '../../utils/states';
 
 const Updates = () => {
   const history = useHistory();
@@ -17,10 +19,13 @@ const Updates = () => {
   const alert = useSelector(({ alert }) => alert);
   const newsReducer = useSelector(({ newsReducer }) => newsReducer);
   const jobsReducer = useSelector(({ jobsReducer }) => jobsReducer);
+  const annoucementsReducer = useSelector(({ annoucementsReducer }) => annoucementsReducer);
+  
 
   useEffect(() => {
     dispatch(fetchNews());
     dispatch(fetchJobs());
+    dispatch(fetchAnnoucements());
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,6 +72,17 @@ const Updates = () => {
       });
   };
 
+  const returnState = (stateCode) => {
+    let state = 'All States';
+    states.map((x) => {
+      if (stateCode.toLowerCase() === x.state_code.toLowerCase()) {
+        state = x.state_name;
+        return state;
+      }
+      return 'All States';
+    });
+    return state; 
+  };
   const deleteAJob = (id) => {
     swal({
       title: 'Are you sure?',
@@ -87,6 +103,37 @@ const Updates = () => {
 
   const [currentTab, setCurrentTab] = useState(0);
 
+  const renderTabs = () => {
+    if  (currentTab === 0) {
+      return (
+        <div onClick={() => history.push('/updates/create/news')} className="d-flex flex-between pointer">
+          <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
+          <h5 className="fw-bold text-green">
+                    Create News Update
+          </h5>
+        </div>
+      );
+    } else if (currentTab===1) {
+      return (
+        <div onClick={() => history.push('/updates/create/job')} className="d-flex flex-between pointer">
+          <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
+          <h5 className="fw-bold text-green">
+          Create Job Update
+          </h5>
+        </div>
+      );
+    } else if (currentTab === 2) {
+      return (
+        <div onClick={() => history.push('/updates/create/notification')} className="d-flex flex-between pointer">
+          <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
+          <h5 className="fw-bold text-green">
+          Create Notification
+          </h5>
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <DashboardLayout title='Updates'>
@@ -96,27 +143,14 @@ const Updates = () => {
 
 
             {
-              currentTab === 0 ?
-                <div onClick={() => history.push('/updates/create/news')} className="d-flex flex-between pointer">
-                  <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
-                  <h5 className="fw-bold text-green">
-                    Create News Update
-                  </h5>
-                </div>
-                :
-                <div onClick={() => history.push('/updates/create/job')} className="d-flex flex-between pointer">
-                  <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
-                  <h5 className="fw-bold text-green">
-                    Create Job Update
-                  </h5>
-                </div>
+              renderTabs()
             }
 
           </div>
 
 
           <div className='mt-5 px-5'>
-            <Tabs tabs={[{ name: 'News' }, { name: 'Jobs' }]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+            <Tabs tabs={[{ name: 'News' }, { name: 'Jobs' }, { name: 'Notifications' }]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
           </div>
 
           <div className="mt-4 px-5">
@@ -153,6 +187,19 @@ const Updates = () => {
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button onClick={()=>history.push('/updates/create/job', {job: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={() => deleteAJob(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
+                      </div></td>
+                    </tr>
+                  ))
+                }
+
+                {
+                  currentTab === 2 && annoucementsReducer.annoucements.map(x => (
+                    <tr key={x.id}>
+                      <td>{WithoutTime(x.created_at)}</td>
+                      <td>{x.title}</td>
+                      <td>{x.content}</td>
+                      <td><div className="btn-group" role="group" aria-label="Basic outlined example">
+                        {returnState(x.state_code)}
                       </div></td>
                     </tr>
                   ))

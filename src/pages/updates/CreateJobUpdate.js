@@ -38,12 +38,6 @@ const CreateJob = ({ location }) => {
   const handleFileUpload = e => {
     const { files } = e.target;
     if (files && files.length) {
-      // const filename = files[0].name;
-
-      // var parts = filename.split('.');
-      // const fileType = parts[parts.length - 1];
-      // console.log('fileType', fileType); //ex: zip, rar, jpg, svg etc.
-
       setImage(files[0]);
     }
   };
@@ -200,7 +194,6 @@ const CreateJob = ({ location }) => {
                   <p>Please upload an image in JPG, JPEG or PNG format (not more than 1MB)</p>
                   <button style={{ backgroundColor: '#E7F9E9', fontSize: 11 }} onClick={onButtonClick} className="btn">Chooose file</button>
                 </div>
-
               </div>
 
               {
