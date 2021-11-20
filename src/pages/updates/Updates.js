@@ -74,6 +74,9 @@ const Updates = () => {
 
   const returnState = (stateCode) => {
     let state = 'All States';
+    if (!stateCode) {
+      return 'All States';
+    }
     states.map((x) => {
       if (stateCode.toLowerCase() === x.state_code.toLowerCase()) {
         state = x.state_name;
