@@ -28,6 +28,10 @@ export const fetchAnnoucements = () => async dispatch => {
   
 export const createAnnoucement = (data) => async dispatch =>  {
   dispatch(startLoading());
+
+  if (data.state_code === '') {
+    delete data.state_code;
+  }
     
   try {
     
