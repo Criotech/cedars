@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Upload = () => {
+const Upload = ({data, deleteAProjectResource}) => {
   return (
     <div>
       <div className='upload-file-container'>
@@ -10,18 +10,25 @@ const Upload = () => {
       </div>
 
       <div className='mt-3'>
-        <div className='flex-between py-2'>
-          <p className='fw-bold'>CreateAGMB-Template.pdf</p>
-          <button style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
-            <i className="fa fa-close" aria-hidden="true"></i>
-          </button>
-        </div>
-        <div className='flex-between py-2'>
-          <p className='fw-bold'>CreateAGMB-Template.pdf</p>
-          <button style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
-            <i className="fa fa-close" aria-hidden="true"></i>
-          </button>
-        </div>
+        {
+          (data) && 
+            data.resources.map((x)=> (
+              <div key={x.id} className='flex-between py-2'>
+                <p className='fw-bold'>{x.filename}</p>
+                <button onClick={()=>deleteAProjectResource(x.id)} style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
+                  <i className="fa fa-close" aria-hidden="true"></i>
+                </button>
+              </div>
+            ))
+        }
+        {
+          !data && <div className='flex-between py-2'>
+            <p className='fw-bold'>CreateAGMB-Template.pdf</p>
+            <button style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
+              <i className="fa fa-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        }
       </div>
 
       <button className="btn bg-green text-white px-4 py-2 float-end mt-5">

@@ -9,7 +9,7 @@ import StateInfo from '../../components/createProject/stateInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { updateProject, fetchProject } from '../../redux/actions/projectsAction';
-
+import { deleteResource } from '../../redux/actions/resourceAction';
 
 const CreateProject = ({ location }) => {
   let x = (location.state) ? location.state.project : null;
@@ -77,6 +77,24 @@ const CreateProject = ({ location }) => {
     }
   };
 
+  const deleteAProjectResource = (id) => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteResource(id));
+          swal('Operation canceled!');
+        } else {
+          swal('Operation canceled!');
+        }
+      });
+  };
+
   return (
     <div>
       <DashboardLayout title='Projects'>
@@ -94,7 +112,7 @@ const CreateProject = ({ location }) => {
               }
 
               {
-                currentTab===1 &&  <Upload />
+                currentTab===1 &&  <Upload data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource}/>
               }
               {
                 currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} />

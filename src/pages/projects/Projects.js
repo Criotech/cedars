@@ -46,7 +46,7 @@ const Projects = () => {
     return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
   };
 
-  const deleteAProject = (id) => {
+  const deleteAProject = () => {
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this file!',

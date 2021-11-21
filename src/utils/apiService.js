@@ -117,6 +117,10 @@ class APIServices {
   async fetchAnnoucements() {
     return await apiInstance.get('/announcements');
   }
+
+  async deleteResource(id) {
+    return await apiInstance.delete(`/resources/${id}`);
+  }
 }
 
 const instance = new APIServices();
