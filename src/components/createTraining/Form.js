@@ -35,9 +35,9 @@ const Form = ({ setCurrentTab, handleChange, training, data }) => {
             <select name='status' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
               <option value={0}>Pending</option>
               <option value={1}>Approved</option>
-              <option value={2}>Started</option>
-              <option value={3}>Attendance Opened</option>
-              <option value={4}>Closed</option>
+              <option value={3}>Started</option>
+              <option value={4}>Attendance Opened</option>
+              <option value={5}>Closed</option>
             </select>
           </div>
         }
