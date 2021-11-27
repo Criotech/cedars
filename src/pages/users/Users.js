@@ -147,7 +147,7 @@ const Users = () => {
                 </button>
                 :
                 <button onClick={approvePCMUsers} className="btn bg-green text-white">
-                  {loadingReducer.loading ? 'Loading...' : 'Approve all'}
+                  {loadingReducer.loading ? 'Loading...' : 'Approve selected'}
                 </button>
             }
 
