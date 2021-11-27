@@ -28,7 +28,7 @@ const CreateJob = ({ location }) => {
     rate: (data) ? data.rate : '', 
     employer_name: (data) ? data.employer.name : '',
     employer_location: (data) ? data.employer.location : '', 
-    employer_email: (data) ? data.employer.name : ''
+    employer_email: (data) ? data.employer.email : ''
 
   });
   const [image, setImage] = useState('');
