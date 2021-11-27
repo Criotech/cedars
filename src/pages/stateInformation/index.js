@@ -18,7 +18,18 @@ const Index = () => {
     stateCode: 'ab'
   });
 
-  const [excoFormData, setExcoFormData] = useState({});
+  const [excoFormData, setExcoFormData] = useState({
+    name: '',
+    email: '',
+    phone_number: '',
+    instagram: '',
+    facebook: '',
+    state_code: '',
+    year: '',
+    batch: '',
+    type: '',
+    position: ''
+  });
 
   useEffect(() => {
     dispatch(fetchExcos(excos.stateCode));
@@ -58,6 +69,18 @@ const Index = () => {
     e.preventDefault();
 
     await dispatch(postExcos({ ...excoFormData }));
+    setExcoFormData({
+      name: '',
+      email: '',
+      phone_number: '',
+      instagram: '',
+      facebook: '',
+      state_code: '',
+      year: '',
+      batch: '',
+      type: '',
+      position: ''
+    });
   };
 
   const copyToClipBoard = async copyMe => {
@@ -131,31 +154,31 @@ const Index = () => {
                     <form>
                       <div className="mb-4 input-family">
                         <label htmlFor="exampleInputPassword1" className="label">Full Name</label>
-                        <input name='name' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
+                        <input name='name' value={excoFormData.name} onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                       </div>
                       <div className='row'>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Email Address</label>
-                            <input name='email' onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
+                            <input name='email' value={excoFormData.email} onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Phone number</label>
-                            <input name='phone_number' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
+                            <input name='phone_number' value={excoFormData.phone_number} onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Instagram Handle</label>
-                            <input name='instagram' onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
+                            <input name='instagram' value={excoFormData.instagram} onChange={handleChange} type="text" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className="mb-4 input-family">
                             <label htmlFor="exampleInputPassword1" className="label">Facebook Link</label>
-                            <input name='facebook' onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
+                            <input name='facebook' value={excoFormData.facebook} onChange={handleChange} type="email" className="form-control" id="exampleInputtext1" />
                           </div>
                         </div>
                       </div>
@@ -163,7 +186,7 @@ const Index = () => {
                       <div className='row'>
                         <div className="mb-4  input-family col-md-4">
                           <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-                          <select name='state_code' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                          <select name='state_code' value={excoFormData.state_code} onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                             <option>Selecet a state</option>
                             {
                               states.map(x => (
@@ -175,7 +198,7 @@ const Index = () => {
 
                         <div className="mb-4 input-family col-md-4">
                           <label htmlFor="exampleInputtext1" className="label">Year</label>
-                          <select name='year' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                          <select name='year' value={excoFormData.year} onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                             <option>Selecet a year</option>
                             {
                               range(2020, 2040).map(x => (
@@ -187,7 +210,7 @@ const Index = () => {
 
                         <div className="mb-4 input-family col-md-4">
                           <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-                          <select name='batch' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                          <select name='batch' value={excoFormData.batch} onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                             <option>Selecet a batch</option>
                             <option value='BatchAStream1'>Batch A, Stream 1</option>
                             <option value='BatchAStream2'>Batch A, Stream 2</option>
@@ -202,7 +225,7 @@ const Index = () => {
 
                       <div className="mb-4 input-family">
                         <label htmlFor="exampleInputtext1" className="label">Exco Type</label>
-                        <select name='type' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                        <select name='type' value={excoFormData.type} onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                           <option>Select type</option>
                           <option value={0}>Schedule Officer</option>
                           <option value={1}>Community Manager</option>

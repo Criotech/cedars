@@ -5,7 +5,7 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import Tabs from '../../components/Tabbar';
 import Form from '../../components/createProject/Form';
 import Upload from '../../components/createProject/upload';
-import StateInfo from '../../components/createProject/stateInfo';
+// import StateInfo from '../../components/createProject/stateInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { updateProject, fetchProject } from '../../redux/actions/projectsAction';
@@ -68,14 +68,14 @@ const CreateProject = ({ location }) => {
   };
 
 
-  const copyToClipBoard = async copyMe => {
-    try {
-      await navigator.clipboard.writeText(copyMe);
-      addToast('Copied', { appearance: 'success' });
-    } catch (err) {
-      addToast('Failed to copy', { appearance: 'error' });
-    }
-  };
+  // const copyToClipBoard = async copyMe => {
+  //   try {
+  //     await navigator.clipboard.writeText(copyMe);
+  //     addToast('Copied', { appearance: 'success' });
+  //   } catch (err) {
+  //     addToast('Failed to copy', { appearance: 'error' });
+  //   }
+  // };
 
   const deleteAProjectResource = (id) => {
     swal({
@@ -105,8 +105,8 @@ const CreateProject = ({ location }) => {
 
 
             <div className='mt-5 px-5 az'>
-              <Tabs tabs={[{name: 'Project Details'}, {name: 'Upload resources'}, {name: 'Excos'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
-              
+              <Tabs tabs={[{name: 'Project Details'}, {name: 'Upload resources'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+              {/* , {name: 'Excos'} */}
               {
                 currentTab===0 && <Form data={projectsReducer.project} project={project} handleChange={handleChange} handleUpdate={handleUpdate} loading={loadingReducer.loading} setCurrentTab={setCurrentTab} /> 
               }
@@ -114,9 +114,9 @@ const CreateProject = ({ location }) => {
               {
                 currentTab===1 &&  <Upload data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource}/>
               }
-              {
-                currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} />
-              }
+              
+              {/* currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} /> */}
+              
          
             </div>
 

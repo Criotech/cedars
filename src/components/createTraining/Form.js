@@ -56,3 +56,5 @@ const Form = ({ setCurrentTab, handleChange, training, data }) => {
 };
 
 export default Form;
+
+
