@@ -135,7 +135,7 @@ const Index = () => {
           <div className="d-flex justify-content-end pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
             <small className="text-green">
-                            Create New
+              Create New
             </small>
           </div>
 
@@ -272,93 +272,107 @@ const Index = () => {
                 </div>
                 <div className="modal-footer">
 
-                  <button onClick={handleSubmit} data-bs-dismiss="modal" type="button" className="btn bg-green text-white">{loadingReducer.loading?'Loading...':'save'}</button>
+                  <button onClick={handleSubmit} data-bs-dismiss="modal" type="button" className="btn bg-green text-white">{loadingReducer.loading ? 'Loading...' : 'save'}</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <h5 className="fw-bold mb-3  mt-5">Excecutives</h5>
+          <h5 className="fw-bold mb-3  mt-5">Executive</h5>
 
 
-          <div className='excos-list'>
-            <div className='row'>
-              {
-                excosReducer.excos.map(x => (
-                  <div key={x.id} className='col-md-6 mb-4 px-5'>
-                    <small className='text-green'>{x.position}</small>
-                    <div className='flex-between mt-1'>
-                      <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
-                        <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
-                      </button>
+          {
+            !loadingReducer.loading
+            &&
+            <div className='excos-list'>
+              <div className='row'>
+                {
+                  excosReducer.excos.map(x => (
+                    <div key={x.id} className='col-md-6 mb-4 px-5'>
+                      <small className='text-green'>{x.position}</small>
+                      <div className='flex-between mt-1'>
+                        <p className='fw-bold text-grey'>{x.name}</p>
+                        <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                          <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
+                        </button>
+                      </div>
+                      <div className='mt-2 fw-bold'>
+                        <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
+                      </div>
+                      <div className='mt-2 fw-bold text-grey'>
+                        <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
+                      </div>
                     </div>
-                    <div className='mt-2 fw-bold'>
-                      <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
-                    </div>
-                    <div className='mt-2 fw-bold text-grey'>
-                      <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
-                    </div>
-                  </div>
-                ))
-              }
+                  ))
+                }
+              </div>
+
             </div>
-         
-          </div>
+          }
+
 
           <h5 className="fw-bold mb-3  mt-5">Schedule Officers</h5>
 
-
-          <div className='excos-list'>
-            <div className='row'>
-              {
-                excosReducer.scheduleOfficers.map(x => (
-                  <div key={x.id} className='col-md-6 mb-4 px-5'>
-                    <small className='text-green'>{x.position}</small>
-                    <div className='flex-between mt-1'>
-                      <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
-                        <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
-                      </button>
+          {
+            !loadingReducer.loading
+            &&
+            <div className='excos-list'>
+              <div className='row'>
+                {
+                  excosReducer.scheduleOfficers.map(x => (
+                    <div key={x.id} className='col-md-6 mb-4 px-5'>
+                      <small className='text-green'>{x.position}</small>
+                      <div className='flex-between mt-1'>
+                        <p className='fw-bold text-grey'>{x.name}</p>
+                        <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                          <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
+                        </button>
+                      </div>
+                      <div className='mt-2 fw-bold'>
+                        <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
+                      </div>
+                      <div className='mt-2 fw-bold text-grey'>
+                        <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
+                      </div>
                     </div>
-                    <div className='mt-2 fw-bold'>
-                      <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
-                    </div>
-                    <div className='mt-2 fw-bold text-grey'>
-                      <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
-                    </div>
-                  </div>
-                ))
-              }
+                  ))
+                }
+              </div>
             </div>
-          </div>
+
+          }
 
           <h5 className="fw-bold mb-3  mt-5">Community Managers</h5>
 
-
-          <div className='excos-list'>
-            <div className='row'>
-              {
-                excosReducer.communityManagers.map(x => (
-                  <div key={x.id} className='col-md-6 mb-4 px-5'>
-                    <small className='text-green'>{x.position}</small>
-                    <div className='flex-between mt-1'>
-                      <p className='fw-bold text-grey'>{x.name}</p>
-                      <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
-                        <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
-                      </button>
+          {
+            !loadingReducer.loading
+            &&
+            <div className='excos-list'>
+              <div className='row'>
+                {
+                  excosReducer.communityManagers.map(x => (
+                    <div key={x.id} className='col-md-6 mb-4 px-5'>
+                      <small className='text-green'>{x.position}</small>
+                      <div className='flex-between mt-1'>
+                        <p className='fw-bold text-grey'>{x.name}</p>
+                        <button onClick={() => copyToClipBoard(`${x.name} ${x.email} ${x.phone_number} ${x.instagram} ${x.facebook}`)} className='btn btn-outline-dark'>
+                          <small>Copy Profile <i className="fa fa-clone" aria-hidden="true"></i></small>
+                        </button>
+                      </div>
+                      <div className='mt-2 fw-bold'>
+                        <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
+                      </div>
+                      <div className='mt-2 fw-bold text-grey'>
+                        <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
+                      </div>
                     </div>
-                    <div className='mt-2 fw-bold'>
-                      <p className='text-grey'><span className='mr-1'>{x.email}</span>  {x.phone_number}</p>
-                    </div>
-                    <div className='mt-2 fw-bold text-grey'>
-                      <p><span className='mr-1'>IG: {x.instagram} </span> <span>Facebook: {x.facebook}</span></p>
-                    </div>
-                  </div>
-                ))
-              }
+                  ))
+                }
+              </div>
             </div>
-          </div>
+
+          }
+
         </div>
       </DashboardLayout>
     </div>
