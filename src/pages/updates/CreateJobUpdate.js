@@ -29,7 +29,6 @@ const CreateJob = ({ location }) => {
     employer_name: (data) ? data.employer.name : '',
     employer_location: (data) ? data.employer.location : '', 
     employer_email: (data) ? data.employer.email : ''
-
   });
   const [image, setImage] = useState('');
   const [perks, setPerks] = useState((data)?data.perks:[]);
