@@ -171,8 +171,8 @@ const Updates = () => {
                   currentTab === 0 && newsReducer.news.map(x => (
                     <tr key={x.id}>
                       <td>{WithoutTime(x.created_at)}</td>
-                      <td>{x.title}</td>
-                      <td>{x.content}</td>
+                      <td>{x.title}...</td>
+                      <td>{x.content.slice(0, 200)}...</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button onClick={()=>history.push('/updates/create/news', {news: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={() => deleteANews(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
@@ -186,7 +186,7 @@ const Updates = () => {
                     <tr key={x.id}>
                       <td>{WithoutTime(x.created_at)}</td>
                       <td>{x.title}</td>
-                      <td>{x.description}</td>
+                      <td>{x.description.slice(0, 200)}...</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button onClick={()=>history.push('/updates/create/job', {job: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
                         <button onClick={() => deleteAJob(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
@@ -200,7 +200,7 @@ const Updates = () => {
                     <tr key={x.id}>
                       <td>{WithoutTime(x.created_at)}</td>
                       <td>{x.title}</td>
-                      <td>{x.content}</td>
+                      <td>{x.content.slice(0, 200)}...</td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         {returnState(x.state_code)}
                       </div></td>

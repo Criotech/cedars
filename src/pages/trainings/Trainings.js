@@ -103,7 +103,7 @@ const Trainings = () => {
                     <tr key={x.id}>
                       <td>{moment(x.updated_at).format('YYYY-MM-DD')}</td>
                       <td>{x.title}</td>
-                      <td> {x.overview} </td>
+                      <td> {x.overview.slice(0,200)}... </td>
                       <td> {x.status} </td>
                       <td><div className="btn-group" role="group" aria-label="Basic outlined example">
                         <button onClick={()=>history.push('/trainings/create', {training: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
