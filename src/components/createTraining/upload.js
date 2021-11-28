@@ -9,15 +9,15 @@ const Upload = ({getRootProps, getInputProps, removeFile, myFiles, handleSubmit,
       </button>
     </div>
   ));
-  const resources = resourceData.resources.map((x)=> (
-    <div key={x.id} className='flex-between py-2'>
-      <p className='fw-bold'>{x.filename}</p>
-      {/* onClick={()=>deleteAProjectResource(x.id)} */}
-      <button onClick={()=>deleteAProjectResource(x.id)} style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
-        <i className="fa fa-close" aria-hidden="true"></i>
-      </button>
-    </div>
-  ));
+  // const resources = resourceData&&resourceData.resources.map((x)=> (
+  //   <div key={x.id} className='flex-between py-2'>
+  //     <p className='fw-bold'>{x.filename}</p>
+  //     {/* onClick={()=>deleteAProjectResource(x.id)} */}
+  //     <button onClick={()=>deleteAProjectResource(x.id)} style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
+  //       <i className="fa fa-close" aria-hidden="true"></i>
+  //     </button>
+  //   </div>
+  // ));
   
   return (
     <div>
@@ -34,7 +34,15 @@ const Upload = ({getRootProps, getInputProps, removeFile, myFiles, handleSubmit,
         }
         {
           data && 
-          resources
+          resourceData.resources.map((x)=> (
+            <div key={x.id} className='flex-between py-2'>
+              <p className='fw-bold'>{x.filename}</p>
+              {/* onClick={()=>deleteAProjectResource(x.id)} */}
+              <button onClick={()=>deleteAProjectResource(x.id)} style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
+                <i className="fa fa-close" aria-hidden="true"></i>
+              </button>
+            </div>
+          ))
         }
       </div>
 

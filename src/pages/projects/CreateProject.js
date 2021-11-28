@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
@@ -9,8 +9,8 @@ import Upload from '../../components/createProject/upload';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { updateProject, fetchProject } from '../../redux/actions/projectsAction';
-// import { useDropzone } from 'react-dropzone';
-import { deleteResource } from '../../redux/actions/resourceAction';
+import { useDropzone } from 'react-dropzone';
+import { deleteResource, addResources } from '../../redux/actions/resourceAction';
 
 const CreateProject = ({ location }) => {
   let x = (location.state) ? location.state.project : null;
@@ -27,7 +27,28 @@ const CreateProject = ({ location }) => {
     overview: '',
     guide: '',
   });
+
+  const [myFiles, setMyFiles] = useState([]);
+
+  const onDrop = useCallback(acceptedFiles => {
+    setMyFiles([...myFiles, ...acceptedFiles]);
+  }, [myFiles]);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+  });
+
+  const removeFile = file => () => {
+    const newFiles = [...myFiles];
+    newFiles.splice(newFiles.indexOf(file), 1);
+    setMyFiles(newFiles);
+  };
   
+  const addResourcesToTraining = () => {
+    
+    dispatch(addResources({myFiles: myFiles, entity_id: projectsReducer.project.id, entity_type: 'project' }));
+  };
+
   useEffect(()=>{
     dispatch(fetchProject(x.id));
     setProject({ title: projectsReducer.project.title, overview: projectsReducer.project.overview, guide: projectsReducer.project.guide  });
@@ -55,8 +76,9 @@ const CreateProject = ({ location }) => {
         icon: 'success',
         button: 'close!',
       });
+      history.push('/projects');
     }
-  }, [alert.message, alert.success, addToast]);
+  }, [alert.message, alert.success, addToast, history]);
 
   const handleChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
@@ -113,7 +135,8 @@ const CreateProject = ({ location }) => {
               }
 
               {
-                currentTab===1 &&  <Upload data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource}/>
+                currentTab===1 &&  <Upload  addResourcesToTraining={addResourcesToTraining} getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
+                  removeFile={removeFile} data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource}/>
               }
               
               {/* currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} /> */}

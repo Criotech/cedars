@@ -51,7 +51,7 @@ const Form = ({ setCurrentTab, handleChange, handleUpdate, loading, training, da
               {loading?'Loading...':'Update Training'}
             </button>
             :
-            <button onClick={handleUpdate} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
+            <button onClick={()=>setCurrentTab(1)} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
           Next
             </button>
             

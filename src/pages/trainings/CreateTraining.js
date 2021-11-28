@@ -79,9 +79,7 @@ const CreateTraining = ({ location }) => {
         icon: 'success',
         button: 'close!',
       });
-      if (!data) {
-        history.push('/trainings');
-      }
+      history.push('/trainings');
     }
   }, [alert.message, alert.success, addToast, history, data]);
 
