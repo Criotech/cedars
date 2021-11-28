@@ -26,7 +26,7 @@ const CreateTraining = ({ location }) => {
     live_video: (data) ? data.live_video : '',
     start_time: (data) ? moment(data.start_time).format('YYYY-MM-DDTHH:mm') : '',
     tutor: (data) ? data.tutor : '',
-    attandance_time: (data) ? moment(data.attandance_time).format('YYYY-MM-DDTHH:mm') : '',
+    attandance_time: (data) ? moment(data.attendance_time).format('YYYY-MM-DDTHH:mm') : '',
     status: (data) ? data.status : ''
   }); 
   
