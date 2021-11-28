@@ -9,11 +9,13 @@ import Upload from '../../components/createTraining/upload';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { addTraining, updateTraining, fetchTraining } from '../../redux/actions/triainingActions';
+import { deleteResource, addResources } from '../../redux/actions/resourceAction';
+
 import { useDropzone } from 'react-dropzone';
 
 
 const CreateTraining = ({ location }) => {
-  // let data = (location.state) ? location.state.training : null;
+  let data = (location.state) ? location.state.training : null;
 
   const history = useHistory();
   const [currentTab, setCurrentTab] = useState(0);
@@ -25,7 +27,7 @@ const CreateTraining = ({ location }) => {
   }, [dispatch, location]);
 
   const trainingsReducer = useSelector(({ trainingsReducer }) => trainingsReducer);
-  let data = trainingsReducer.training ? trainingsReducer.training : null;
+  let resourceData = trainingsReducer.training ? trainingsReducer.training : null;
 
   const [training, setTraining] = useState({
     title: (data) ? data.title : '',
@@ -75,9 +77,11 @@ const CreateTraining = ({ location }) => {
         icon: 'success',
         button: 'close!',
       });
-      history.push('/trainings');
+      if (!data) {
+        history.push('/trainings');
+      }
     }
-  }, [alert.message, alert.success, addToast, history]);
+  }, [alert.message, alert.success, addToast, history, data]);
 
   const handleChange = (e) => {
     setTraining({ ...training, [e.target.name]: e.target.value });
@@ -107,6 +111,29 @@ const CreateTraining = ({ location }) => {
     await dispatch(updateTraining({ ...training }, data.id));
   };
 
+  const addResourcesToTraining = () => {
+    
+    dispatch(addResources({myFiles: myFiles, entity_id: location.state.training.id,entity_type: 'training' }));
+  };
+
+  const deleteAProjectResource = (id) => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteResource(id));
+          swal('Operation canceled!');
+        } else {
+          swal('Operation canceled!');
+        }
+      });
+  };
+
   return (
     <div>
       <DashboardLayout title='Trainings'>
@@ -122,9 +149,9 @@ const CreateTraining = ({ location }) => {
 
               {
                 currentTab === 0 ? <Form handleChange={handleChange} loading={loadingReducer.loading} handleUpdate={handleUpdate} setCurrentTab={setCurrentTab} training={training} data={data ? data : null} /> :
-                  <Upload getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
+                  <Upload addResourcesToTraining={addResourcesToTraining} resourceData={resourceData} getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
                     removeFile={removeFile} loading={loadingReducer.loading} handleSubmit={handleSubmit}
-                    handleUpdate={handleUpdate} data={data ? data : null}
+                    handleUpdate={handleUpdate} deleteAProjectResource={deleteAProjectResource} data={data ? data : null}
                   />
               }
 

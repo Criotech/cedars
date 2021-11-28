@@ -122,6 +122,10 @@ class APIServices {
     return await apiInstance.get('/announcements');
   }
 
+  async addResources(data) {
+    return await apiInstance.post('/resources', data);
+  }
+
   async deleteResource(id) {
     return await apiInstance.delete(`/resources/${id}`);
   }
