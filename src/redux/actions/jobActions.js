@@ -89,7 +89,9 @@ export const updateJob = (data, id) => async dispatch =>  {
     formData.append('employer_name', data.employer_name);
     formData.append('employer_location', data.employer_location);
     formData.append('employer_email', data.employer_email);
-    // formData.append('employer_logo', data.image);
+    if (data.image) {
+      formData.append('employer_logo', data.image);
+    }
 
     const resp = await ApiService.updateJob(formData, id);
   
