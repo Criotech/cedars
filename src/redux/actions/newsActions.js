@@ -58,14 +58,14 @@ export const addNews = (data) => async dispatch =>  {
 
 export const updateNews = (data, id) => async dispatch =>  {
   dispatch(startLoading());
+
   try {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('content', data.content);
-    formData.append('image', data.image);
+    // formData.append('image', data.image);
     formData.append('category_id', 1);
     formData.append('is_featured', data.is_featured);
-
     const resp = await ApiService.updateNews(formData, id);
   
     if (resp) {

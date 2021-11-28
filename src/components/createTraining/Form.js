@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Form = ({ setCurrentTab, handleChange, training, data }) => {
+const Form = ({ setCurrentTab, handleChange, handleUpdate, loading, training, data }) => {
   return (
     <div>
       <form>
@@ -45,9 +45,18 @@ const Form = ({ setCurrentTab, handleChange, training, data }) => {
 
       </form>
       <div className='d-flex justify-content-end'>
-        <button onClick={() => setCurrentTab(1)} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
+        {
+          data ?
+            <button onClick={handleUpdate} className="btn bg-green text-white px-4 py-2 float-end mt-5">
+              {loading?'Loading...':'Update Training'}
+            </button>
+            :
+            <button onClick={handleUpdate} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 fw-bold">
           Next
-        </button>
+            </button>
+            
+        }
+
       </div>
 
     </div>

@@ -18,6 +18,7 @@ export const ERROR = 'ERROR';
 export const CLEAR = 'CLEAR';
 
 export const FETCH_TRAININGS = 'FETCH_TRAININGS';
+export const FETCH_TRAINING = 'FETCH_TRAINING';
 export const FETCH_PROJECTS = 'FETCH_PROJECTS';
 export const FETCH_NEWS = 'FETCH_NEWS';
 export const FETCH_JOBS = 'FETCH_JOBS';

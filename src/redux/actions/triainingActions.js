@@ -2,6 +2,7 @@
 import moment from 'moment';
 import {
   FETCH_TRAININGS,
+  FETCH_TRAINING
 } from '../types';
 import ApiService from '../../utils/apiService';
 import { getError, success, clear } from './alertActions';
@@ -14,6 +15,26 @@ export const fetchTrainings = () => async dispatch => {
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_TRAININGS, payload: resp.data.data });
+    }
+  } catch (error) {
+    dispatch(stopLoading());
+    if (error.message === 'Network Error'||error.response.status===500) {
+      dispatch(getError('Network Error'));
+      dispatch(clear());
+    } else {
+      dispatch(getError(error.response.data.error.message));
+      dispatch(clear());
+    }
+  }
+};
+
+export const fetchTraining = (id) => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const resp = await ApiService.fetchTraining(id);
+    if (resp) {
+      dispatch(stopLoading());
+      return dispatch({ type: FETCH_TRAINING, payload: resp.data.data });
     }
   } catch (error) {
     dispatch(stopLoading());
@@ -72,9 +93,9 @@ export const updateTraining = (data, id) => async dispatch =>  {
     formData.append('attendance_time', moment(data.attandance_time).format('YYYY-MM-DD HH:mm:ss'));
     formData.append('tutor', data.tutor);
     formData.append('status', data.status);
-    for (let i = 0; i < data.myFiles.length; i++) {
-      formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
-    }
+    // for (let i = 0; i < data.myFiles.length; i++) {
+    //   formData.append(`resources[${i}][attachment]`, data.myFiles[i]);
+    // }
 
     const resp = await ApiService.updateTraining(formData, id);
   

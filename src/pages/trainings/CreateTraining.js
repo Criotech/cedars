@@ -8,17 +8,24 @@ import Form from '../../components/createTraining/Form';
 import Upload from '../../components/createTraining/upload';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { addTraining, updateTraining } from '../../redux/actions/triainingActions';
+import { addTraining, updateTraining, fetchTraining } from '../../redux/actions/triainingActions';
 import { useDropzone } from 'react-dropzone';
 
 
 const CreateTraining = ({ location }) => {
-  let data = (location.state) ? location.state.training : null;
+  // let data = (location.state) ? location.state.training : null;
 
   const history = useHistory();
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
   const { addToast } = useToasts();
+
+  useEffect(()=>{
+    dispatch(fetchTraining(location.state.training.id));
+  }, [dispatch, location]);
+
+  const trainingsReducer = useSelector(({ trainingsReducer }) => trainingsReducer);
+  let data = trainingsReducer.training ? trainingsReducer.training : null;
 
   const [training, setTraining] = useState({
     title: (data) ? data.title : '',
@@ -97,7 +104,7 @@ const CreateTraining = ({ location }) => {
       training.status = 3;
     } 
 
-    await dispatch(updateTraining({ ...training, myFiles: myFiles }, data.id));
+    await dispatch(updateTraining({ ...training }, data.id));
   };
 
   return (
@@ -114,7 +121,7 @@ const CreateTraining = ({ location }) => {
               <Tabs tabs={[{ name: 'Overview' }, { name: 'Resources' }]} setCurrentTab={setCurrentTab} currentTab={currentTab}  />
 
               {
-                currentTab === 0 ? <Form handleChange={handleChange} setCurrentTab={setCurrentTab} training={training} data={data ? data : null} /> :
+                currentTab === 0 ? <Form handleChange={handleChange} loading={loadingReducer.loading} handleUpdate={handleUpdate} setCurrentTab={setCurrentTab} training={training} data={data ? data : null} /> :
                   <Upload getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
                     removeFile={removeFile} loading={loadingReducer.loading} handleSubmit={handleSubmit}
                     handleUpdate={handleUpdate} data={data ? data : null}

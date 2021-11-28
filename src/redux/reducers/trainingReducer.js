@@ -1,7 +1,8 @@
-import { FETCH_TRAININGS } from '../types';
+import { FETCH_TRAININGS, FETCH_TRAINING } from '../types';
 
 const initialState = {
-  trainings: []
+  trainings: [],
+  training: {}
 };
 
 const trianings = (state = initialState, action) => {
@@ -9,6 +10,8 @@ const trianings = (state = initialState, action) => {
   case FETCH_TRAININGS:
 
     return { ...state, trainings: action.payload.data };
+  case FETCH_TRAINING: 
+    return { ...state, training: action.payload };
   default:
     return state;
   }

@@ -13,6 +13,10 @@ class APIServices {
     return await apiInstance.get('/trainings?order=desc');
   }
 
+  async fetchTraining (id) {
+    return await apiInstance.get(`/trainings/${id}`);
+  }
+
   async fetchProjects () {
     return await apiInstance.get('/projects?order=desc');
   }

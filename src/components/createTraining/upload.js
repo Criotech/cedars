@@ -9,6 +9,16 @@ const Upload = ({getRootProps, getInputProps, removeFile, myFiles, handleSubmit,
       </button>
     </div>
   ));
+  const resources = data.resources.map((x)=> (
+    <div key={x.id} className='flex-between py-2'>
+      <p className='fw-bold'>{x.filename}</p>
+      {/* onClick={()=>deleteAProjectResource(x.id)} */}
+      <button style={{border: '1px solid #D5D8DF', fontSize: 12}} className='btn'>
+        <i className="fa fa-close" aria-hidden="true"></i>
+      </button>
+    </div>
+  ));
+  
   return (
     <div>
       <div {...getRootProps({className: 'dropzone upload-file-container'})}>
@@ -21,6 +31,10 @@ const Upload = ({getRootProps, getInputProps, removeFile, myFiles, handleSubmit,
       <div className='mt-3'>
         {
           files
+        }
+        {
+          data && 
+          resources
         }
       </div>
 
