@@ -23,7 +23,9 @@ const CreateTraining = ({ location }) => {
   const { addToast } = useToasts();
 
   useEffect(()=>{
-    dispatch(fetchTraining(location.state.training.id));
+    if (location.state) {
+      dispatch(fetchTraining(location.state.training.id));
+    }
   }, [dispatch, location]);
 
   const trainingsReducer = useSelector(({ trainingsReducer }) => trainingsReducer);

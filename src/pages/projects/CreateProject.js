@@ -9,6 +9,7 @@ import Upload from '../../components/createProject/upload';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { updateProject, fetchProject } from '../../redux/actions/projectsAction';
+// import { useDropzone } from 'react-dropzone';
 import { deleteResource } from '../../redux/actions/resourceAction';
 
 const CreateProject = ({ location }) => {
