@@ -1,0 +1,137 @@
+import React, { useEffect, useState, useRef } from 'react';
+import moment from 'moment';
+import swal from 'sweetalert';
+import DashboardLayout from '../../layouts/Dasboard_Layout';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+import { getFirestore, getDocs, doc, addDoc, collection, query, onSnapshot, serverTimestamp, orderBy, deleteDoc } from 'firebase/firestore';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyAfOD0YL2cC5s0eDoYu7l2zkyoBhuc6rfE',
+  authDomain: 'dodeel-cds.firebaseapp.com',
+  projectId: 'dodeel-cds',
+  storageBucket: 'dodeel-cds.appspot.com',
+  messagingSenderId: '60292476262',
+  appId: '1:60292476262:web:e74f8f938da332429faca7',
+  measurementId: 'G-Z175Z158DS'
+});
+
+const db = getFirestore();
+
+
+const TrainingChats = () => {
+  const [chats, setChats] = useState([]);
+  const [text, setText] = useState('');
+  const messagesEndRef = useRef(null);
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  
+  async function fetchChats () {
+    const q = await query(collection(db, 'chats'), orderBy('createdAt'));
+    onSnapshot(q, (querySnapshot) => {
+      let arr = [];
+
+      querySnapshot.forEach((doc) => {
+        arr.push({ id: doc.id, value: doc.data() });
+      });
+      setChats(arr);
+    });
+  }
+
+  useEffect(() => {
+    fetchChats();
+    // eslint-disable-next-line
+    }, []);
+
+  useEffect(() => {
+    if (messagesEndRef) {
+      messagesEndRef.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, []);
+
+  const sendMessage = async (e) => {
+    if (e.key === 'Enter') {
+      await addDoc(collection(db, 'chats'), {
+        text,
+        name: 'Admin',
+        isAdmin: true,
+        createdAt: serverTimestamp()
+      });
+      setText('');
+    }
+  };
+
+  const clearChats = async () => {
+    const q = query(collection(db, 'chats'));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (x) => {
+      await deleteDoc(doc(db, 'chats', x.id));
+    });
+  };
+
+  const clearAllChats = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          clearChats();
+        } else {
+          swal('Operation canceled!');
+        }
+      });
+  };
+
+  const renderChats = () => {
+    return chats.map(chat => (
+      <div key={chat.id} className="chatcont">
+        {/* {
+          chat.value.imageUrl ? <img src={chat.value.imageUrl} alt="Avatar" className="right"/> :
+            <img src='https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png' alt="Avatar" className="right"/>
+        } */}
+        <p className="fw-bold">{chat.value.text}</p>
+        <span className="time-left">{chat.value.name} {chat.value.stateCode} {chat.value.createdAt&&moment(chat.value.createdAt.toDate()).fromNow()}</span>
+      </div>
+    ));
+  };
+
+  return (
+    <DashboardLayout title='TrainingChat'>
+      <section className="chat-section">
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className="form-check form-switch">
+            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
+            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Disable Chat Feature</label>
+          </div>
+          <button onClick={clearAllChats} className='btn bg-danger text-white'>
+            Clear Chats
+          </button>
+        </div>
+
+        <div className='mt-5 px-5 ag'>
+          <div ref={messagesEndRef} className="flex-1 h-90 overflow-auto">
+            {chats.length===0?<div className='d-flex justify-content-center align-items-center h-90'><p>Empty chats</p></div>
+              :
+              renderChats()}
+          </div>
+          <div className="flex-row align-items-center">
+            <input type="text" onKeyDown={sendMessage} onChange={handleChange} value={text} className="form-control chatInput" placeholder="Enter Message" />
+          </div>
+        </div>
+      </section>
+    </DashboardLayout>
+  );
+};
+
+export default TrainingChats;

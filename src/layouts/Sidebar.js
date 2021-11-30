@@ -53,6 +53,14 @@ const Sidebar = ({ title }) => {
               <p>States info</p>
             </div>
           </Link>
+
+          <Link to="/trainings/chat">
+            <div className={title === 'TrainingChat' ? 'nav-link active' : 'nav-link'} >
+              <span><i className="fa fa-comments-o" aria-hidden="true"></i></span>
+              <p>Chat</p>
+            </div>
+          </Link>
+          
           
         </nav>
 
