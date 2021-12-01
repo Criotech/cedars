@@ -7,10 +7,10 @@ import ApiService from '../../utils/apiService';
 import { getError, clear, success } from './alertActions';
 import { startLoading, stopLoading } from './loadingAction';
     
-export const fetchProspects = (page, per_page) => async dispatch => {
+export const fetchProspects = (page, per_page, searchText) => async dispatch => {
   dispatch(startLoading());
   try {
-    const resp = await ApiService.fetchProspects(page, per_page);
+    const resp = await ApiService.fetchProspects(page, per_page, searchText);
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_PROSPECTS, payload: resp.data.data });
@@ -27,10 +27,10 @@ export const fetchProspects = (page, per_page) => async dispatch => {
   }
 };
 
-export const fetchCM = (page, per_page) => async dispatch => {
+export const fetchCM = (page, per_page, searchText) => async dispatch => {
   dispatch(startLoading());
   try {
-    const resp = await ApiService.fetchCM(page, per_page);
+    const resp = await ApiService.fetchCM(page, per_page, searchText);
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_CM, payload: resp.data.data });

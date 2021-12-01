@@ -29,12 +29,20 @@ class APIServices {
     return await apiInstance.get('/news?order=desc');
   }
 
-  async fetchProspects(page, per_page) {
-    return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}&order=desc`);
+  async fetchProspects(page, per_page, searchText) {
+    if (searchText) {
+      return await apiInstance.get(`/prospects?&search=${searchText}&order=desc`);
+    } else {
+      return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}&order=desc`);
+    }
   }
 
-  async fetchCM(page, per_page) {
-    return await apiInstance.get(`/users?page=${page}&per_page=${per_page}&order=desc`);
+  async fetchCM(page, per_page, searchText) {
+    if (searchText) {
+      return await apiInstance.get(`/users?&search=${searchText}&order=desc`);
+    } else {
+      return await apiInstance.get(`/users?page=${page}&per_page=${per_page}&order=desc`);
+    }
   }
 
   async approvePCMs(data) {

@@ -1,50 +1,58 @@
 import React from 'react';
 import moment from 'moment';
 
-const CMS = ({users, history, setPerPage, prev, next, per_page, page, totalUsers}) => {
+const CMS = ({users, history, loading, setPerPage, prev, next, per_page, page, totalUsers, handleCMSearch, cmSearchText }) => {
   return (
     <div className="users-list-container">
       <div className="top d-flex align-items-center">
         {/* <i className="fa fa-trash" style={{ color: '#C7C7C7' }} aria-hidden="true"></i>
         <p className="mx-3 fw-bold"> {selectedNo} selected </p>
         <span className="badge bg-green text-white">{selectedNo}</span> */}
+        <div className='search-bar-container'>
+          <i className="fa fa-search" aria-hidden="true"></i>
+          <input onChange={handleCMSearch} value={cmSearchText} type="text" className="form-control flex-grow-1" placeholder='Search CMs' />
+        </div>
       </div>
 
-      <div className="table-section">
-        <table className="table">
-          <thead>
-            <tr>
-              {/* <th scope="col"><input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></th> */}
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">State code</th>
-              <th scope="col">Phone number</th>
-              <th scope="col">No. of trainings attended</th>
-              <th scope="col">Status</th>
-              <th scope="col">Recent activity</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              users.map(x => (
-                <tr key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
-                  {/* <td><input onChange={() => handleCheck(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td> */}
-                  <th onClick={()=>history.push('/users/user', { id: x.id })} className="d-flex"><div className="circle"><img src={x.profile.photo} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>{x.name}</th>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.email}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.nysc_state_code}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.phone_number}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.attendance_count}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.status}</td>
-                  <td onClick={()=>history.push('/users/user', { id: x.id })}>{moment (x.updated_at).fromNow ()}</td>
+      {
+        loading?<p className='px-4'>Please wait ....</p>:
+          <div className="table-section">
+            <table className="table">
+              <thead>
+                <tr>
+                  {/* <th scope="col"><input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></th> */}
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">State code</th>
+                  <th scope="col">Phone number</th>
+                  <th scope="col">No. of trainings attended</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Recent activity</th>
                 </tr>
-              ))
-            }
+              </thead>
+              <tbody>
+                {
+                  users.map(x => (
+                    <tr key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
+                      {/* <td><input onChange={() => handleCheck(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td> */}
+                      <th onClick={()=>history.push('/users/user', { id: x.id })} className="d-flex"><div className="circle"><img src={x.profile.photo} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" /></div>{x.name}</th>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.email}</td>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.nysc_state_code}</td>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.profile.phone_number}</td>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.attendance_count}</td>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{x.status}</td>
+                      <td onClick={()=>history.push('/users/user', { id: x.id })}>{moment (x.updated_at).fromNow ()}</td>
+                    </tr>
+                  ))
+                }
 
 
-          </tbody>
-        </table>
+              </tbody>
+            </table>
 
-      </div>
+          </div>
+
+      }
 
       <div className='footer'>
         <div className="d-flex align-items-center">

@@ -36,6 +36,9 @@ const Users = () => {
   const [selectedNo, countSelected] = useState(0);
   const [page, setPage] = useState(1);
   const [per_page, handleSetPerPage] = useState(15);
+  const [cmSearchText, changeCMSearchText] = useState('');
+  const [pcmSearchText, changePCMSearchText] = useState('');
+
 
   useEffect(() => {
     dispatch(fetchProspects(page, per_page));
@@ -124,6 +127,18 @@ const Users = () => {
     selectUser([...newArr]);
   };
 
+  const handleCMSearch = async (e) => {
+    changeCMSearchText(e.target.value);
+    
+    await dispatch(fetchCM(page, per_page, cmSearchText));
+  };
+
+  const handlePCMSearch = async (e) => {
+    changePCMSearchText(e.target.value);
+    
+    await dispatch(fetchProspects(page, per_page, pcmSearchText));
+  };
+
   const handleSwitchTab = (x) => {
     switchUserType(x);
     setPage(1);
@@ -156,11 +171,11 @@ const Users = () => {
           {
             userType === 'cm'
               ?
-              <CMS users={usersReducer.cms} history={history} prev={prev} next={next} totalUsers={usersReducer.totalCMs} setPerPage={setPerPage}
-                handleCheck={handleCheck} selectedNo={selectedNo} page={page} per_page={per_page} />
+              <CMS cmSearchText={cmSearchText} handleCMSearch={handleCMSearch} users={usersReducer.cms} history={history} prev={prev} next={next} totalUsers={usersReducer.totalCMs} setPerPage={setPerPage}
+                handleCheck={handleCheck} loading={loadingReducer.loading} selectedNo={selectedNo} page={page} per_page={per_page} />
               :
               <PCMS users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo}
-                prev={prev} next={next} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
+                prev={prev} next={next} loading={loadingReducer.loading} handlePCMSearch={handlePCMSearch} changePCMSearchText={changePCMSearchText} pcmSearchText={pcmSearchText} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
           }
 
         </section>
