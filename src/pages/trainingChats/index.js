@@ -5,7 +5,7 @@ import DashboardLayout from '../../layouts/Dasboard_Layout';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { getFirestore, getDocs, doc, addDoc, collection, query, onSnapshot, serverTimestamp, orderBy, deleteDoc } from 'firebase/firestore';
-
+// updateDoc
 firebase.initializeApp({
   apiKey: 'AIzaSyAfOD0YL2cC5s0eDoYu7l2zkyoBhuc6rfE',
   authDomain: 'dodeel-cds.firebaseapp.com',
@@ -23,6 +23,7 @@ const TrainingChats = () => {
   const [chats, setChats] = useState([]);
   const [text, setText] = useState('');
   const messagesEndRef = useRef(null);
+  const [showDropDown, toggleDropdown] = useState(false);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -66,6 +67,28 @@ const TrainingChats = () => {
       setText('');
     }
   };
+
+  //   {
+  //     chatStatus: 'all users' || 'admin only' || 'disable chat '
+  //   }
+
+  // const washingtonRef = doc(db, "cities", "DC");
+
+  // // Set the "capital" field of the city 'DC'
+  // await updateDoc(washingtonRef, {
+  //   capital: true
+  // });
+  //   const chatSettings = async (e) => {
+  //     if (e.key === 'Enter') {
+  //       await addDoc(collection(db, 'chats'), {
+  //         text,
+  //         name: 'Admin',
+  //         isAdmin: true,
+  //         createdAt: serverTimestamp()
+  //       });
+  //       setText('');
+  //     }
+  //   };
 
   const clearChats = async () => {
     const q = query(collection(db, 'chats'));
@@ -113,9 +136,20 @@ const TrainingChats = () => {
     <DashboardLayout title='TrainingChat'>
       <section className="chat-section">
         <div className='d-flex justify-content-between align-items-center'>
-          <div className="form-check form-switch">
+          {/* <div className="form-check form-switch">
             <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Disable Chat Feature</label>
+          </div> */}
+          
+          <div className="position-relative">
+            <button onClick={()=>toggleDropdown(!showDropDown)} className="btn btn-secondary dropdown-toggle" type="button">
+              Chats Settings
+            </button>
+            <div className={showDropDown?'position-absolute bg-white border':'position-absolute bg-white border d-none'}>
+              <p className="dropdown-item">All Users</p>
+              <p className="dropdown-item">Admin Only</p>
+              <p className="dropdown-item">Disable Chat</p>
+            </div>
           </div>
           <button onClick={clearAllChats} className='btn bg-danger text-white'>
             Clear Chats

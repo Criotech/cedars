@@ -11,6 +11,7 @@ export const fetchExcos = (stateCode) => async dispatch => {
   try {
     const resp = await ApiService.fetchStateExcos(stateCode);
     if (resp) {
+      console.log(resp.data, 'jdbckhdbckhdbkhbdchkbdkhbadkcbksb sbh');
       dispatch(stopLoading());
       return dispatch({ type: FETCH_EXCOS, payload: resp.data.data });
     }

@@ -155,7 +155,7 @@ const CreateJob = ({ location }) => {
                   </div>
 
                   <div className="mb-4 input-family col-md-6">
-                    <label htmlFor="exampleInputtext1" className="label">Attendance Time</label>
+                    <label htmlFor="exampleInputtext1" className="label">Closing Time</label>
                     <input type="date" name='closing_date' className="form-control" onChange={handleChange} value={update.closing_date} />
                   </div>
                 </div>
