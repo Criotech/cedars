@@ -95,14 +95,17 @@ const TrainingChats = () => {
 
   const renderChats = () => {
     return chats.map(chat => (
-      <div key={chat.id} className={chat.value.isAdmin?'chatcont darker': 'chatcont'}>
-        {/* {
+      <div className={chat.value.isAdmin?'d-flex justify-content-end':'d-flex'} key={chat.id}>
+        <div className={chat.value.isAdmin?'chatcont darker': 'chatcont'}>
+          {/* {
           chat.value.imageUrl ? <img src={chat.value.imageUrl} alt="Avatar" className="right"/> :
             <img src='https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png' alt="Avatar" className="right"/>
         } */}
-        <p className="fw-bold">{chat.value.text}</p>
-        <span className={chat.value.isAdmin?'time-left text-white': 'time-left'}>{chat.value.name} {chat.value.stateCode} {chat.value.createdAt&&moment(chat.value.createdAt.toDate()).fromNow()}</span>
+          <p className="fw-bold">{chat.value.text}</p>
+          <span className={chat.value.isAdmin?'time-left text-white': 'time-left'}>{chat.value.name} {chat.value.stateCode} {chat.value.createdAt&&moment(chat.value.createdAt.toDate()).fromNow()}</span>
+        </div>
       </div>
+
     ));
   };
 
