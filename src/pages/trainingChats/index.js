@@ -4,8 +4,8 @@ import swal from 'sweetalert';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
-import { getFirestore, getDocs, doc, addDoc, collection, query, onSnapshot, serverTimestamp, orderBy, deleteDoc } from 'firebase/firestore';
-// updateDoc
+import { getFirestore, getDocs, doc, updateDoc, addDoc, collection, query, onSnapshot, serverTimestamp, orderBy, deleteDoc } from 'firebase/firestore';
+
 firebase.initializeApp({
   apiKey: 'AIzaSyAfOD0YL2cC5s0eDoYu7l2zkyoBhuc6rfE',
   authDomain: 'dodeel-cds.firebaseapp.com',
@@ -24,6 +24,7 @@ const TrainingChats = () => {
   const [text, setText] = useState('');
   const messagesEndRef = useRef(null);
   const [showDropDown, toggleDropdown] = useState(false);
+  const [status, setStatus] = useState('all users');
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -42,8 +43,20 @@ const TrainingChats = () => {
     });
   }
 
+  async function fetchChatSettings () {
+    const q = await collection(db, 'settings');
+    onSnapshot(q, (querySnapshot) => {
+
+      querySnapshot.forEach((doc) => {
+        setStatus(doc.data().status);
+        // console.log(doc.data());
+      });
+    });
+  }
+
   useEffect(() => {
     fetchChats();
+    fetchChatSettings();
     // eslint-disable-next-line
     }, []);
 
@@ -68,27 +81,35 @@ const TrainingChats = () => {
     }
   };
 
-  //   {
-  //     chatStatus: 'all users' || 'admin only' || 'disable chat '
-  //   }
 
-  // const washingtonRef = doc(db, "cities", "DC");
 
-  // // Set the "capital" field of the city 'DC'
-  // await updateDoc(washingtonRef, {
-  //   capital: true
-  // });
-  //   const chatSettings = async (e) => {
-  //     if (e.key === 'Enter') {
-  //       await addDoc(collection(db, 'chats'), {
-  //         text,
-  //         name: 'Admin',
-  //         isAdmin: true,
-  //         createdAt: serverTimestamp()
-  //       });
-  //       setText('');
-  //     }
-  //   };
+  const updateChatSettings = async (val) => {
+    const settingsRef = doc(db, 'settings', 'Z0loDfGgk4myMYa9bctL');
+    await updateDoc(settingsRef, {
+      'status': val
+    });
+    setStatus(val);
+    toggleDropdown(false);
+  };
+
+  const chatSettings = (val) => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Are you sure you want to update chat status.',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: false,
+    })
+      .then((willUpdte) => {
+        if (willUpdte) {
+          updateChatSettings(val);
+        } else {
+          swal('Operation canceled!');
+        }
+      });
+  };
+
+  
 
   const clearChats = async () => {
     const q = query(collection(db, 'chats'));
@@ -146,9 +167,9 @@ const TrainingChats = () => {
               Chats Settings
             </button>
             <div className={showDropDown?'position-absolute bg-white border':'position-absolute bg-white border d-none'}>
-              <p className="dropdown-item">All Users</p>
-              <p className="dropdown-item">Admin Only</p>
-              <p className="dropdown-item">Disable Chat</p>
+              <p onClick={()=>chatSettings('all users')} className="dropdown-item">All Users</p>
+              <p onClick={()=>chatSettings('admin only')} className="dropdown-item">Admin Only</p>
+              <p onClick={()=>chatSettings('disable chat')} className="dropdown-item">Disable Chat</p>
             </div>
           </div>
           <button onClick={clearAllChats} className='btn bg-danger text-white'>
@@ -162,9 +183,13 @@ const TrainingChats = () => {
               :
               renderChats()}
           </div>
-          <div className="flex-row align-items-center">
-            <input type="text" onKeyDown={sendMessage} onChange={handleChange} value={text} className="form-control chatInput" placeholder="Enter Message" />
-          </div>
+          {
+            status !== 'disable chat' &&
+              <div className="flex-row align-items-center">
+                <input type="text" onKeyDown={sendMessage} onChange={handleChange} value={text} className="form-control chatInput" placeholder="Enter Message" />
+              </div>
+          }
+
         </div>
       </section>
     </DashboardLayout>
