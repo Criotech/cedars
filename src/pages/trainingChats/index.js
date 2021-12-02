@@ -49,7 +49,6 @@ const TrainingChats = () => {
 
       querySnapshot.forEach((doc) => {
         setStatus(doc.data().status);
-        // console.log(doc.data());
       });
     });
   }
@@ -81,8 +80,6 @@ const TrainingChats = () => {
     }
   };
 
-
-
   const updateChatSettings = async (val) => {
     const settingsRef = doc(db, 'settings', 'Z0loDfGgk4myMYa9bctL');
     await updateDoc(settingsRef, {
@@ -109,7 +106,6 @@ const TrainingChats = () => {
       });
   };
 
-  
 
   const clearChats = async () => {
     const q = query(collection(db, 'chats'));
@@ -117,6 +113,12 @@ const TrainingChats = () => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (x) => {
       await deleteDoc(doc(db, 'chats', x.id));
+    });
+
+    const p = query(collection(db, 'people'));
+    const pQuerySnapshot = await getDocs(p);
+    pQuerySnapshot.forEach(async (x) => {
+      await deleteDoc(doc(db, 'people', x.id));
     });
   };
 
