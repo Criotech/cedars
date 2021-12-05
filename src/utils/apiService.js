@@ -29,11 +29,11 @@ class APIServices {
     return await apiInstance.get('/news?order=desc');
   }
 
-  async fetchProspects(page, per_page, searchText) {
+  async fetchProspects(page, per_page, searchText, status) {
     if (searchText) {
       return await apiInstance.get(`/prospects?&search=${searchText}&order=desc`);
     } else {
-      return await apiInstance.get(`/prospects?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&order=desc`);
+      return await apiInstance.get(`/prospects?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&status=${status?status:null}&order=desc`);
     }
   }
 

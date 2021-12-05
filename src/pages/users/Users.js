@@ -19,6 +19,7 @@ const Users = () => {
   const usersReducer = useSelector(({ usersReducer }) => usersReducer);
   const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
   const [userType, switchUserType] = useState('cm');
+  const [pcmsStatus, setPcmStatus] = useState(null);
 
   const [users, selectUser] = useState([
     { id: 1, active: false },
@@ -73,6 +74,12 @@ const Users = () => {
     } else {
       dispatch(fetchProspects(page, x));
     }
+  };
+
+  const filterPCMByStatus = (val) => {
+    setPcmStatus(val);
+
+    dispatch(fetchProspects(page, per_page, undefined, val));
   };
 
   useEffect(() => {
@@ -174,7 +181,7 @@ const Users = () => {
               <CMS cmSearchText={cmSearchText} handleCMSearch={handleCMSearch} users={usersReducer.cms} history={history} prev={prev} next={next} totalUsers={usersReducer.totalCMs} setPerPage={setPerPage}
                 handleCheck={handleCheck} loading={loadingReducer.loading} selectedNo={selectedNo} page={page} per_page={per_page} />
               :
-              <PCMS users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo}
+              <PCMS filterPCMByStatus={filterPCMByStatus} pcmsStatus={pcmsStatus} users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo}
                 prev={prev} next={next} loading={loadingReducer.loading} handlePCMSearch={handlePCMSearch} changePCMSearchText={changePCMSearchText} pcmSearchText={pcmSearchText} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
           }
 
