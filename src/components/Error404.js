@@ -6,7 +6,7 @@ const Error404 = ({ location }) => (
     <h1>Error: 404</h1>
     <p>
       The requested url <span id="address404">{location.pathname}</span> was not
-      found on the server.
+      found on the server
     </p>
   </section>
 );
