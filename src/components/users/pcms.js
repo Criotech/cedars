@@ -1,6 +1,20 @@
 import React from 'react';
 import moment from 'moment';
+import { states } from '../../utils/states';
 const PCMS = ({users, handleSelectPCMIds, selectedCount, setPerPage, prev, next, per_page, page, totalUsers, loading, handlePCMSearch, changePCMSearchText, pcmSearchText}) => {
+
+  const getStateName = (stateCode=>{
+    let stateName;
+    states.map(x=>{
+      if (x.state_code===stateCode) {
+        stateName = x.state_name;
+        return stateName;
+      }
+      return stateName;
+    });
+    return stateName;
+  });
+
   return (
     <div className="users-list-container">
       <div className="top d-flex align-items-center justify-content-between">
@@ -38,7 +52,7 @@ const PCMS = ({users, handleSelectPCMIds, selectedCount, setPerPage, prev, next,
                       <th  className="d-flex">{x.name}</th>
                       <td >{x.email}</td>
                       <td >{x.nysc_state_code}</td>
-                      <td >Lagos</td>
+                      <td >{getStateName(x.state_code)}</td>
                       <td >{x.status}</td>
                       <td >{moment (x.updated_at).fromNow ()}</td>
                     </tr>
