@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const baseUrl = 'https://dodeel.douglasokolaa.codes';
+// eslint-disable-next-line no-undef
+const baseUrl = process.env.REACT_APP_BASEURL;
 
 axios.defaults.baseURL = baseUrl;
 
