@@ -41,9 +41,9 @@ const Users = () => {
 
 
   useEffect(() => {
-    dispatch(fetchProspects(page, per_page));
-    dispatch(fetchCM(page, per_page));
-  }, [dispatch, page, per_page]);
+    dispatch(fetchProspects());
+    dispatch(fetchCM());
+  }, [dispatch]);
 
   const next = () => {
     let x = page + 1;
@@ -69,9 +69,9 @@ const Users = () => {
     handleSetPerPage(x);
 
     if (userType === 'cm') {
-      dispatch(fetchCM(page, per_page));
+      dispatch(fetchCM(page, x));
     } else {
-      dispatch(fetchProspects(page, per_page));
+      dispatch(fetchProspects(page, x));
     }
   };
 
