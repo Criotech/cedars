@@ -107,7 +107,7 @@ const AddUser = () => {
                   <button onClick={onButtonClick} className="btn btn-outline border-green text-green mt-2 fw-bold">
                                         Upload Avatar
                   </button>
-                  <p className="mt-2">Recommended dimensions: 200x200, maximum file size: 2MB</p>
+                  <p className="mt-2">Recommended dimensions: 200x200, maximum file size: 2MB.</p>
                 </div>
               </div>
 
