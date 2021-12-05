@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import swal from 'sweetalert';
@@ -7,13 +8,13 @@ import 'firebase/firestore';
 import { getFirestore, getDocs, doc, updateDoc, addDoc, collection, query, onSnapshot, serverTimestamp, orderBy, deleteDoc } from 'firebase/firestore';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyAfOD0YL2cC5s0eDoYu7l2zkyoBhuc6rfE',
-  authDomain: 'dodeel-cds.firebaseapp.com',
-  projectId: 'dodeel-cds',
-  storageBucket: 'dodeel-cds.appspot.com',
-  messagingSenderId: '60292476262',
-  appId: '1:60292476262:web:e74f8f938da332429faca7',
-  measurementId: 'G-Z175Z158DS'
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
 
 const db = getFirestore();
