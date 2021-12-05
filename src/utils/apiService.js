@@ -33,7 +33,7 @@ class APIServices {
     if (searchText) {
       return await apiInstance.get(`/prospects?&search=${searchText}&order=desc`);
     } else {
-      return await apiInstance.get(`/prospects?page=${page}&per_page=${per_page}&order=desc`);
+      return await apiInstance.get(`/prospects?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&order=desc`);
     }
   }
 
@@ -41,7 +41,7 @@ class APIServices {
     if (searchText) {
       return await apiInstance.get(`/users?&search=${searchText}&order=desc`);
     } else {
-      return await apiInstance.get(`/users?page=${page}&per_page=${per_page}&order=desc`);
+      return await apiInstance.get(`/users?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&order=desc`);
     }
   }
 
