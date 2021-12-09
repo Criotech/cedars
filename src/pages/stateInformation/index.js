@@ -179,7 +179,6 @@ const Index = () => {
     });
   };
 
-  console.log(excoFormData, 'jbjbebeububcbjcbcjb');
   return (
     <div>
       <DashboardLayout title='StatesInfo'>
