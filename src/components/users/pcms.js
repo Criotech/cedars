@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { states } from '../../utils/states';
-const PCMS = ({ users, handleSelectPCMIds, selectedCount, setPerPage, prev, next, per_page, page, totalUsers, loading, handlePCMSearch, filterPCMByStatus, pcmSearchText }) => {
+const PCMS = ({ users, handleSelectPCMIds, selectedCount, pcmIds, setPCMIds, setPerPage, prev, next, per_page, page, totalUsers, loading, handlePCMSearch, filterPCMByStatus, pcmSearchText }) => {
   const [showFIlter, toggleFilter] = useState(false);
+  const [allChecked, setAllChecked] = useState(false);
 
   const getStateName = (stateCode => {
     let stateName;
@@ -15,6 +16,31 @@ const PCMS = ({ users, handleSelectPCMIds, selectedCount, setPerPage, prev, next
     });
     return stateName;
   });
+
+  const checkSelected = (id) => {
+    for (let i = 0; i < pcmIds.length; i++) {
+      if (id === pcmIds[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const checkAll = () => {
+    if (allChecked===false) {
+      let allIds = [];
+      for (let i = 0; i<users.length; i++) {
+        allIds.push(users[i].id);
+      }
+  
+      setPCMIds([...pcmIds, ...allIds]);
+    } else {
+      setPCMIds([]);
+    }
+    setAllChecked(!allChecked);
+
+  };
+
 
   return (
     <div className="users-list-container">
@@ -29,15 +55,15 @@ const PCMS = ({ users, handleSelectPCMIds, selectedCount, setPerPage, prev, next
           <input onChange={handlePCMSearch} value={pcmSearchText} type="text" className="form-control flex-grow-1" placeholder='Search CMs' />
         </div>
         <div className="dropdown bg-success position relative">
-          <button onClick={()=>toggleFilter(!showFIlter)} className="btn btn-secondary dropdown-toggle" type="button">
+          <button onClick={() => toggleFilter(!showFIlter)} className="btn btn-secondary dropdown-toggle" type="button">
             Filter
           </button>
           {
             showFIlter &&
             <div className='border position-absolute bg-white p-2'>
-              <p onClick={()=>filterPCMByStatus(0)} className='pointer py-2 border-bottom'>Pending</p>
-              <p onClick={()=>filterPCMByStatus(1)} className='pointer py-2 border-bottom'>Approved</p>
-              <p onClick={()=>filterPCMByStatus(null)} className='pointer py-2 border-bottom'>All</p>
+              <p onClick={() => filterPCMByStatus(0)} className='pointer py-2 border-bottom'>Pending</p>
+              <p onClick={() => filterPCMByStatus(1)} className='pointer py-2 border-bottom'>Approved</p>
+              <p onClick={() => filterPCMByStatus(null)} className='pointer py-2 border-bottom'>All</p>
             </div>
           }
         </div>
@@ -50,7 +76,7 @@ const PCMS = ({ users, handleSelectPCMIds, selectedCount, setPerPage, prev, next
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col"><input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></th>
+                  <th scope="col"><input onChange={checkAll} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></th>
                   <th scope="col">Name</th>
                   <th scope="col">Email</th>
                   <th scope="col">State code</th>
@@ -63,7 +89,7 @@ const PCMS = ({ users, handleSelectPCMIds, selectedCount, setPerPage, prev, next
                 {
                   users.map(x => (
                     <tr key={x.id} className={x.active ? 'active pointer' : 'pointer'}>
-                      <td><input onChange={() => handleSelectPCMIds(x.id)} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" /></td>
+                      <td><input onChange={() => handleSelectPCMIds(x.id)} className="form-check-input" type="checkbox" checked={checkSelected(x.id) ? true : false} id="flexCheckChecked" /></td>
                       <th className="d-flex">{x.name}</th>
                       <td >{x.email}</td>
                       <td >{x.nysc_state_code}</td>

@@ -123,6 +123,7 @@ const Users = () => {
     }
   };
 
+
   const handleCheck = (x) => {
     let newArr = users;
     newArr[x - 1].active = !newArr[x - 1].active;
@@ -182,7 +183,7 @@ const Users = () => {
                 handleCheck={handleCheck} loading={loadingReducer.loading} selectedNo={selectedNo} page={page} per_page={per_page} />
               :
               <PCMS filterPCMByStatus={filterPCMByStatus} pcmsStatus={pcmsStatus} users={usersReducer.pcms} handleSelectPCMIds={handleSelectPCMIds} selectedCount={pcmIds.length} handleCheck={handleCheck} selectedNo={selectedNo}
-                prev={prev} next={next} loading={loadingReducer.loading} handlePCMSearch={handlePCMSearch} changePCMSearchText={changePCMSearchText} pcmSearchText={pcmSearchText} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
+                prev={prev} next={next} setPCMIds={setPCMIds} loading={loadingReducer.loading} pcmIds={pcmIds} handlePCMSearch={handlePCMSearch} changePCMSearchText={changePCMSearchText} pcmSearchText={pcmSearchText} totalUsers={usersReducer.totalPCMs} setPerPage={setPerPage} page={page} per_page={per_page} />
           }
 
         </section>
