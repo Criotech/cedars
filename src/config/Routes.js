@@ -23,6 +23,7 @@ const CreateJob = lazy(()=> import('../pages/updates/CreateJobUpdate'));
 const StatesInfo = lazy(()=> import('../pages/stateInformation'));
 const CreateNotification = lazy(()=> import('../pages/updates/CreateNotification'));
 const TrainingChats = lazy(()=> import('../pages/trainingChats'));
+const OnboardedBusinesses = lazy(()=>import('../pages/projects/OnboardedBusinesses'));
 
 
 const Routes = () => (
@@ -53,6 +54,7 @@ const Routes = () => (
         <PrivateRoute exact path='/statesinfo' component={StatesInfo} />
         <PrivateRoute exact path='/updates/create/notification' component={CreateNotification} />
         <PrivateRoute exact path='/trainings/chat' component={TrainingChats} />
+        <PrivateRoute exact path='/projects/onboardedbusiness' component={OnboardedBusinesses} />
 
         {/* catch all invalid urls */}
         <Route component={Error404} />

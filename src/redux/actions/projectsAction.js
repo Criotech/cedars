@@ -1,6 +1,7 @@
 import {
   FETCH_PROJECTS,
-  FETCH_PROJECT
+  FETCH_PROJECT,
+  FETCH_BUSINESSES
 } from '../types';
 import ApiService from '../../utils/apiService';
 import { getError, clear, success } from './alertActions';
@@ -81,6 +82,26 @@ export const fetchProject = (id) => async dispatch => {
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_PROJECT, payload: resp.data.data });
+    }
+  } catch (error) {
+    dispatch(stopLoading());
+    if (error.message === 'Network Error' || error.response.status===500) {
+      dispatch(getError('Network Error'));
+      dispatch(clear());
+    } else {
+      dispatch(getError(error.response.data.error.message));
+      dispatch(clear());
+    }
+  }
+};
+
+export const fetchBusinesses = (page, per_page) => async dispatch => {
+  dispatch(startLoading());
+  try {
+    const resp = await ApiService.fetchBusinesses(page, per_page);
+    if (resp) {
+      dispatch(stopLoading());
+      return dispatch({ type: FETCH_BUSINESSES, payload: resp.data.data });
     }
   } catch (error) {
     dispatch(stopLoading());

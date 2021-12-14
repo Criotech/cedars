@@ -79,6 +79,9 @@ const Projects = () => {
             </div>
           </div>
 
+          <button onClick={()=>history.push('/projects/onboardedbusiness')} className='btn bg-green text-white'>Onboarded Businesses</button>
+
+
           <div className='w-100 mt-4'>
             <div className="d-flex align-items-center w-100">
               <div className='search-bar-container'>

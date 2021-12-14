@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
@@ -43,15 +43,15 @@ const CreateProject = ({ location }) => {
     newFiles.splice(newFiles.indexOf(file), 1);
     setMyFiles(newFiles);
   };
-  
+
   const addResourcesToTraining = () => {
-    
-    dispatch(addResources({myFiles: myFiles, entity_id: projectsReducer.project.id, entity_type: 'project' }));
+
+    dispatch(addResources({ myFiles: myFiles, entity_id: projectsReducer.project.id, entity_type: 'project' }));
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchProject(x.id));
-    setProject({ title: projectsReducer.project.title, overview: projectsReducer.project.overview, guide: projectsReducer.project.guide  });
+    setProject({ title: projectsReducer.project.title, overview: projectsReducer.project.overview, guide: projectsReducer.project.guide });
   }, [dispatch, x.id, projectsReducer.project.title, projectsReducer.project.overview, projectsReducer.project.guide]);
 
   const alert = useSelector(({ alert }) => alert);
@@ -124,24 +124,25 @@ const CreateProject = ({ location }) => {
         <section className="trainings-section">
           <div>
             <h4><i onClick={() => history.push('/projects')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
-            <h5 className="fw-bold mt-3">{projectsReducer.project?'Update Project':'Create New Project'}</h5>
-
+            <div className="d-flex flex-between">
+              <h5 className="fw-bold mt-3">{projectsReducer.project ? 'Update Project' : 'Create New Project'}</h5>
+            </div>
 
             <div className='mt-5 px-5 az'>
-              <Tabs tabs={[{name: 'Project Details'}, {name: 'Upload resources'}]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
+              <Tabs tabs={[{ name: 'Project Details' }, { name: 'Upload resources' }]} setCurrentTab={setCurrentTab} currentTab={currentTab} />
               {/* , {name: 'Excos'} */}
               {
-                currentTab===0 && <Form data={projectsReducer.project} project={project} handleChange={handleChange} handleUpdate={handleUpdate} loading={loadingReducer.loading} setCurrentTab={setCurrentTab} /> 
+                currentTab === 0 && <Form data={projectsReducer.project} project={project} handleChange={handleChange} handleUpdate={handleUpdate} loading={loadingReducer.loading} setCurrentTab={setCurrentTab} />
               }
 
               {
-                currentTab===1 &&  <Upload  addResourcesToTraining={addResourcesToTraining} getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
-                  removeFile={removeFile} data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource}/>
+                currentTab === 1 && <Upload addResourcesToTraining={addResourcesToTraining} getRootProps={getRootProps} getInputProps={getInputProps} myFiles={myFiles}
+                  removeFile={removeFile} data={projectsReducer.project} deleteAProjectResource={deleteAProjectResource} />
               }
-              
+
               {/* currentTab===2 && <StateInfo data={projectsReducer.project} copyToClipBoard={copyToClipBoard} /> */}
-              
-         
+
+
             </div>
 
           </div>

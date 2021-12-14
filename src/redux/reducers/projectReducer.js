@@ -1,8 +1,10 @@
-import { FETCH_PROJECTS, FETCH_PROJECT } from '../types';
+import { FETCH_PROJECTS, FETCH_PROJECT, FETCH_BUSINESSES } from '../types';
 
 const initialState = {
   projects: [],
-  project: {}
+  project: {},
+  businesses: [],
+  totalBusinesses: ''
 };
 
 const projects = (state = initialState, action) => {
@@ -11,6 +13,8 @@ const projects = (state = initialState, action) => {
     return { ...state, projects: action.payload.data };
   case FETCH_PROJECT:
     return { ...state, project: action.payload };
+  case FETCH_BUSINESSES:
+    return  { ...state, businesses: action.payload.data, totalBusinesses: action.payload.total };
   default:
     return state;
   }
