@@ -141,6 +141,11 @@ class APIServices {
   async deleteResource(id) {
     return await apiInstance.delete(`/resources/${id}`);
   }
+
+  async fetchBusinesses(page, per_page,) {
+    return await apiInstance.get(`/businesses?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&order=desc`);
+  }
+
 }
 
 const instance = new APIServices();
