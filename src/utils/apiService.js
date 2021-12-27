@@ -142,8 +142,8 @@ class APIServices {
     return await apiInstance.delete(`/resources/${id}`);
   }
 
-  async fetchBusinesses(page, per_page,) {
-    return await apiInstance.get(`/businesses?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&order=desc`);
+  async fetchBusinesses(page, per_page, status=0) {
+    return await apiInstance.get(`/businesses?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&status=${status}&order=desc`);
   }
 
 }
