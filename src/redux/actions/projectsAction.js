@@ -95,10 +95,10 @@ export const fetchProject = (id) => async dispatch => {
   }
 };
 
-export const fetchBusinesses = (page, per_page) => async dispatch => {
+export const fetchBusinesses = (page, per_page, status) => async dispatch => {
   dispatch(startLoading());
   try {
-    const resp = await ApiService.fetchBusinesses(page, per_page);
+    const resp = await ApiService.fetchBusinesses(page, per_page, status);
     if (resp) {
       dispatch(stopLoading());
       return dispatch({ type: FETCH_BUSINESSES, payload: resp.data.data });

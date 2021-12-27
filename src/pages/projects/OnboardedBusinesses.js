@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -20,6 +20,7 @@ const OnboardedBusinesses = () => {
 
   const [page, setPage] = useState(1);
   const [per_page, handleSetPerPage] = useState(15);
+  const [showFIlter, toggleFilter] = useState(false);
 
   useEffect(() => {
     dispatch(fetchBusinesses());
@@ -53,11 +54,15 @@ const OnboardedBusinesses = () => {
     })
       .then((willUpdte) => {
         if (willUpdte) {
-          dispatch(updateBusinessStatus({status: 1, userId}, businessId));
+          dispatch(updateBusinessStatus({ status: 1, userId }, businessId));
         } else {
           swal('Operation canceled!');
         }
       });
+  };
+
+  const filterBussinessStatus = (val) => {
+    dispatch(fetchBusinesses(page, per_page, val));
   };
 
 
@@ -94,9 +99,9 @@ const OnboardedBusinesses = () => {
           <td>{item.business_owner}</td>
           {/* <td> </td> */}
           <td>{item.corper.name}</td>
-          <td><p onClick={()=>verifyBusiness(item.id, item.user_id)} className={item.status==='approved'?'badge bg-green text-white pointer':'badge bg-pending text-white pointer'}>{item.status==='approved'?'verified':'pending'}</p></td>
+          <td><p onClick={() => verifyBusiness(item.id, item.user_id)} className={item.status === 'approved' ? 'badge bg-green text-white pointer' : 'badge bg-pending text-white pointer'}>{item.status === 'approved' ? 'verified' : 'pending'}</p></td>
           <td>{item.reject_reason}</td>
-        </tr>              
+        </tr>
       );
     });
   };
@@ -107,16 +112,30 @@ const OnboardedBusinesses = () => {
         <div className="mt-4">
           <h4><i onClick={() => history.push('/projects')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
 
-          {/* <div className='w-100 mt-4'>
-            <div className="d-flex align-items-center w-100">
-              <div className='search-bar-container'>
+          <div className='w-100 mt-4'>
+            <div className="d-flex align-items-center w-100 justify-content-end">
+              {/* <div className='search-bar-container'>
                 <i className="fa fa-search" aria-hidden="true"></i>
                 <input type="text" className="form-control flex-grow-1" placeholder='Search' />
+              </div> */}
+
+              <div className="dropdown bg-success position relative">
+                <button onClick={() => toggleFilter(!showFIlter)} className="btn btn-secondary dropdown-toggle" type="button">
+                  Filter
+                </button>
+                {
+                  showFIlter &&
+                  <div className='border position-absolute bg-white p-2'>
+                    <p onClick={()=>filterBussinessStatus(null)} className='pointer py-2 border-bottom'>Pending</p>
+                    <p onClick={()=>filterBussinessStatus(1)} className='pointer py-2 border-bottom'>Approved</p>
+                    <p onClick={()=>filterBussinessStatus(0)} className='pointer py-2 border-bottom'>All</p>
+                  </div>
+                }
               </div>
 
-              <h6 className="px-5 text-green fw-bold">Filters <i className="fa fa-cog ml-1" aria-hidden="true"></i></h6>
+              {/* <h6 className="px-5 text-green fw-bold">Filters <i className="fa fa-cog ml-1" aria-hidden="true"></i></h6> */}
             </div>
-          </div> */}
+          </div>
 
           <table className="table">
             <thead>
@@ -172,11 +191,11 @@ const OnboardedBusinesses = () => {
               <h5 className="mr-3 fw-bold">
                 {
                   page > 1 &&
-              <i onClick={prev} className="fa fa-angle-left mr-2 pointer" aria-hidden="true"></i>
+                  <i onClick={prev} className="fa fa-angle-left mr-2 pointer" aria-hidden="true"></i>
                 }
                 {
                   page < Math.ceil(+projectsReducer.totalBusinesses / per_page) &&
-              <i className="fa fa-angle-right pointer" onClick={next} aria-hidden="true"></i>
+                  <i className="fa fa-angle-right pointer" onClick={next} aria-hidden="true"></i>
                 }
               </h5>
             </div>
