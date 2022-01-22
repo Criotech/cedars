@@ -99,6 +99,7 @@ const OnboardedBusinesses = () => {
           <td>{item.business_owner}</td>
           {/* <td> </td> */}
           <td>{item.corper.name}</td>
+          <td>{item.corper.profile.nysc_state_code}</td>
           <td><p onClick={() => verifyBusiness(item.id, item.user_id)} className={item.status === 'approved' ? 'badge bg-green text-white pointer' : 'badge bg-pending text-white pointer'}>{item.status === 'approved' ? 'verified' : 'pending'}</p></td>
           <td>{item.reject_reason}</td>
         </tr>
@@ -147,6 +148,7 @@ const OnboardedBusinesses = () => {
                 <th scope="col">Owner’s name</th>
                 {/* <th scope="col">Phone number</th> */}
                 <th scope="col">Onboader</th>
+                <th scope="col">State Code</th>
                 <th scope="col">Status</th>
                 <th scope="col">Comment</th>
 
