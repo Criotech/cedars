@@ -94,14 +94,14 @@ const OnboardedBusinesses = () => {
         <tr key={item.id}>
           {/* <td>{i + 1}</td> */}
           <td>{moment(item.created_at).format('YYYY-MM-DD, h:mm:ss')}</td>
-          <td>{item.business_name}</td>
-          <td>{item.business_email}</td>
-          <td>{item.business_owner}</td>
+          <td>{item?.business_name}</td>
+          <td>{item?.business_email}</td>
+          <td>{item?.business_owner}</td>
           {/* <td> </td> */}
           <td>{item.corper.name}</td>
-          <td>{item.corper.profile.nysc_state_code}</td>
+          <td>{item?.corper?.profile?.nysc_state_code}</td>
           <td><p onClick={() => verifyBusiness(item.id, item.user_id)} className={item.status === 'approved' ? 'badge bg-green text-white pointer' : 'badge bg-pending text-white pointer'}>{item.status === 'approved' ? 'verified' : 'pending'}</p></td>
-          <td>{item.reject_reason}</td>
+          <td>{item?.reject_reason}</td>
         </tr>
       );
     });
