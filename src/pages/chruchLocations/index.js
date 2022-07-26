@@ -5,13 +5,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { fetchProspects, fetchCM, approvePCMs } from '../../redux/actions/usersAction';
-import CMS from '../../components/users/users';
-import PCMS from '../../components/users/pcms';
 import ApiService from '../../utils/apiService';
-import Admins from '../../components/Admins';
-import UsersComponent from '../../components/Users';
+import UsersTable from '../../components/Users';
+import ServicesComponent from "../../components/Services"
+import DepartmentComponent from '../../components/Department';
+import ChurchLocationsComponent from '../../components/ChruchLocations';
 
-const Users = () => {
+const ChruchLocations = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -19,9 +19,8 @@ const Users = () => {
 
 
   const alert = useSelector(({ alert }) => alert);
-  const usersReducer = useSelector(({ usersReducer }) => usersReducer);
   const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
-  const [userType, switchUserType] = useState('user');
+  const [userType, switchUserType] = useState('cm');
 
   const [users, selectUser] = useState([
     { id: 1, active: false },
@@ -41,64 +40,23 @@ const Users = () => {
   const [per_page, handleSetPerPage] = useState(15);
   const [cmSearchText, changeCMSearchText] = useState('');
   const [pcmSearchText, changePCMSearchText] = useState('');
-  const [usersData, setUsers] = useState([]);
-  const [admins, setAdmins] = useState([]);
+  const [confessions, setChruchLocations] = useState([]);
 
-
-  const fetchAllUsers = async () => {
+  console.log(confessions, 'hello worldm')
+  const fetchAllAttendances = async () => {
     try {
-      let res = await ApiService.fetchUsers();
-      setUsers(res.data.data);
+      let res = await ApiService.fetchChurchLocations();
+      console.log(res.data.data);
+      setChruchLocations(res.data.data);
     } catch (e) {
       console.log(e)
     }
   }
-  const fetchAllAdmins = async () => {
-    try {
-      let res = await ApiService.fetchAdmins();
-      setAdmins(res.data.data);
-    } catch (e) {
-      console.log(e)
-    }
-  }
+
   useEffect(() => {
-    fetchAllAdmins();
-    fetchAllUsers();
+    fetchAllAttendances();
   }, []);
 
-  const toCreateUser = () => {
-    history.push('/users/add')
-  }
-
-  const next = () => {
-    let x = page + 1;
-    setPage(x);
-    if (userType === 'cm') {
-      dispatch(fetchCM(page, per_page));
-    } else {
-      dispatch(fetchProspects(page, per_page));
-    }
-  };
-
-  const prev = () => {
-    let x = page - 1;
-    setPage(x);
-    if (userType === 'cm') {
-      dispatch(fetchCM(page, per_page));
-    } else {
-      dispatch(fetchProspects(page, per_page));
-    }
-  };
-
-  const setPerPage = (x) => {
-    handleSetPerPage(x);
-
-    if (userType === 'cm') {
-      dispatch(fetchCM(page, x));
-    } else {
-      dispatch(fetchProspects(page, x));
-    }
-  };
 
   useEffect(() => {
     if (alert.message) {
@@ -171,14 +129,15 @@ const Users = () => {
   };
 
   return (
-    <div>
-      <DashboardLayout title='users'>
+    <div>im
+      <DashboardLayout title='Chruch Locations'>
         <section className="users-section">
           <div className="flex-between">
             <div className="d-flex align-items-center">
-              <h5 onClick={() => switchUserType('user')} className={userType === 'user' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Users</h5>
-              <h5 onClick={() => switchUserType('admin')} className={userType === 'admin' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Admins</h5>
+              <h5 onClick={() => handleSwitchTab('cm')} className={userType === 'cm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Active Users</h5>
+              <h5 onClick={() => handleSwitchTab('pcm')} className={userType === 'pcm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Interested Users</h5>
             </div>
+
             {
               userType === 'cm'
                 ?
@@ -186,19 +145,14 @@ const Users = () => {
                   Add
                 </button>
                 :
-                <button onClick={toCreateUser} className="btn bg-green text-white">
-                  Create User
+                <button onClick={approvePCMUsers} className="btn bg-green text-white">
+                  {loadingReducer.loading ? 'Loading...' : 'Approve selected'}
                 </button>
             }
 
           </div>
 
-          {
-            userType === 'user' ? <UsersComponent data={usersData}/>
-            :
-            <Admins data={admins} />
-          }
-
+          <ChurchLocationsComponent data={confessions} />
 
         </section>
       </DashboardLayout>
@@ -206,4 +160,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default ChruchLocations;

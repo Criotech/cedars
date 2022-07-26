@@ -20,7 +20,7 @@ export const loginUser = (email, password) => async dispatch => {
     if (resp) {
       dispatch(stopLoading());
 
-      localStorage.setItem('token', resp.data.data.api_token);
+      localStorage.setItem('token', resp.data.token);
       return dispatch(setCurrentUser(resp.data.data));
     }
   } catch (error) {

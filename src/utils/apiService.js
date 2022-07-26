@@ -5,7 +5,51 @@ class APIServices {
     return await apiInstance.post('/auth/login', data);
   }
 
-  async fetchAuthUser () {
+  async fetchAdmins() {
+    return apiInstance.get('/users/admins');
+  }
+
+  async fetchUsers() {
+    return apiInstance.get('/users');
+  }
+
+  async fetchServices() {
+    return apiInstance.get('/services');
+  }
+
+  async fetchDepartments() {
+    return apiInstance.get('/departments');
+  }
+
+  async fetchAttendances() {
+    return apiInstance.get('/attendances');
+  }
+
+  async fetchConfessions() {
+    return apiInstance.get('/confessions');
+  }
+
+  async fetchBooks() {
+    return apiInstance.get('/monthly_books');
+  }
+
+  async fetchTestimonies() {
+    return apiInstance.get('/testimony');
+  }
+
+  async fetchChurchLocations() {
+    return apiInstance.get('/church_locations');
+  }
+
+  async fetchTestimonies() {
+    return apiInstance.get('/testimony');
+  }
+
+  async registerUser(data) {
+    return await apiInstance.post('/users', data);
+  }  
+
+  async fetchAuthUser() {
     return apiInstance.get('/auth/profile');
   }
 
@@ -13,11 +57,11 @@ class APIServices {
     return await apiInstance.get('/trainings?order=desc');
   }
 
-  async fetchTraining (id) {
+  async fetchTraining(id) {
     return await apiInstance.get(`/trainings/${id}`);
   }
 
-  async fetchProjects () {
+  async fetchProjects() {
     return await apiInstance.get('/projects?order=desc');
   }
 
@@ -25,7 +69,7 @@ class APIServices {
     return await apiInstance.get('/jobs?order=desc');
   }
 
-  async fetchNews () {
+  async fetchNews() {
     return await apiInstance.get('/news?order=desc');
   }
 
@@ -33,7 +77,7 @@ class APIServices {
     if (searchText) {
       return await apiInstance.get(`/prospects?&search=${searchText}&order=desc`);
     } else {
-      return await apiInstance.get(`/prospects?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&status=${status?status:null}&order=desc`);
+      return await apiInstance.get(`/prospects?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&status=${status ? status : null}&order=desc`);
     }
   }
 
@@ -41,7 +85,7 @@ class APIServices {
     if (searchText) {
       return await apiInstance.get(`/users?&search=${searchText}&order=desc`);
     } else {
-      return await apiInstance.get(`/users?page=${page===undefined?1:page}&per_page=${per_page===undefined?15:per_page}&order=desc`);
+      return await apiInstance.get(`/users?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&order=desc`);
     }
   }
 
@@ -74,14 +118,14 @@ class APIServices {
   }
 
   async toggleActiveUser(data) {
-    return await apiInstance.patch(`/users/${data.id}`, {status: data.status});
+    return await apiInstance.patch(`/users/${data.id}`, { status: data.status });
   }
 
-  async deleteTraining (id) {
+  async deleteTraining(id) {
     return await apiInstance.delete(`/trainings/${id}`);
   }
 
-  async deleteProject (id) {
+  async deleteProject(id) {
     return await apiInstance.delete(`/projects/${id}`);
   }
 
@@ -100,7 +144,7 @@ class APIServices {
   async updateTraining(data, id) {
     return await apiInstance.post(`/trainings/${id}?_method=PATCH`, data);
   }
-  
+
   async fetchProject(id) {
     return await apiInstance.get(`/projects/${id}`);
   }
@@ -142,7 +186,7 @@ class APIServices {
     return await apiInstance.delete(`/resources/${id}`);
   }
 
-  async fetchBusinesses(page, per_page, status=0) {
+  async fetchBusinesses(page, per_page, status = 0) {
     return await apiInstance.get(`/businesses?page=${page === undefined ? 1 : page}&per_page=${per_page === undefined ? 15 : per_page}&status=${status}&order=desc`);
   }
 

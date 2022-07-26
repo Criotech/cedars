@@ -1,24 +1,88 @@
-import React, { useEffect } from 'react';
-import moment from 'moment';
+import React, { useState, useEffect } from 'react';
 import swal from 'sweetalert';
+import DashboardLayout from '../../layouts/Dasboard_Layout';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import DashboardLayout from '../../layouts/Dasboard_Layout';
-import { fetchTrainings, deleteTraining } from '../../redux/actions/triainingActions';
+import { fetchProspects, fetchCM, approvePCMs } from '../../redux/actions/usersAction';
+import CMS from '../../components/users/users';
+import PCMS from '../../components/users/pcms';
+import ApiService from '../../utils/apiService';
+import UsersTable from '../../components/Users';
 
-
-const Trainings = () => {
+const Users = () => {
   const history = useHistory();
+
   const dispatch = useDispatch();
   const { addToast } = useToasts();
 
-  const alert = useSelector(({ alert }) => alert);
-  const trainingsReducer = useSelector(({ trainingsReducer }) => trainingsReducer);
 
-  useEffect(()=>{
-    dispatch(fetchTrainings());
-  }, [dispatch]);
+  const alert = useSelector(({ alert }) => alert);
+  const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
+  const [userType, switchUserType] = useState('cm');
+
+  const [users, selectUser] = useState([
+    { id: 1, active: false },
+    { id: 2, active: false },
+    { id: 3, active: false },
+    { id: 4, active: false },
+    { id: 5, active: false },
+    { id: 6, active: false },
+    { id: 7, active: false },
+    { id: 8, active: false },
+    { id: 9, active: false },
+    { id: 10, active: false },
+  ]);
+  const [pcmIds, setPCMIds] = useState([]);
+  const [selectedNo, countSelected] = useState(0);
+  const [page, setPage] = useState(1);
+  const [per_page, handleSetPerPage] = useState(15);
+  const [cmSearchText, changeCMSearchText] = useState('');
+  const [pcmSearchText, changePCMSearchText] = useState('');
+  const [usersData, setUsers] = useState([]);
+
+
+  const fetchAllAdmins = async () => {
+    try {
+      let res = await ApiService.fetchUsers();
+      setUsers(res.data.data);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    fetchAllAdmins();
+  }, []);
+
+  const next = () => {
+    let x = page + 1;
+    setPage(x);
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, per_page));
+    } else {
+      dispatch(fetchProspects(page, per_page));
+    }
+  };
+
+  const prev = () => {
+    let x = page - 1;
+    setPage(x);
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, per_page));
+    } else {
+      dispatch(fetchProspects(page, per_page));
+    }
+  };
+
+  const setPerPage = (x) => {
+    handleSetPerPage(x);
+
+    if (userType === 'cm') {
+      dispatch(fetchCM(page, x));
+    } else {
+      dispatch(fetchProspects(page, x));
+    }
+  };
 
   useEffect(() => {
     if (alert.message) {
@@ -41,90 +105,80 @@ const Trainings = () => {
     }
   }, [alert.message, alert.success, addToast]);
 
-  const deletATraining = (id) => {
-    swal({
-      title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this file!',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-          dispatch(deleteTraining(id));
-        } else {
-          swal('Operation canceled!');
-        }
+  const approvePCMUsers = async () => {
+    if (pcmIds.length === 0) {
+      return;
+    }
+    await dispatch(approvePCMs(pcmIds, 1));
+  };
+
+
+  const handleSelectPCMIds = (id) => {
+    let check = pcmIds.includes(id);
+    if (check) {
+      let a = pcmIds.filter(x => {
+        return x !== id;
       });
+      setPCMIds(a);
+    } else {
+      setPCMIds([...pcmIds, id]);
+    }
+  };
+
+
+  const handleCheck = (x) => {
+    let newArr = users;
+    newArr[x - 1].active = !newArr[x - 1].active;
+    if (newArr[x - 1].active === true) {
+      countSelected(selectedNo + 1);
+    } else {
+      countSelected(selectedNo - 1);
+    }
+    selectUser([...newArr]);
+  };
+
+  const handleCMSearch = async (e) => {
+    changeCMSearchText(e.target.value);
+
+    await dispatch(fetchCM(page, per_page, cmSearchText));
+  };
+
+  const handlePCMSearch = async (e) => {
+    changePCMSearchText(e.target.value);
+
+    await dispatch(fetchProspects(page, per_page, pcmSearchText));
+  };
+
+  const handleSwitchTab = (x) => {
+    switchUserType(x);
+    setPage(1);
   };
 
   return (
     <div>
-      <DashboardLayout title='Trainings'>
-        <section className="trainings-section">
+      <DashboardLayout title='Users'>
+        <section className="users-section">
           <div className="flex-between">
-            <h5 className="fw-bold mb-3">Trainings</h5>
-
-            <div onClick={() => history.push('/trainings/create')} className="d-flex flex-between pointer">
-              <i className="fa fa-plus-circle text-green mr-1" aria-hidden="true"></i>
-              <h5 className="fw-bold text-green">
-                Create New
-              </h5>
+            <div className="d-flex align-items-center">
+              <h5 onClick={() => handleSwitchTab('cm')} className={userType === 'cm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Active Users</h5>
+              <h5 onClick={() => handleSwitchTab('pcm')} className={userType === 'pcm' ? 'text-green fw-bold mb-3 mr-3 pointer' : 'fw-bold mb-3 mr-3 pointer'}>Interested Users</h5>
             </div>
+
+            {
+              userType === 'cm'
+                ?
+                <button onClick={() => history.push('/users/add')} className="btn bg-green text-white">
+                  Add
+                </button>
+                :
+                <button onClick={approvePCMUsers} className="btn bg-green text-white">
+                  {loadingReducer.loading ? 'Loading...' : 'Approve selected'}
+                </button>
+            }
+
           </div>
 
-
-          <div className='w-100 mt-4'>
-            <div className="d-flex align-items-center w-100">
-              <div className='search-bar-container'>
-                <i className="fa fa-search" aria-hidden="true"></i>
-                <input type="text" className="form-control flex-grow-1" placeholder='Search' />
-              </div>
-
-              <h6 className="px-5 text-green fw-bold">Filters <i className="fa fa-cog ml-1" aria-hidden="true"></i></h6>
-            </div>
-          </div>
-
-          <div className="mt-4">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Overview</th>
-                  <th scope="col">Status</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {
-                  trainingsReducer.trainings.map(x => (
-                    <tr key={x.id}>
-                      <td>{moment(x.updated_at).format('YYYY-MM-DD')}</td>
-                      <td>{x.title}</td>
-                      <td> {x.overview.slice(0,200)}... </td>
-                      <td> {x.status} </td>
-                      <td><div className="btn-group" role="group" aria-label="Basic outlined example">
-                        <button onClick={()=>history.push('/trainings/create', {training: x})} style={{ borderColor: '#DFDFDF', backgroundColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn">Edit</button>
-                        <button onClick={()=>deletATraining(x.id)} style={{ borderColor: '#DFDFDF', borderWidth: 1 }} type="button" className="btn btn-outline-white">Delete</button>
-                      </div></td>
-                    </tr>
-                  ))
-                }
-
-              </tbody>
-            </table>
-
-            <div className='footer d-flex justify-content-end py-3'>
-              <div className="d-flex align-items-center">
-                <p className="mr-3">Rows per page 10 <i className="fa fa-caret-down" aria-hidden="true"></i></p>
-                <p className="mr-3">1-5 of 13 </p>
-                <h5 className="mr-3 fw-bold"><i className="fa fa-angle-left mr-2" aria-hidden="true"></i> <i className="fa fa-angle-right" aria-hidden="true"></i></h5>
-              </div>
-
-            </div>
-          </div>
+          <UsersTable data={usersData} />
 
         </section>
       </DashboardLayout>
@@ -132,4 +186,4 @@ const Trainings = () => {
   );
 };
 
-export default Trainings;
+export default Users;

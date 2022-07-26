@@ -20,37 +20,59 @@ const Sidebar = ({ title }) => {
           </Link>
 
           <Link to="/users">
-            <div className={title === 'Users' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'users' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">groups</span>
               <p>Users</p>
             </div>
           </Link>
 
-          <Link to="/trainings">
-            <div className={title === 'Trainings' ? 'nav-link active' : 'nav-link'} >
-              <span className="material-icons">co_present</span>
-              <p>Trainings</p>
-            </div>
-          </Link>
-
           <Link to="/projects">
-            <div className={title === 'Projects' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'Services' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">assignment</span>
-              <p>Projects</p>
+              <p>Services</p>
             </div>
           </Link>
 
           <Link to="/updates">
-            <div className={title === 'Updates' ? 'nav-link active' : 'nav-link'} >
+            <div className={title === 'Department' ? 'nav-link active' : 'nav-link'} >
               <span className="material-icons">menu_book</span>
-              <p>Updates</p>
+              <p>Department</p>
             </div>
           </Link>
 
-          <Link to="/statesinfo">
-            <div className={title === 'StatesInfo' ? 'nav-link active' : 'nav-link'} >
-              <span><i className="fa fa-info-circle" aria-hidden="true"></i></span>
-              <p>States info</p>
+          <Link to="/attendances">
+            <div className={title === 'Attendances' ? 'nav-link active' : 'nav-link'} >
+              <span className="material-icons">menu_book</span>
+              <p>Attendances</p>
+            </div>
+          </Link>
+
+          <Link to="/confessions">
+            <div className={title === 'Confessions' ? 'nav-link active' : 'nav-link'} >
+              <span className="material-icons">menu_book</span>
+              <p>Confessions</p>
+            </div>
+          </Link>
+
+          <Link to="/books">
+            <div className={title === 'Books' ? 'nav-link active' : 'nav-link'} >
+              <span className="material-icons">menu_book</span>
+              <p>Books</p>
+            </div>
+          </Link>
+
+
+          <Link to="/testimonies">
+            <div className={title === 'Testimonies' ? 'nav-link active' : 'nav-link'} >
+              <span className="material-icons">menu_book</span>
+              <p>Testimonies</p>
+            </div>
+          </Link>
+
+          <Link to="/church-locations">
+            <div className={title === 'Chruch Locations' ? 'nav-link active' : 'nav-link'} >
+              <span className="material-icons">menu_book</span>
+              <p>Church Locations</p>
             </div>
           </Link>
 
@@ -60,8 +82,8 @@ const Sidebar = ({ title }) => {
               <p>Chat</p>
             </div>
           </Link>
-          
-          
+
+
         </nav>
 
       </div>

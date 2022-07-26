@@ -1,13 +1,14 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Logo from '../components/Logo';
 import { logoutUser } from '../redux/actions/authActions';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const auth = useSelector(({ auth }) => auth)
 
   return (
-    <nav  className="navbar navbar-expand-lg navbar-light fixed-top px-lg-5 dash-header d-flex justify-content-between align-items-center">
+    <nav  className="navbar navbar-expand-lg container navbar-light fixed-top px-lg-5 dash-header d-flex justify-content-between align-items-center">
       <div className="navbar-brand" href="#">
         <Logo />
       </div>
@@ -24,8 +25,8 @@ const Header = () => {
             <span className="material-icons-outlined mr-2 text-white">
               notifications
             </span>
-            <img src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="Avatar" className="avatar mr-1"></img>
-            <h6 className="mr-2">Femi Ilori</h6>
+            <img src="https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236__340.png" alt="Avatar" className="avatar mr-1"></img>
+            <h6 className="mr-2">{auth.user.full_name}</h6>
             
             <div className='dropdown'>
               <span className="material-icons-outlined mt-2 pointer" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

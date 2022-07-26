@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 import DashboardLayout from '../../layouts/Dasboard_Layout';
@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { addUser } from '../../redux/actions/usersAction';
 import { states } from '../../utils/states';
+import ApiService from '../../utils/apiService';
+
 
 const AddUser = () => {
   const dispatch = useDispatch();
@@ -13,16 +15,16 @@ const AddUser = () => {
   const { addToast } = useToasts();
 
   const alert = useSelector(({ alert }) => alert);
-  const loadingReducer = useSelector(({ loadingReducer }) => loadingReducer);
 
   const [user, setUser] = useState({
-    name: '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    gender: '',
     email: '',
-    deployed_state: 'AB',
-    nysc_state_code: '',
-    phone_number: '',
-    nysc_call_up_number: ''
+    password: 'password'
   });
+  const [loading, setloading] = useState(false);
 
   const [photo, setPhoto] = useState('');
   const [preview, setPreview] = useState('');
@@ -42,45 +44,53 @@ const AddUser = () => {
     }
   };
 
-
-  const onButtonClick = () => {
-    inputFile.current.click();
-  };
-
-  useEffect(() => {
-    if (alert.message) {
-      addToast(alert.message, { appearance: 'error' });
-      swal({
-        title: 'Error!',
-        text: alert.message,
-        icon: 'error',
-        button: 'close!',
-      });
-    }
-    if (alert.success) {
-      addToast(alert.success, { appearance: 'success' });
-      swal({
-        title: 'Success!',
-        text: alert.success,
-        icon: 'success',
-        button: 'close!',
-      });
-    }
-  }, [alert.message, alert.success, addToast]);
-
-  
-
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value }); 
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleAddUser = async (e) => {
     e.preventDefault();
 
-    const {name, email, deployed_state, nysc_state_code, phone_number, nysc_call_up_number} = user;
-    if (!name && !email && !deployed_state && !nysc_state_code && !phone_number && !nysc_call_up_number ) return;
-    
-    await dispatch(addUser({name, email, deployed_state, nysc_state_code, phone_number, nysc_call_up_number, photo}));
+    const { email, first_name, last_name, password, gender, phone } = user;
+    if (!email || !first_name || !last_name || !password || !gender || !phone) {
+      addToast("parameter required", { appearance: 'error' });
+      return;
+    };
+
+    try {
+      setloading(true)
+      let res = await ApiService.registerUser(user);
+
+      if (res.data) {
+        addToast("User Adder Successfully", { appearance: 'success' });
+        swal({
+          title: 'Success',
+          text: "User Adder Successfully",
+          icon: 'success',
+          button: 'close!',
+        });
+        setUser({
+          first_name: '',
+          last_name: '',
+          phone: '',
+          gender: '',
+          email: '',
+          password: 'password'
+        });
+      } else {
+        swal({
+          title: 'Error!',
+          text: res.data.message,
+          icon: 'error',
+          button: 'close!',
+        });
+      }
+      setloading(false)
+    } catch (e) {
+      console.log(e)
+      setloading(false)
+    }
+
   };
 
 
@@ -91,9 +101,9 @@ const AddUser = () => {
           <div>
             <h4><i onClick={() => history.push('/users')} className="fa fa-angle-left fw-bold pointer" aria-hidden="true"></i> </h4>
             <div className="form-outer-container">
-              <div className='header d-flex'>
+              {/* <div className='header d-flex'>
                 <div className="circle-big mr-2">
-                  <img src={preview?preview:'https://cdn.truelancer.com/upload-full/701651-vector-cartoon-portrait-avatar-illustration-fanart.jpg'} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
+                  <img src={preview ? preview : 'https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236__340.png'} width="100%" height="100%" style={{ borderRadius: '50%' }} alt="Avatar" />
 
                 </div>
                 <div>
@@ -105,54 +115,83 @@ const AddUser = () => {
                     type="file"
                   />
                   <button onClick={onButtonClick} className="btn btn-outline border-green text-green mt-2 fw-bold">
-                                        Upload Avatar
+                    Upload Avatar
                   </button>
                   <p className="mt-2">Recommended dimensions: 200x200, maximum file size: 2MB.</p>
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-container">
                 <form>
-                  <div className="mb-4 input-family">
-                    <label htmlFor="exampleInputPassword1" className="label">Full name</label>
-                    <input name='name' onChange={handleChange} type="text" className="form-control" />
-                  </div>
-                  <div className="mb-4 input-family">
-                    <label htmlFor="exampleInputtext1" className="label">Email address</label>
-                    <input name='email' onChange={handleChange} type="text" className="form-control" />
+                  <div className="d-flex flex-row" style={{ gap: 10 }}>
+                    <div className="mb-4 input-family w-100">
+                      <label htmlFor="exampleInputPassword1" className="label">First Name</label>
+                      <input name='first_name' onChange={handleChange} type="text" value={user.first_name} className="form-control" />
+                    </div>
+
+                    <div className="mb-4 input-family w-100">
+                      <label htmlFor="exampleInputtext1" className="label">Last Name</label>
+                      <input name='last_name' onChange={handleChange} type="text" value={user.last_name} className="form-control" />
+                    </div>
                   </div>
                   {/* <div className="mb-4 input-family">
                     <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
                     <input name='deployed_state' onChange={handleChange} type="text" className="form-control" />
                   </div> */}
-                  <div className="mb-4 input-family">
+                  {/* <div className="mb-4 input-family">
                     <label htmlFor="exampleInputtext1" className="label">State of deployment</label>
-                    <select name='deployed_state' onChange={handleChange} className="form-select" style={{height: 60}} aria-label="Default select example">
+                    <select name='deployed_state' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
                       {
-                        states.map(x=>(
+                        states.map(x => (
                           <option key={x.state_code} value={x.state_code}>{x.state_name}</option>
                         ))
                       }
                     </select>
+                  </div> */}
+                  <div className="mb-4 input-family w-100">
+                    <label htmlFor="exampleInputtext1" className="label">Email</label>
+                    <input name='email' onChange={handleChange} type="text" value={user.email} className="form-control" />
                   </div>
+
+                  {/* <div className="mb-4 input-family">
+                    <label htmlFor="exampleInputtext1" className="label">Gender</label>
+                    <input name='gender' onChange={handleChange} type="text" value={user.gender} className="form-control" />
+                  </div> */}
+
                   <div className="mb-4 input-family">
-                    <label htmlFor="exampleInputtext1" className="label">Call up number</label>
-                    <input name='nysc_call_up_number' onChange={handleChange} type="text" className="form-control" />
+                    <label htmlFor="exampleInputtext1" className="label">Gender</label>
+                    <select name='gender' onChange={handleChange} className="form-select" style={{ height: 60 }} aria-label="Default select example">
+                      {
+                        [
+                          {
+                            name: '',
+                            tag: '',
+                          },
+                          {
+                            name: 'Male',
+                            tag: 'Male',
+                          }, {
+                            name: 'Female',
+                            tag: 'Female',
+                          }].map(x => (
+                            <option key={x.tag} value={x.name}>{x.name}</option>
+                          ))
+                      }
+                    </select>
                   </div>
-                  <div className="mb-4 input-family">
-                    <label htmlFor="exampleInputtext1" className="label">State code</label>
-                    <input name='nysc_state_code' onChange={handleChange} type="text" className="form-control" />
-                  </div>
+
                   <div className="mb-4 input-family">
                     <label htmlFor="exampleInputtext1" className="label">Phone number</label>
-                    <input name='phone_number' onChange={handleChange} type="text" className="form-control" />
+                    <input name='phone' onChange={handleChange} type="text" value={user.phone} className="form-control" />
                   </div>
+
                 </form>
 
+                <button onClick={handleAddUser} style={{ marginTop: -10 }} className="btn bg-green text-white px-5 py-2 w-100 mt-3 fw-bold">
+                  {loading ? 'Loading...' : 'Save'}
+                </button>
               </div>
-              <button onClick={handleAddUser} style={{marginTop: -10}} className="btn bg-green text-white px-5 py-2 fw-bold">
-                {loadingReducer.loading?'Loading...':'Save'}
-              </button>
+
             </div>
           </div>
         </section>

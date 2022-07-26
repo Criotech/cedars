@@ -24,7 +24,11 @@ const StatesInfo = lazy(()=> import('../pages/stateInformation'));
 const CreateNotification = lazy(()=> import('../pages/updates/CreateNotification'));
 const TrainingChats = lazy(()=> import('../pages/trainingChats'));
 const OnboardedBusinesses = lazy(()=>import('../pages/projects/OnboardedBusinesses'));
-
+const Attendances = lazy(() => import('../pages/attendances'));
+const Confessions = lazy(() => import('../pages/confessions'));
+const Books = lazy(() => import('../pages/books'));
+const Testimmonies = lazy(() => import('../pages/testimonies'));
+const ChurchLocations = lazy(() => import('../pages/chruchLocations'));
 
 const Routes = () => (
   // eslint-disable-next-line no-undef
@@ -55,6 +59,11 @@ const Routes = () => (
         <PrivateRoute exact path='/updates/create/notification' component={CreateNotification} />
         <PrivateRoute exact path='/trainings/chat' component={TrainingChats} />
         <PrivateRoute exact path='/projects/onboardedbusiness' component={OnboardedBusinesses} />
+        <PrivateRoute exact path='/attendances' component={Attendances} />
+        <PrivateRoute exact path='/confessions' component={Confessions} />
+        <PrivateRoute exact path='/books' component={Books} />
+        <PrivateRoute exact path='/testimonies' component={Testimmonies} />
+        <PrivateRoute exact path='/church-locations' component={ChurchLocations} />
 
         {/* catch all invalid urls */}
         <Route component={Error404} />
